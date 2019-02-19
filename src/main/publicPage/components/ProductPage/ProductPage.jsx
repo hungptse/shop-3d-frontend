@@ -1,82 +1,57 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import logo from "../../../../assets/images/logo.png";
 import Footer from "../UI/Footer.jsx";
 import {
-    Container,
-    Divider,
-    Dropdown,
-    Grid,
-    Header,
-    Image,
-    Item,
-    Menu,
-    Button,
-} from 'semantic-ui-react'
+  Container,
+  Divider,
+  Card,
+  Grid,
+  Header,
+  Image,
+  Item,
+  Menu,
+  Icon,
+  Breadcrumb
+} from "semantic-ui-react";
+
+import HeaderPage from "../UI/Header";
 
 class ProductPage extends Component {
-    render() {
-        return (
-            <div>
-    <Menu fixed='top' inverted>
-      <Container>
-        <Menu.Item as='a' header>
-          <Image size='mini' src={logo} style={{ marginRight: '1.5em' }} />
-          3D Model Shop
-        </Menu.Item>
-        <Menu.Item as='a'>Home</Menu.Item>
-        <Menu.Item as='a'>Product</Menu.Item>
+  render() {
+    return (
+      <div>
+        <HeaderPage />
 
-        {/* <Dropdown item simple text='Dropdown'>
-          <Dropdown.Menu>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Header>Header Item</Dropdown.Header>
-            <Dropdown.Item>
-              <i className='dropdown icon' />
-              <span className='text'>Submenu</span>
-              <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown> */}
-      </Container>
-    </Menu>
-    <Container style={{ marginTop: '7em', height : '1000px'}}>
-      <Header as='h1'>Product</Header>
-      <Grid columns={3} divided>
-    <Grid.Row>
-      <Grid.Column>
-        <Image src={logo} />
-      </Grid.Column>
-      <Grid.Column>
-        <Image src={logo} />
-      </Grid.Column>
-      <Grid.Column>
-        <Image src={logo} />
-        
-      </Grid.Column>
-    </Grid.Row>
+        <Container style={{ marginTop: "7em", height: "1000px" }}>
+          <Breadcrumb>
+            <Breadcrumb.Section link>Home</Breadcrumb.Section>
+            <Breadcrumb.Divider />
+            <Breadcrumb.Section active>Product</Breadcrumb.Section>
+          </Breadcrumb>
+          <Header as="h1">Product</Header>
 
-    <Grid.Row>
-      <Grid.Column>
-        <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-      </Grid.Column>
-      <Grid.Column>
-        <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-      </Grid.Column>
-      <Grid.Column>
-        <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
-    </Container>
-    <Footer/>
-  </div>
-  );}
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={3}>
+                <Card fluid>
+                  <Card.Content>
+                    <Card.Header>Fillter</Card.Header>
+                    <Card.Description>
+                      Matthew is a musician living in Nashville.
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+              <Grid.Column width={13}>
+                
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+        <Footer />
+      </div>
+    );
+  }
 }
 
 export default ProductPage;

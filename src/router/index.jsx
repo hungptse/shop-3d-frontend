@@ -1,7 +1,6 @@
 import withAdminRouteComponent from "./withAdminRouteComponent";
 import withUserRouteComponent from "./withUserRouteComponent";
 
-import Login from '../main/loginPage/Login.jsx';
 import AdminPage from '../main/adminPage';
 import UserPage from '../main/userPage';
 import HomePage from '../main/publicPage';
@@ -13,11 +12,11 @@ const withAdmin = withAdminRouteComponent("/");
 const withUser = withUserRouteComponent("/");
 
 const indexRoutes = [
-    {
-        path: '/login',
-        name: 'Login',
-        component: Login
-    },
+    // {
+    //     path: '/login',
+    //     name: 'Login',
+    //     component: Login
+    // },
     {
         path: '/home',
         name: 'Home',
