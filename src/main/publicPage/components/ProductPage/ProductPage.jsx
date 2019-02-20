@@ -32,7 +32,7 @@ class ProductPage extends Component {
               <Grid.Column width={12}>
                 <Grid columns={3}>
                   <Grid.Column>
-                      <Product/>
+                      <Product name='My Name is Hung'/>
                   </Grid.Column>
                 </Grid>
               </Grid.Column>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Reveal, Button, Icon, Image } from 'semantic-ui-react';
+import { Card, Reveal, Button, Icon, Image, Label } from 'semantic-ui-react';
 
 class Product extends Component {
     render() {
@@ -18,8 +18,8 @@ class Product extends Component {
               </Reveal.Content>
             </Reveal>
             <Card.Content>
-              <Card.Header>GUNDAM BANDAI</Card.Header>
-              <Card.Meta><Icon name="dollar sign" />30</Card.Meta>
+              <Card.Header>{this.props.name}</Card.Header>
+              <Card.Meta><Label tag as='a'><Icon name="dollar sign" />10.00</Label></Card.Meta>
               <Card.Description>
                 RG 19 MBF-P02 Astray Red Frame
               </Card.Description>

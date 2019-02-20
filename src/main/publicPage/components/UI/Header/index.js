@@ -2,16 +2,26 @@ import React, { Component } from "react";
 import logo from "../../../../../assets/images/azgundam-logo.png";
 import { Link } from "react-router-dom";
 import { Icon, Image, Menu, Container, Button, Input } from "semantic-ui-react";
+import CartIcon from "../Cart";
+import Cart from "../Cart/Cart.jsx";
+import "../Cart/cart.scss";
+import "../Cart/header.scss";
+
+
 class HeaderPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeItem: this.props.location.pathname };
+    this.state = {
+      activeItem: this.props.location.pathname,
+      cartIsActive: true,
+      cart: {items : [{'id' : 1,'name' : 'abc'},{'id' : 2,'name' : 'abc'}]}
+    };
   }
 
-  componentDidMount(){
-    if (this.state.activeItem === '/') {
-      this.setState({ activeItem: "/home"});
-    } else{
+  componentDidMount() {
+    if (this.state.activeItem === "/") {
+      this.setState({ activeItem: "/home" });
+    } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
   }
@@ -20,10 +30,42 @@ class HeaderPage extends Component {
     this.setState({ activeItem: "/" + path });
   };
 
+  handleCartIcon = () => {
+    this.setState({ cartIsActive: !this.state.cartIsActive });
+    if (this.state.cartIsActive) {
+      document.body.classList.add("dark-overflow");
+    } else{
+      document.body.classList.remove("dark-overflow");
+
+    }
+  };
+
+  // cartToggle = () => {
+  //   this.setState({
+  //     cartIsActive: !this.state.cartIsActive,
+  //   });
+  //   document.body.classList.toggle("noscroll");
+  // };
+
+  // showCart = () => {
+  //   this.setState({
+  //     cartIsActive: true,
+  //   });
+  //   document.body.classList.add("noscroll");
+  // };
+
+
 
   render() {
     return (
-      <Menu fixed='top' borderless secondary pointing style={{ paddingBottom: "1em", background : '#f9f9f9' }}>
+      <Menu
+        fixed="top"
+        borderless
+        secondary
+        pointing
+        style={{ paddingBottom: "1em", background: "#ffffff" }}
+        className="boderBot"
+      >
         <Container style={{ backgroudColor: "white" }}>
           <Image
             floated="left"
@@ -50,21 +92,21 @@ class HeaderPage extends Component {
               );
             }
           })}
-          {/* <Menu.Item as="a">
-            PRODUCT
-          </Menu.Item> */}
-
           <Menu.Menu position="right">
             <Menu.Item>
               <Input icon="search" placeholder="Search..." />
             </Menu.Item>
             <Menu.Item>
-              <Button animated="fade">
-                <Button.Content hidden>Cart</Button.Content>
-                <Button.Content visible>
-                  <Icon name="shop" />
-                </Button.Content>
-              </Button>
+              <CartIcon
+                onClick={this.handleCartIcon}
+                cartIsActive={this.state.cartIsActive}
+                cart = {this.state.cart}
+              />
+              <div
+									className={this.state.cartIsActive ? 'mini-cart-open' : ''}
+								>
+									<Cart cart={this.state.cart}/>
+								</div>
             </Menu.Item>
             <Menu.Item>
               <Button primary>Login</Button>
