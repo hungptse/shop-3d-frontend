@@ -3,8 +3,7 @@ import withUserRouteComponent from "./withUserRouteComponent";
 
 import AdminPage from '../main/adminPage';
 import UserPage from '../main/userPage';
-import HomePage from '../main/publicPage';
-import ProductPage from '../main/publicPage/components/ProductPage/ProductPage.jsx';
+import PublicPage from '../main/publicPage';
 
 
 
@@ -18,14 +17,9 @@ const indexRoutes = [
     //     component: Login
     // },
     {
-        path: '/home',
-        name: 'Home',
-        component: HomePage
-    },
-    {
-        path: '/product',
-        name: 'Product',
-        component: ProductPage
+        path: '/',
+        name: 'Public',
+        component: PublicPage
     },
     {
         path: '/admin',
@@ -37,7 +31,7 @@ const indexRoutes = [
         name: 'User',
         component: withUser(UserPage)
     },
-    { path: '/', pathTo: '/home', name: 'Home', redirect: true }
+    { path: '/', pathTo: '/', name: 'Public', redirect: true }
 ];
 
 export default indexRoutes;
