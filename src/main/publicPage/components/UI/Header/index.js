@@ -1,11 +1,22 @@
 import React, { Component } from "react";
 import logo from "../../../../../assets/images/azgundam-logo.png";
 import { Link } from "react-router-dom";
-import { Icon, Image, Menu, Container, Button, Input } from "semantic-ui-react";
+import { Image, Menu, Container, Button, Input } from "semantic-ui-react";
 import CartIcon from "../Cart";
 import Cart from "../Cart/Cart.jsx";
 import "../Cart/cart.scss";
 import "../Cart/header.scss";
+import {connect} from 'react-redux';
+import { createSelector } from "reselect";
+
+const CART_STORE = 'CART_STORE';
+
+const getCartFromReducer = state => state[CART_STORE].cart;
+
+const startSelector = createSelector(
+  getCartFromReducer,
+    (cart) => ({ cart: cart || [] })
+);
 
 
 class HeaderPage extends Component {
@@ -14,7 +25,7 @@ class HeaderPage extends Component {
     this.state = {
       activeItem: this.props.location.pathname,
       cartIsActive: true,
-      cart: {items : [{'id' : 1,'name' : 'abc'},{'id' : 2,'name' : 'abc'}]}
+      // cart: {items : [{'id' : 1,'name' : 'abc'},{'id' : 2,'name' : 'abc'}]}
     };
   }
 
@@ -24,7 +35,7 @@ class HeaderPage extends Component {
     } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
-  }
+   }
 
   handldeActiveItem = path => {
     this.setState({ activeItem: "/" + path });
@@ -54,7 +65,11 @@ class HeaderPage extends Component {
   //   document.body.classList.add("noscroll");
   // };
 
-
+  // renderCart(){
+  //   if (this.state.loading) {
+  //     return <Cart/>
+  //   }
+  // }
 
   render() {
     return (
@@ -100,12 +115,11 @@ class HeaderPage extends Component {
               <CartIcon
                 onClick={this.handleCartIcon}
                 cartIsActive={this.state.cartIsActive}
-                cart = {this.state.cart}
               />
               <div
 									className={this.state.cartIsActive ? 'mini-cart-open' : ''}
 								>
-									<Cart cart={this.state.cart}/>
+									<Cart />
 								</div>
             </Menu.Item>
             <Menu.Item>
@@ -118,4 +132,4 @@ class HeaderPage extends Component {
   }
 }
 
-export default HeaderPage;
+export default connect(startSelector, {})(HeaderPage);

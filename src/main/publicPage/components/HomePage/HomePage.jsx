@@ -17,9 +17,6 @@ const loaddingRequestFromReducer = state => state[LIST_EVENTS_STORE].loading;
 // );
 
 class HomePage extends React.Component {
-  //   componentDidMount() {
-  //     this.props.getListEventsFromAPI && this.props.getListEventsFromAPI();
-  //   }
 
   render() {
     return (

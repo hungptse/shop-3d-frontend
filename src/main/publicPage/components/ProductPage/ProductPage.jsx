@@ -1,13 +1,25 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Card,
-  Grid,
-  Header,
-  Breadcrumb,
-} from "semantic-ui-react";
+import { Container, Card, Grid, Header, Breadcrumb } from "semantic-ui-react";
 import Product from "../UI/Product";
+import { connect } from "react-redux";
+import { createSelector } from "reselect";
+import { getListProductFromAPI } from "./ProductPage.action";
+
+const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
+
+const loadListProductFromReducer = state =>
+  state[PRODUCT_PAGE_STORE].listProduct;
+
+const startSelector = createSelector(
+  loadListProductFromReducer,
+  listProduct => ({ listProduct: listProduct || [] })
+);
+
 class ProductPage extends Component {
+  componentDidMount() {
+    this.props.getListProductFromAPI && this.props.getListProductFromAPI();
+  }
+
   render() {
     return (
       <div>
@@ -31,9 +43,13 @@ class ProductPage extends Component {
               </Grid.Column>
               <Grid.Column width={12}>
                 <Grid columns={3}>
-                  <Grid.Column>
-                      <Product name='My Name is Hung'/>
-                  </Grid.Column>
+                  {this.props.listProduct.map((product, key) => {
+                    return (
+                      <Grid.Column key={key}>
+                        <Product info={product} />{" "}
+                      </Grid.Column>
+                    );
+                  })}
                 </Grid>
               </Grid.Column>
             </Grid.Row>
@@ -44,4 +60,7 @@ class ProductPage extends Component {
   }
 }
 
-export default ProductPage;
+export default connect(
+  startSelector,
+  { getListProductFromAPI }
+)(ProductPage);

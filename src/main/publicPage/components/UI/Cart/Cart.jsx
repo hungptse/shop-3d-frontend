@@ -7,71 +7,113 @@ import {
   Button,
   Icon,
   Image,
-  Item,
   Label,
   Segment,
   Divider,
-  Card,
-  Reveal,
-  Grid,
-  Rail
+  Grid
 } from "semantic-ui-react";
 
-const CartItem = ({ item, deleteCartItem }) => {
+import { connect } from "react-redux";
+import { createSelector } from "reselect";
+
+const CART_STORE = "CART_STORE";
+const getCartFromReducer = state => state[CART_STORE].cart;
+
+const startSelector = createSelector(
+  getCartFromReducer,
+  cart => ({ cart: cart || [] })
+);
+
+const CartItem = item => {
   return (
-    <Grid columns={3}>
+    <Grid columns={2}>
       <Grid.Row>
-        <Grid.Column>
-            <Image src={faker.image.avatar()} />
+        <Grid.Column width={4}>
+          <Image src={faker.image.avatar()} />
         </Grid.Column>
-        <Grid.Column>{faker.commerce.product()}</Grid.Column>
-        <Grid.Column textAlign='right'>$10.00</Grid.Column>
+        <Grid.Column width={12}>
+          <Grid>
+            <Grid.Column floated="left" textAlign="left" width={6}>
+              {item.name}
+            </Grid.Column>
+            <Grid.Column floated="right" width={4}>
+              <Grid>
+                <Grid.Row
+                  textAlign="right"
+                  centered
+                  style={{ paddingBottom: "0" }}
+                >
+                  <Segment basic style={{ paddingTop: "0" }}>
+                    ${item.price}
+                  </Segment>
+                </Grid.Row>
+                <Grid.Row style={{ paddingTop: "0" }}>
+                  <Button basic size="mini">
+                    Remove
+                  </Button>
+                </Grid.Row>
+              </Grid>
+            </Grid.Column>
+          </Grid>
+          <Label>
+            <Icon name="tags" />
+            Qty: {item.quantity}
+          </Label>
+        </Grid.Column>
       </Grid.Row>
     </Grid>
-    // <Card>
-    //   <Card.Content>
-    //     <Card.Header>ABC</Card.Header>
-    //     <Card.Meta>
-    //     <Label tag as='a'>$10.00</Label>
-    //     </Card.Meta>
-    //     <Card.Description>RG 19 MBF-P02 Astray Red Frame</Card.Description>
-    //   </Card.Content>
-    //   <Card.Content extra>
-    //     <Button animated="arrow right" color="blue" fluid>
-    //       <Button.Content visible>
-    //         <Icon name="add to cart" />
-    //       </Button.Content>
-    //       <Button.Content hidden>Add to cart</Button.Content>
-    //     </Button>
-    //   </Card.Content>
-    // </Card>
   );
 };
 
 class Cart extends Component {
+
+
   deleteCartItem = id => {
     console.log(id);
   };
 
   render() {
-    const { cart, deleteCartItem, cartToggle } = this.props;
 
-    if (cart && cart.items && cart.items.length > 0) {
-      const items = cart.items.map(item => (
+    const { deleteCartItem, cartToggle } = this.props;
+    if (this.props.cart && this.props.cart.length > 0) {
+      const items = this.props.cart.map(item => (
         <CartItem key={item.id} item={item} deleteCartItem={deleteCartItem} />
       ));
-
       return (
         <div className="mini-cart" style={{ borderBottom: "" }}>
           {items}
-          <Divider clearing style={{margin : '1rem 0'}} />
-          <Segment floated="left" basic style={{fontWeight : 'bold'}}>Subtotal</Segment>
-          <Segment floated="right" basic style={{fontWeight : 'bold'}}>$1000</Segment>
+          <Divider clearing style={{ margin: "1rem 0" }} />
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={4}>
+                <Segment basic style={{ fontWeight: "bold", paddingTop: "0" }}>
+                  Subtotal
+                </Segment>
+              </Grid.Column>
+              <Grid.Column width={12}>
+                <Grid>
+                  <Grid.Column floated="left" textAlign="left" width={6} />
+                  <Grid.Column floated="right" width={4}>
+                    <Grid>
+                      <Grid.Row textAlign="right" centered>
+                        <Segment
+                          basic
+                          style={{ fontWeight: "bold", paddingTop: "0" }}
+                        >
+                          $21.98
+                        </Segment>
+                      </Grid.Row>
+                    </Grid>
+                  </Grid.Column>
+                </Grid>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Button fluid style={{ background: "#00b366" }}>
             <NavLink
               style={{ textTransform: "uppercase", color: "white" }}
               to="/checkout"
-              onClick={cartToggle}
+              // onClick={cartToggle}
             >
               Go To Checkout
             </NavLink>
@@ -81,10 +123,13 @@ class Cart extends Component {
     }
     return (
       <div className="mini-cart">
-        <p>Cart is empty</p>
+        <h4>Your cart is empty</h4>
       </div>
     );
   }
 }
 
-export default Cart;
+export default connect(
+  startSelector,
+  {}
+)(Cart);

@@ -1,40 +1,64 @@
-import React, { Component } from 'react';
-import { Card, Reveal, Button, Icon, Image, Label } from 'semantic-ui-react';
+import React, { Component } from "react";
+import { Card, Reveal, Button, Icon, Image, Label } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { createSelector } from "reselect";
+import { addCartToReducer } from "../Cart/Cart.action";
+
+const CART_STORE = "CART_STORE";
+const getCartFromReducer = state => state[CART_STORE].cart;
+
+const startSelector = createSelector(
+  getCartFromReducer,
+  (cart) => ({ cart: cart || [] })
+);
 
 class Product extends Component {
-    render() {
-        return (
-            <Card>
-            <Reveal animated="move" instant>
-              <Reveal.Content visible>
-                <Image
-                  src="https://react.semantic-ui.com/images/avatar/large/nan.jpg"
-                />
-              </Reveal.Content>
-              <Reveal.Content hidden>
-                <Image
-                  src="https://react.semantic-ui.com/images/avatar/large/chris.jpg"
-                />
-              </Reveal.Content>
-            </Reveal>
-            <Card.Content>
-              <Card.Header>{this.props.name}</Card.Header>
-              <Card.Meta><Label tag as='a'><Icon name="dollar sign" />10.00</Label></Card.Meta>
-              <Card.Description>
-                RG 19 MBF-P02 Astray Red Frame
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Button animated="arrow right" color="blue" fluid>
-                <Button.Content visible>
-                  <Icon name="add to cart" />
-                </Button.Content>
-                <Button.Content hidden>Add to cart</Button.Content>
-              </Button>
-            </Card.Content>
-          </Card>
-        );
-    }
+  state = { id: this.props.info.id };
+
+  addToCart = e => {
+    e.preventDefault();
+    console.log(this.props.info);
+    this.props.addCartToReducer && this.props.addCartToReducer({ id: this.props.info.id, name: this.props.info.name, quantity: 1 });
+    console.log(this.props.cart);
+  };
+
+  render() {
+    const { info } = this.props;
+    return (
+      <Card key={info.id}>
+        <Reveal animated="move" instant>
+          <Reveal.Content visible>
+            <Image src="https://react.semantic-ui.com/images/avatar/large/nan.jpg" />
+          </Reveal.Content>
+          <Reveal.Content hidden>
+            <Image src="https://react.semantic-ui.com/images/avatar/large/chris.jpg" />
+          </Reveal.Content>
+        </Reveal>
+        <Card.Content>
+          <Card.Meta>
+            <Label tag as="a">
+              <Icon name="dollar sign" />
+              {info.price}
+            </Label>
+          </Card.Meta>
+          <Card.Header>{info.name}</Card.Header>
+
+          <Card.Description>{info.description}</Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <Button animated color="blue" fluid onClick={this.addToCart}>
+            <Button.Content visible>
+              <Icon name="add to cart" />
+            </Button.Content>
+            <Button.Content hidden>Add to cart</Button.Content>
+          </Button>
+        </Card.Content>
+      </Card>
+    );
+  }
 }
 
-export default Product;
+export default connect(
+  startSelector,
+  { addCartToReducer }
+)(Product);

@@ -1,10 +1,10 @@
-export const BASE_URL = "https://api-fcode.herokuapp.com";
+export const BASE_URL = "https://localhost:5001";
 
 // Login
 export const AUTH__LOGIN = `${BASE_URL}/login`;
 
-// List Events
-export const PUBLIC__LIST_EVENTS = `${BASE_URL}/event/type/`;
+// List Prodct
+export const PUBLIC_LIST_PRODUCT = `${BASE_URL}/api/product`;
 
 //list account
 export const ACCOUNT__GET_ALL_ACCOUNT = `${BASE_URL}/account`;

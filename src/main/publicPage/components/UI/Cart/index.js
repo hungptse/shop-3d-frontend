@@ -4,11 +4,24 @@ import iconClose from "../../../../../assets/images/close.svg";
 
 import "../Cart/header.scss";
 import "../Cart/cart.scss";
+import { connect } from "react-redux";
+import { createSelector } from "reselect";
+
+const CART_STORE = "CART_STORE";
+const getCartFromReducer = state => state[CART_STORE].cart;
+
+const startSelector = createSelector(
+  getCartFromReducer,
+  cart => ({ cart: cart || [] })
+);
 
 const CartCount = ({ cart, cartIsActive }) => {
-  if (cart.items.length > 0 && cartIsActive) {
-    // const itemsCount = cart.items.reduce((a, b) => a + b.quantity, 0);
-    return <span className="cart-count">{cart.items.length}</span>;
+  if (cart.length > 0 && cartIsActive) {
+    var count = 0;
+    cart.map(product => {
+      count += product.quantity;
+    });
+    return <span className="cart-count">{count}</span>;
   }
   return null;
 };
@@ -32,16 +45,22 @@ class CartIcon extends Component {
   constructor(props) {
     super(props);
   }
-
+  componentDidMount() {
+    // this.getCart && this.getCart();
+  }
   render() {
-    const { cart, onClick, cartIsActive } = this.props;
+    const { onClick, cartIsActive } = this.props;
+
     return (
       <div className="cart-button" onClick={onClick}>
-        <CartCount cart={cart} cartIsActive={cartIsActive} />
+        <CartCount cart={this.props.cart} cartIsActive={cartIsActive} />
         <CartIconActive cartIsActive={cartIsActive} />
       </div>
     );
   }
 }
 
-export default CartIcon;
+export default connect(
+  startSelector,
+  {}
+)(CartIcon);
