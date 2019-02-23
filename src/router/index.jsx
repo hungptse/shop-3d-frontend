@@ -11,11 +11,6 @@ const withAdmin = withAdminRouteComponent("/");
 const withUser = withUserRouteComponent("/");
 
 const indexRoutes = [
-    // {
-    //     path: '/login',
-    //     name: 'Login',
-    //     component: Login
-    // },
     {
         path: '/',
         name: 'Public',

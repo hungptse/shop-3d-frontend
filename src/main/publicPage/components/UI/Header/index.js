@@ -8,10 +8,13 @@ import "../Cart/cart.scss";
 import "../Cart/header.scss";
 import {connect} from 'react-redux';
 import { createSelector } from "reselect";
+import { getCartFromAPI } from "../Cart/Cart.action";
+
 
 const CART_STORE = 'CART_STORE';
 
 const getCartFromReducer = state => state[CART_STORE].cart;
+
 
 const startSelector = createSelector(
   getCartFromReducer,
@@ -35,6 +38,7 @@ class HeaderPage extends Component {
     } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
+    this.props.getCartFromAPI && this.props.getCartFromAPI();
    }
 
   handldeActiveItem = path => {
@@ -132,4 +136,4 @@ class HeaderPage extends Component {
   }
 }
 
-export default connect(startSelector, {})(HeaderPage);
+export default connect(startSelector, {getCartFromAPI})(HeaderPage);
