@@ -9,8 +9,8 @@ import "../Cart/header.scss";
 import {connect} from 'react-redux';
 import { createSelector } from "reselect";
 import { getCartFromAPI } from "../Cart/Cart.action";
-
-
+import Login from "../../Login";
+import SearchBar from "../Search";
 const CART_STORE = 'CART_STORE';
 
 const getCartFromReducer = state => state[CART_STORE].cart;
@@ -113,7 +113,8 @@ class HeaderPage extends Component {
           })}
           <Menu.Menu position="right">
             <Menu.Item>
-              <Input icon="search" placeholder="Search..." />
+              <SearchBar />
+              {/* <Input icon="search" placeholder="Search..." /> */}
             </Menu.Item>
             <Menu.Item>
               <CartIcon
@@ -127,7 +128,8 @@ class HeaderPage extends Component {
 								</div>
             </Menu.Item>
             <Menu.Item>
-              <Button primary>Login</Button>
+              <Login />
+              {/* <Button primary>Login</Button> */}
             </Menu.Item>
           </Menu.Menu>
         </Container>

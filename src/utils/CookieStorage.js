@@ -1,5 +1,12 @@
 
-class CookieStorage{
+export const COOKIE_KEY = {
+    JWT: "3d_jwt",
+    USERNAME : "username"
+    // SENDER: "fcode_sendertoken",
+    // NOTIFICATION: "fcode_notification_v0"
+};
+
+class CookieStorageUtils{
     getItem(key, defaultValue) {
         let name = key + "=";
         let cookies = document.cookie.split(";");
@@ -49,4 +56,4 @@ class CookieStorage{
     }
 }
 
-export default CookieStorage;
+export default new CookieStorageUtils();
