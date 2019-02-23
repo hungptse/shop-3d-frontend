@@ -1,7 +1,7 @@
 import React from "react";
 import { renderRoutes } from "../../components/route";
 import ThemeRoutes from "./routing.jsx";
-import { Segment, Sidebar, Menu, Icon } from "semantic-ui-react";
+// import { Segment, Sidebar, Menu, Icon } from "semantic-ui-react";
 import HeaderPage from "./components/UI/Header";
 import Footer from "./components/UI/Footer";
 
@@ -20,6 +20,7 @@ class Fulllayout extends React.Component {
         >
           {renderRoutes(ThemeRoutes, this.props.match.path)}
         </div>
+        <Footer />
       </div>
     );
   }

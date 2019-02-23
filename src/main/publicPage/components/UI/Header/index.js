@@ -43,12 +43,12 @@ class HeaderPage extends Component {
 
   handleCartIcon = () => {
     this.setState({ cartIsActive: !this.state.cartIsActive });
-    if (this.state.cartIsActive) {
-      document.body.classList.add("dark-overflow");
-    } else{
-      document.body.classList.remove("dark-overflow");
+    // if (this.state.cartIsActive) {
+    //   document.body.classList.add("dark-overflow");
+    // } else{
+    //   document.body.classList.remove("dark-overflow");
 
-    }
+    // }
   };
 
   // cartToggle = () => {
@@ -92,7 +92,7 @@ class HeaderPage extends Component {
               return (
                 <Menu.Item
                   active={
-                    this.state.activeItem == "/" + route.path ? true : false
+                    this.state.activeItem === "/" + route.path ? true : false
                   }
                   key={key}
                 >
@@ -105,7 +105,7 @@ class HeaderPage extends Component {
                   </Link>
                 </Menu.Item>
               );
-            }
+            } 
           })}
           <Menu.Menu position="right">
             <Menu.Item>

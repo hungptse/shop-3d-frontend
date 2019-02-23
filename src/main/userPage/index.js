@@ -1,6 +1,6 @@
 import React from 'react';
-import { renderRoutes } from '../../components/route';
-import ThemeRoutes from './userRouter/routing.jsx';
+// import { renderRoutes } from '../../components/route';
+// import ThemeRoutes from './userRouter/routing.jsx';
 
 class Fulllayout extends React.Component {
 	/*--------------------------------------------------------------------------------*/

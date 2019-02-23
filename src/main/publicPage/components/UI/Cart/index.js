@@ -18,7 +18,7 @@ const startSelector = createSelector(
 const CartCount = ({ cart, cartIsActive }) => {
   if (cart.length > 0 && cartIsActive) {
     var count = 0;
-    cart.map(product => {
+    cart.forEach(product => {
       count += product.quantity;
     });
     return <span className="cart-count">{count}</span>;
@@ -42,9 +42,6 @@ const CartIconActive = ({ cartIsActive }) => {
 };
 
 class CartIcon extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     // this.getCart && this.getCart();
   }

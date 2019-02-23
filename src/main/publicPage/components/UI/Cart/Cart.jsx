@@ -15,6 +15,8 @@ import {
 
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
+import { removeCartFromReducer } from "./Cart.action";
+
 
 const CART_STORE = "CART_STORE";
 const getCartFromReducer = state => state[CART_STORE].cart;
@@ -24,7 +26,7 @@ const startSelector = createSelector(
   cart => ({ cart: cart || [] })
 );
 
-const CartItem = item => {
+const CartItem = data => {
   return (
     <Grid columns={2}>
       <Grid.Row>
@@ -34,7 +36,7 @@ const CartItem = item => {
         <Grid.Column width={12}>
           <Grid>
             <Grid.Column floated="left" textAlign="left" width={6}>
-              {item.name}
+              {data.item.name}
             </Grid.Column>
             <Grid.Column floated="right" width={4}>
               <Grid>
@@ -44,11 +46,11 @@ const CartItem = item => {
                   style={{ paddingBottom: "0" }}
                 >
                   <Segment basic style={{ paddingTop: "0" }}>
-                    ${item.price}
+                    ${data.item.price}
                   </Segment>
                 </Grid.Row>
                 <Grid.Row style={{ paddingTop: "0" }}>
-                  <Button basic size="mini">
+                  <Button basic size="mini" onClick={data.onClick}>
                     Remove
                   </Button>
                 </Grid.Row>
@@ -57,7 +59,7 @@ const CartItem = item => {
           </Grid>
           <Label>
             <Icon name="tags" />
-            Qty: {item.quantity}
+            Qty: {data.item.quantity}
           </Label>
         </Grid.Column>
       </Grid.Row>
@@ -66,19 +68,22 @@ const CartItem = item => {
 };
 
 class Cart extends Component {
-
-
-  deleteCartItem = id => {
-    console.log(id);
-  };
+  deleteCartItem(item) {
+    this.props.removeCartFromReducer && this.props.removeCartFromReducer(item);
+  }
+  componentDidUpdate(){
+    console.log(this.props.cart);
+    
+  }
 
   render() {
-
-    const { deleteCartItem, cartToggle } = this.props;
     if (this.props.cart && this.props.cart.length > 0) {
       const items = this.props.cart.map(item => (
-        <CartItem key={item.id} item={item} deleteCartItem={deleteCartItem} />
+        <CartItem key={item.id} item={item} onClick={() => this.deleteCartItem(item)} />
       ));
+      const itemsPrice = this.props.cart.map(item => {
+        return parseInt(item.quantity) * parseInt(item.price);
+      });
       return (
         <div className="mini-cart" style={{ borderBottom: "" }}>
           {items}
@@ -100,7 +105,7 @@ class Cart extends Component {
                           basic
                           style={{ fontWeight: "bold", paddingTop: "0" }}
                         >
-                          $21.98
+                          ${itemsPrice.reduce((sum, cur) => sum + cur)}
                         </Segment>
                       </Grid.Row>
                     </Grid>
@@ -123,7 +128,7 @@ class Cart extends Component {
     }
     return (
       <div className="mini-cart">
-        <h4>Your cart is empty</h4>
+        <h5>Your cart is empty</h5>
       </div>
     );
   }
@@ -131,5 +136,5 @@ class Cart extends Component {
 
 export default connect(
   startSelector,
-  {}
+  { removeCartFromReducer }
 )(Cart);

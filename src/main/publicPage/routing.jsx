@@ -3,8 +3,6 @@
 import ProductPage from "./components/ProductPage/ProductPage.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import { productReducer } from './components/ProductPage/ProductPage.reducer';
-import { cartReducer } from './components/UI/Cart/Cart.reducer';
-
 
 
 const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
@@ -20,9 +18,7 @@ const ThemeRoutes = [
     path: 'product',
     name: 'Product',
     component: ProductPage,
-    // preProcess: () => store.injectReducer('CART_STORE', cartReducer)
-   preProcess: () => store.injectReducer(PRODUCT_PAGE_STORE, productReducer)
-
+    preProcess: () => store.injectReducer(PRODUCT_PAGE_STORE, productReducer)
   },
   {
     path: '1',

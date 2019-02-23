@@ -17,9 +17,7 @@ class Product extends Component {
 
   addToCart = e => {
     e.preventDefault();
-    console.log(this.props.info);
-    this.props.addCartToReducer && this.props.addCartToReducer({ id: this.props.info.id, name: this.props.info.name, quantity: 1 });
-    console.log(this.props.cart);
+    this.props.addCartToReducer && this.props.addCartToReducer({ id: this.props.info.id, name: this.props.info.name, price : this.props.info.price , quantity: 1 });
   };
 
   render() {
@@ -35,8 +33,8 @@ class Product extends Component {
           </Reveal.Content>
         </Reveal>
         <Card.Content>
-          <Card.Meta>
-            <Label tag as="a">
+          <Card.Meta style={{ textAlign : 'right' }}>
+            <Label tag as="a" >
               <Icon name="dollar sign" />
               {info.price}
             </Label>
