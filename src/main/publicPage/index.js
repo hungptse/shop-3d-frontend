@@ -20,7 +20,7 @@ class Fulllayout extends React.Component {
         >
           {renderRoutes(ThemeRoutes, this.props.match.path)}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

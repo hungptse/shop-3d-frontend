@@ -2,9 +2,8 @@ import uuidv4 from "uuid/v4";
 import JWT_Decode from "jwt-decode";
 
 export const LOCAL_STORAGE_KEY = {
-    JWT: "fcode_jwt"
-    // SENDER: "fcode_sendertoken",
-    // NOTIFICATION: "fcode_notification_v0"
+    JWT: "3d_jwt",
+    GUEST_CART: "guest",
 };
 
 class LocalStorageUtils {

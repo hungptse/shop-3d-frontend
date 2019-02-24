@@ -1,10 +1,17 @@
 import React, { Component } from "react";
-import { Container, Card, Grid, Header, Breadcrumb } from "semantic-ui-react";
+import {
+  Container,
+  Card,
+  Grid,
+  Header,
+  Breadcrumb,
+  Segment,
+  Image
+} from "semantic-ui-react";
 import Product from "../UI/Product";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { getListProductFromAPI } from "./ProductPage.action";
-
 const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
 
 const loadListProductFromReducer = state =>
@@ -17,7 +24,21 @@ const startSelector = createSelector(
 
 class ProductPage extends Component {
   componentDidMount() {
-    this.props.getListProductFromAPI && this.props.getListProductFromAPI();
+    if (this.props.listProduct.length == 0) {
+      this.props.getListProductFromAPI && this.props.getListProductFromAPI();
+    }
+  }
+
+  renderLoading() {
+    if (this.props.listProduct.length == 0) {
+      return (
+        <Segment loading>
+          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+        </Segment>
+      );
+    }
   }
 
   render() {
@@ -42,6 +63,7 @@ class ProductPage extends Component {
                 </Card>
               </Grid.Column>
               <Grid.Column width={12}>
+                {this.renderLoading()}
                 <Grid columns={3}>
                   {this.props.listProduct.map((product, key) => {
                     return (

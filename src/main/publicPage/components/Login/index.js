@@ -7,12 +7,17 @@ import {
   Divider,
   Grid,
   Header,
-  Message} from "semantic-ui-react";
+  Message,
+  Dropdown,
+  Image,
+  Icon
+} from "semantic-ui-react";
 import { post } from "../../../../utils/ApiCaller";
 import { AUTH__LOGIN } from "../../../../utils/ApiEndpoint";
 import CookieStorageUtils, {
   COOKIE_KEY
 } from "../../../../utils/CookieStorage";
+import faker from "faker";
 
 class LoginForm extends Component {
   state = {
@@ -20,19 +25,19 @@ class LoginForm extends Component {
     username: "",
     password: "",
     error: true,
-    loading: false
+    loading: false,
+    signned: false
   };
 
   show = () => this.setState({ open: true });
-  close = () => this.setState({ open: false, error : true });
+  close = () => this.setState({ open: false, error: true });
 
   handleSubmit = () => {
-    console.log(this.state.username + " " + this.state.password);
     this.setState({ loading: true });
-    this.onLogin(this.state.username, this.state.password, token => {
+    this.onLogin(this.state.username, this.state.password, (token) => {
       if (token) {
         CookieStorageUtils.setItem(COOKIE_KEY.JWT, token);
-        CookieStorageUtils.setItem(COOKIE_KEY.USERNAME, this.state.username);
+        // CookieStorageUtils.setItem(COOKIE_KEY.USERNAME, name);
       }
     });
     // this.setState({loading : false});
@@ -46,27 +51,73 @@ class LoginForm extends Component {
       { "Content-Type": "application/json" }
     )
       .then(res => {
+        console.log(res.config.headers);
+        
         cb(res.config.headers.Authorization.replace("Bearer ", ""));
-        this.setState({ error: true, loading: false });
+        this.setState({
+          error: true,
+          loading: false,
+          signned: true,
+          open: false
+        });
       })
       .catch(() => {
-              this.setState({ error: false, loading: false });
-              console.log("Invalid Username or Password");
-          });
+        this.setState({ error: false, loading: false });
+      });
   }
 
   render() {
-    const { open, error, loading } = this.state;
-    return (
-      <div>
-        {/* <Button onClick={this.show(true)}>Default</Button> */}
+    const { open, error, loading, signned } = this.state;
+
+    const LogginButton = () => {
+      if (signned) {
+        return (
+          <Dropdown trigger={dropdownBtn} pointing="top left">
+            <Dropdown.Menu>
+              <Dropdown.Item disabled>
+                Signed in as <strong>hungpt</strong>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Icon name="user" /> Account
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Icon name="settings" /> Settings
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Icon name="sign-out" /> Sign Out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        );
+      }
+      return (
         <Button onClick={this.show} primary>
           Login
         </Button>
+      );
+    };
+
+    const dropdownBtn = (
+      <span>
+        <Image avatar src={faker.internet.avatar()} /> Hello, Hung
+      </span>
+    );
+    return (
+      <div>
+        {/* <Button onClick={this.show(true)}>Default</Button> */}
+        {/* <Button onClick={this.show} primary>
+          Login
+        </Button> */}
+        <LogginButton />
         {/* <Button onClick={this.show("blurring")}>Blurring</Button> */}
 
-        <Modal centered={false} dimmer="blurring" open={open} onClose={this.close}>
-          <Segment placeholder style={{ background: "white" }} padded='very'>
+        <Modal
+          centered={false}
+          dimmer="blurring"
+          open={open}
+          onClose={this.close}
+        >
+          <Segment placeholder style={{ background: "white" }} padded="very">
             <Grid columns={2} relaxed="very" stackable>
               <Grid.Column>
                 <Form onSubmit={this.handleSubmit} error loading={loading}>
@@ -91,7 +142,15 @@ class LoginForm extends Component {
                       Invalid Username or Password
                     </Message.Content>
                   </Message>
-                  <Button content="Login" secondary />
+                  {/* <Grid.Row columns={2}> */}
+                  <Grid.Column>
+                    <Button content="Login" secondary />
+                  </Grid.Column>
+                  {/* <Grid.Column  >
+                      <Button content="Forgot Password?" secondary floated='right'/>
+                    </Grid.Column> */}
+                  {/* <Button content="" secondary /> */}
+                  {/* </Grid.Row> */}
                 </Form>
               </Grid.Column>
 

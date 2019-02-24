@@ -3,13 +3,14 @@ import { Card, Reveal, Button, Icon, Image, Label } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { addCartToReducer } from "../Cart/Cart.action";
+import firebase from "../../../../../utils/Firebase.js";
 
 const CART_STORE = "CART_STORE";
 const getCartFromReducer = state => state[CART_STORE].cart;
 
 const startSelector = createSelector(
   getCartFromReducer,
-  (cart) => ({ cart: cart || [] })
+  cart => ({ cart: cart || [] })
 );
 
 class Product extends Component {
@@ -17,7 +18,19 @@ class Product extends Component {
 
   addToCart = e => {
     e.preventDefault();
-    this.props.addCartToReducer && this.props.addCartToReducer({ id: this.props.info.id, name: this.props.info.name, price : this.props.info.price , quantity: 1 });
+    this.props.addCartToReducer &&
+      this.props.addCartToReducer({
+        id: this.props.info.id,
+        name: this.props.info.name,
+        price: this.props.info.price,
+        quantity: 1
+      });
+    firebase
+      .database()
+      .ref("/" + "demo")
+      .set({
+        cart: this.props.cart
+      });
   };
 
   render() {
@@ -33,8 +46,8 @@ class Product extends Component {
           </Reveal.Content>
         </Reveal>
         <Card.Content>
-          <Card.Meta style={{ textAlign : 'right' }}>
-            <Label tag as="a" >
+          <Card.Meta style={{ textAlign: "right" }}>
+            <Label tag as="a">
               <Icon name="dollar sign" />
               {info.price}
             </Label>

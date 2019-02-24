@@ -71,10 +71,6 @@ class Cart extends Component {
   deleteCartItem(item) {
     this.props.removeCartFromReducer && this.props.removeCartFromReducer(item);
   }
-  componentDidUpdate(){
-    console.log(this.props.cart);
-    
-  }
 
   render() {
     if (this.props.cart && this.props.cart.length > 0) {

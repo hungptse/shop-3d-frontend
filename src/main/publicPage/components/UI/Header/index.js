@@ -28,7 +28,6 @@ class HeaderPage extends Component {
     this.state = {
       activeItem: this.props.location.pathname,
       cartIsActive: true,
-      // cart: {items : [{'id' : 1,'name' : 'abc'},{'id' : 2,'name' : 'abc'}]}
     };
   }
 
@@ -47,13 +46,14 @@ class HeaderPage extends Component {
 
   handleCartIcon = () => {
     this.setState({ cartIsActive: !this.state.cartIsActive });
-    // if (this.state.cartIsActive) {
-    //   document.body.classList.add("dark-overflow");
-    // } else{
-    //   document.body.classList.remove("dark-overflow");
-
-    // }
+    if (this.state.cartIsActive) {
+      document.body.classList.add("dark-overflow");
+    } else{
+      document.body.classList.remove("dark-overflow");
+    }
   };
+
+
 
   // cartToggle = () => {
   //   this.setState({
@@ -129,6 +129,7 @@ class HeaderPage extends Component {
             </Menu.Item>
             <Menu.Item>
               <Login />
+              
               {/* <Button primary>Login</Button> */}
             </Menu.Item>
           </Menu.Menu>

@@ -7,14 +7,26 @@ const removeCart = payload => ({ type: "REMOVE_FROM_CART", payload });
 
 const getCart = payload => ({ type: "GET_CART", payload });
 
-
 export const addCartToReducer = product => {
   return async dispatch => {
-    await post(CART + "/demo", {id : product.id, name : product.name, quantity : product.quantity, price : product.price}, {}, {}).then(result => {
-      dispatch(addCart(product));
-    }).catch(err => {
-      console.log(err);
-    });
+    await post(
+      CART + "/demo",
+      {
+        id: product.id,
+        name: product.name,
+        quantity: product.quantity,
+        price: product.price
+      },
+      {},
+      {}
+    )
+      .then(result => {
+        dispatch(addCart(product));
+        dispatch(getCart(result.data.cart));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   // return (dispatch) => {
@@ -24,13 +36,15 @@ export const addCartToReducer = product => {
 
 export const removeCartFromReducer = product => {
   return async dispatch => {
-    await put(CART + "/demo", {id : product.id}, {}, {}).then(result => {
-      dispatch(removeCart(product));
-    }).catch(err => {
-      console.log(err);
-    });
-  }
-  
+    await put(CART + "/demo", { id: product.id }, {}, {})
+      .then(result => {
+        dispatch(removeCart(product));
+        dispatch(getCart(result.data.cart));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   // return dispatch => {
   //   dispatch(removeCart(id));
@@ -39,10 +53,12 @@ export const removeCartFromReducer = product => {
 
 export const getCartFromAPI = () => {
   return async dispatch => {
-    await get(CART + "/demo",{},{}).then(result => {
-      dispatch(getCart(result.data.cart));
-    }).catch(err => {
-      console.log(err);
-    });
-  }
-}
+    await get(CART + "/demo", {}, {})
+      .then(result => {
+        dispatch(getCart(result.data.cart));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};

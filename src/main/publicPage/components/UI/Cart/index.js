@@ -42,9 +42,6 @@ const CartIconActive = ({ cartIsActive }) => {
 };
 
 class CartIcon extends Component {
-  componentDidMount() {
-    // this.getCart && this.getCart();
-  }
   render() {
     const { onClick, cartIsActive } = this.props;
 

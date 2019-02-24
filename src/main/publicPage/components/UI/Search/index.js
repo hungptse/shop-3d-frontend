@@ -13,7 +13,7 @@ const getResults = () =>
 
 const source = _.range(0, 3).reduce((memo) => {
   const name = faker.hacker.noun()
-
+  
   memo[name] = {
     name,
     results: getResults(),
