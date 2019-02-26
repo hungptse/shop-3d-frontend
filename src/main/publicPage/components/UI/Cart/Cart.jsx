@@ -16,14 +16,14 @@ import {
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { removeCartFromReducer } from "./Cart.action";
-
+import CookieStorageUtils,{ COOKIE_KEY  } from "../../../../../utils/CookieStorage";
 
 const CART_STORE = "CART_STORE";
-const getCartFromReducer = state => state[CART_STORE].cart;
 
+const getCartFromReducer = state => state[CART_STORE].cart;
 const startSelector = createSelector(
-  getCartFromReducer,
-  cart => ({ cart: cart || [] })
+  [getCartFromReducer],
+  (cart) => ({ cart: cart || []})
 );
 
 const CartItem = data => {
@@ -69,7 +69,7 @@ const CartItem = data => {
 
 class Cart extends Component {
   deleteCartItem(item) {
-    this.props.removeCartFromReducer && this.props.removeCartFromReducer(item);
+    this.props.removeCartFromReducer && this.props.removeCartFromReducer(item, CookieStorageUtils.getItem(COOKIE_KEY.UID));
   }
 
   render() {

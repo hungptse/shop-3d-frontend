@@ -11,6 +11,7 @@ import { createSelector } from "reselect";
 import { getCartFromAPI } from "../Cart/Cart.action";
 import Login from "../../Login";
 import SearchBar from "../Search";
+import  CookieStorageUtils,{ COOKIE_KEY } from "../../../../../utils/CookieStorage";
 const CART_STORE = 'CART_STORE';
 
 const getCartFromReducer = state => state[CART_STORE].cart;
@@ -37,7 +38,7 @@ class HeaderPage extends Component {
     } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
-    this.props.getCartFromAPI && this.props.getCartFromAPI();
+    this.props.getCartFromAPI && this.props.getCartFromAPI(CookieStorageUtils.getItem(COOKIE_KEY.UID));
    }
 
   handldeActiveItem = path => {
@@ -46,11 +47,11 @@ class HeaderPage extends Component {
 
   handleCartIcon = () => {
     this.setState({ cartIsActive: !this.state.cartIsActive });
-    if (this.state.cartIsActive) {
-      document.body.classList.add("dark-overflow");
-    } else{
-      document.body.classList.remove("dark-overflow");
-    }
+    // if (this.state.cartIsActive) {
+    //   document.body.classList.add("dark-overflow");
+    // } else{
+    //   document.body.classList.remove("dark-overflow");
+    // }
   };
 
 

@@ -4,13 +4,19 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { addCartToReducer } from "../Cart/Cart.action";
 import firebase from "../../../../../utils/Firebase.js";
+import CookieStorageUtils, {
+  COOKIE_KEY
+} from "../../../../../utils/CookieStorage";
 
+const AUTH_STORE = "AUTH_STORE";
 const CART_STORE = "CART_STORE";
+
 const getCartFromReducer = state => state[CART_STORE].cart;
+const uidFromReducer = state => state[AUTH_STORE].uid;
 
 const startSelector = createSelector(
-  getCartFromReducer,
-  cart => ({ cart: cart || [] })
+  [getCartFromReducer, uidFromReducer],
+  (cart, uid) => ({ cart: cart || [], uid: uid || "" })
 );
 
 class Product extends Component {
@@ -19,18 +25,22 @@ class Product extends Component {
   addToCart = e => {
     e.preventDefault();
     this.props.addCartToReducer &&
-      this.props.addCartToReducer({
-        id: this.props.info.id,
-        name: this.props.info.name,
-        price: this.props.info.price,
-        quantity: 1
-      });
-    firebase
-      .database()
-      .ref("/" + "demo")
-      .set({
-        cart: this.props.cart
-      });
+      this.props.addCartToReducer(
+        {
+          id: this.props.info.id,
+          name: this.props.info.name,
+          price: this.props.info.price,
+          quantity: 1
+        },
+        this.props.uid
+      );
+
+    // firebase
+    //   .database()
+    //   .ref("/" + "demo")
+    //   .set({
+    //     cart: this.props.cart
+    //   });
   };
 
   render() {

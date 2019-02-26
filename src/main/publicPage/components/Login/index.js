@@ -17,7 +17,24 @@ import { AUTH__LOGIN } from "../../../../utils/ApiEndpoint";
 import CookieStorageUtils, {
   COOKIE_KEY
 } from "../../../../utils/CookieStorage";
-import faker from "faker";
+import {
+  setSignnedToReducer,
+  getSignnedFromReducer,
+  setUIDToReducer,
+  getUIDFromReducer
+} from "../Login/Auth.action";
+import { connect } from "react-redux";
+import { createSelector } from "reselect";
+import { DeviceUUID } from "device-uuid/lib/device-uuid";
+
+const AUTH_STORE = "AUTH_STORE";
+const signnedFromReducer = state => state[AUTH_STORE].signned;
+const uidFromReducer = state => state[AUTH_STORE].uid;
+
+const startSelector = createSelector(
+  [signnedFromReducer, uidFromReducer],
+  (signned, uid) => ({ signned: signned, uid: uid })
+);
 
 class LoginForm extends Component {
   state = {
@@ -25,49 +42,55 @@ class LoginForm extends Component {
     username: "",
     password: "",
     error: true,
-    loading: false,
-    signned: false
+    loading: false
   };
 
   show = () => this.setState({ open: true });
   close = () => this.setState({ open: false, error: true });
+
+  componentDidMount() {
+    this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
+    this.props.getUIDFromReducer && this.props.getUIDFromReducer();        
+  }
 
   handleSubmit = () => {
     this.setState({ loading: true });
     this.onLogin(this.state.username, this.state.password, (token) => {
       if (token) {
         CookieStorageUtils.setItem(COOKIE_KEY.JWT, token);
-        // CookieStorageUtils.setItem(COOKIE_KEY.USERNAME, name);
+        CookieStorageUtils.setItem(COOKIE_KEY.UID, this.state.username);
       }
     });
-    // this.setState({loading : false});
   };
 
-  async onLogin(username, password, cb) {
-    await post(
-      AUTH__LOGIN,
-      { username: username, password: password },
-      {},
-      { "Content-Type": "application/json" }
-    )
+  async onLogin(username, password, getToken) {
+    await post(AUTH__LOGIN, { username: username, password: password }, {}, {})
       .then(res => {
-        console.log(res.config.headers);
-        
-        cb(res.config.headers.Authorization.replace("Bearer ", ""));
+        getToken(
+          res.headers.authorization.replace("Bearer ", ""),
+        );
         this.setState({
           error: true,
           loading: false,
-          signned: true,
           open: false
         });
+        this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
+        this.props.setUIDToReducer && this.props.setUIDToReducer(this.props.uid,username);
       })
       .catch(() => {
         this.setState({ error: false, loading: false });
       });
   }
 
+  handleLogout = () => {
+    this.props.setSignnedToReducer && this.props.setSignnedToReducer(false);
+    CookieStorageUtils.removeItem(COOKIE_KEY.UID);
+    CookieStorageUtils.removeItem(COOKIE_KEY.JWT);
+  };
+
   render() {
-    const { open, error, loading, signned } = this.state;
+    const { open, error, loading } = this.state;
+    const { signned, uid } = this.props;
 
     const LogginButton = () => {
       if (signned) {
@@ -75,7 +98,7 @@ class LoginForm extends Component {
           <Dropdown trigger={dropdownBtn} pointing="top left">
             <Dropdown.Menu>
               <Dropdown.Item disabled>
-                Signed in as <strong>hungpt</strong>
+                Signed in as <strong>{uid}</strong>
               </Dropdown.Item>
               <Dropdown.Item>
                 <Icon name="user" /> Account
@@ -83,7 +106,7 @@ class LoginForm extends Component {
               <Dropdown.Item>
                 <Icon name="settings" /> Settings
               </Dropdown.Item>
-              <Dropdown.Item>
+              <Dropdown.Item onClick={this.handleLogout}>
                 <Icon name="sign-out" /> Sign Out
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -99,7 +122,11 @@ class LoginForm extends Component {
 
     const dropdownBtn = (
       <span>
-        <Image avatar src={faker.internet.avatar()} /> Hello, Hung
+        <Image
+          avatar
+          src="https://s3.amazonaws.com/uifaces/faces/twitter/javorszky/128.jpg"
+        />{" "}
+        Hello, {uid}
       </span>
     );
     return (
@@ -112,8 +139,8 @@ class LoginForm extends Component {
         {/* <Button onClick={this.show("blurring")}>Blurring</Button> */}
 
         <Modal
-          centered={false}
-          dimmer="blurring"
+          // centered={false}
+          dimmer="inverted"
           open={open}
           onClose={this.close}
         >
@@ -126,7 +153,6 @@ class LoginForm extends Component {
                     icon="user"
                     iconPosition="left"
                     label="Username"
-                    placeholder="Username"
                     onChange={e => this.setState({ username: e.target.value })}
                   />
                   <Form.Input
@@ -166,4 +192,7 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default connect(
+  startSelector,
+  { setSignnedToReducer, getSignnedFromReducer, setUIDToReducer, getUIDFromReducer}
+)(LoginForm);

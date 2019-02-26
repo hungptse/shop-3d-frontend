@@ -7,10 +7,10 @@ const removeCart = payload => ({ type: "REMOVE_FROM_CART", payload });
 
 const getCart = payload => ({ type: "GET_CART", payload });
 
-export const addCartToReducer = product => {
+export const addCartToReducer = (product, uid) => {
   return async dispatch => {
     await post(
-      CART + "/demo",
+      CART + "/" + uid,
       {
         id: product.id,
         name: product.name,
@@ -21,6 +21,8 @@ export const addCartToReducer = product => {
       {}
     )
       .then(result => {
+        console.log(result.data);
+        
         dispatch(addCart(product));
         dispatch(getCart(result.data.cart));
       })
@@ -34,9 +36,9 @@ export const addCartToReducer = product => {
   // };
 };
 
-export const removeCartFromReducer = product => {
+export const removeCartFromReducer = (product, uid) => {
   return async dispatch => {
-    await put(CART + "/demo", { id: product.id }, {}, {})
+    await put(CART + "/" + uid, { id: product.id }, {}, {})
       .then(result => {
         dispatch(removeCart(product));
         dispatch(getCart(result.data.cart));
@@ -51,9 +53,9 @@ export const removeCartFromReducer = product => {
   // };
 };
 
-export const getCartFromAPI = () => {
+export const getCartFromAPI = (uid) => {
   return async dispatch => {
-    await get(CART + "/demo", {}, {})
+    await get(CART + "/" + uid, {}, {})
       .then(result => {
         dispatch(getCart(result.data.cart));
       })
