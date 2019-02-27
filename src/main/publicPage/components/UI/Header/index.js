@@ -13,8 +13,12 @@ import Login from "../../Login";
 import SearchBar from "../Search";
 import  CookieStorageUtils,{ COOKIE_KEY } from "../../../../../utils/CookieStorage";
 const CART_STORE = 'CART_STORE';
+const AUTH_STORE = 'AUTH_STORE';
+
 
 const getCartFromReducer = state => state[CART_STORE].cart;
+// const getUIDFromReducer = state => state[AUTH_STORE].uid;
+
 
 
 const startSelector = createSelector(
@@ -37,8 +41,8 @@ class HeaderPage extends Component {
       this.setState({ activeItem: "/home" });
     } else {
       this.setState({ activeItem: this.props.location.pathname });
-    }
-    this.props.getCartFromAPI && this.props.getCartFromAPI(CookieStorageUtils.getItem(COOKIE_KEY.UID));
+    }    
+    this.props.getCartFromAPI && this.props.getCartFromAPI(CookieStorageUtils.getSub());
    }
 
   handldeActiveItem = path => {
@@ -53,28 +57,6 @@ class HeaderPage extends Component {
     //   document.body.classList.remove("dark-overflow");
     // }
   };
-
-
-
-  // cartToggle = () => {
-  //   this.setState({
-  //     cartIsActive: !this.state.cartIsActive,
-  //   });
-  //   document.body.classList.toggle("noscroll");
-  // };
-
-  // showCart = () => {
-  //   this.setState({
-  //     cartIsActive: true,
-  //   });
-  //   document.body.classList.add("noscroll");
-  // };
-
-  // renderCart(){
-  //   if (this.state.loading) {
-  //     return <Cart/>
-  //   }
-  // }
 
   render() {
     return (

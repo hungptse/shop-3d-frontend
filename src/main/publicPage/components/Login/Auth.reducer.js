@@ -11,6 +11,7 @@ const setUID = (state, payload) => {
 };
 
 
+
 export const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "SET_SIGNNED":

@@ -25,8 +25,7 @@ import {
 } from "../Login/Auth.action";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { DeviceUUID } from "device-uuid/lib/device-uuid";
-
+import { getCartFromAPI } from "../UI/Cart/Cart.action";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
 const uidFromReducer = state => state[AUTH_STORE].uid;
@@ -50,12 +49,12 @@ class LoginForm extends Component {
 
   componentDidMount() {
     this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
-    this.props.getUIDFromReducer && this.props.getUIDFromReducer();        
+    this.props.getUIDFromReducer && this.props.getUIDFromReducer();
   }
 
   handleSubmit = () => {
     this.setState({ loading: true });
-    this.onLogin(this.state.username, this.state.password, (token) => {
+    this.onLogin(this.state.username, this.state.password, token => {
       if (token) {
         CookieStorageUtils.setItem(COOKIE_KEY.JWT, token);
         CookieStorageUtils.setItem(COOKIE_KEY.UID, this.state.username);
@@ -66,16 +65,16 @@ class LoginForm extends Component {
   async onLogin(username, password, getToken) {
     await post(AUTH__LOGIN, { username: username, password: password }, {}, {})
       .then(res => {
-        getToken(
-          res.headers.authorization.replace("Bearer ", ""),
-        );
+        getToken(res.headers.authorization.replace("Bearer ", ""));
         this.setState({
           error: true,
           loading: false,
           open: false
         });
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
-        this.props.setUIDToReducer && this.props.setUIDToReducer(this.props.uid,username);
+        this.props.setUIDToReducer && this.props.setUIDToReducer(username);
+        this.props.getCartFromAPI && this.props.getCartFromAPI(this.props.uid);
+        window.location.reload();
       })
       .catch(() => {
         this.setState({ error: false, loading: false });
@@ -83,9 +82,10 @@ class LoginForm extends Component {
   }
 
   handleLogout = () => {
-    this.props.setSignnedToReducer && this.props.setSignnedToReducer(false);
-    CookieStorageUtils.removeItem(COOKIE_KEY.UID);
     CookieStorageUtils.removeItem(COOKIE_KEY.JWT);
+    this.props.setSignnedToReducer && this.props.setSignnedToReducer(false);
+    this.props.setUIDToReducer && this.props.setUIDToReducer(undefined);
+    window.location.reload();
   };
 
   render() {
@@ -194,5 +194,11 @@ class LoginForm extends Component {
 
 export default connect(
   startSelector,
-  { setSignnedToReducer, getSignnedFromReducer, setUIDToReducer, getUIDFromReducer}
+  {
+    setSignnedToReducer,
+    getSignnedFromReducer,
+    setUIDToReducer,
+    getUIDFromReducer,
+    getCartFromAPI
+  }
 )(LoginForm);

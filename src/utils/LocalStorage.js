@@ -3,7 +3,6 @@ import JWT_Decode from "jwt-decode";
 
 export const LOCAL_STORAGE_KEY = {
     JWT: "3d_jwt",
-    GUEST_CART: "guest",
 };
 
 class LocalStorageUtils {

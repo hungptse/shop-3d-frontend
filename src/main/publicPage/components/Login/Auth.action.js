@@ -17,7 +17,7 @@ export const setSignnedToReducer = signned => {
 
 export const getSignnedFromReducer = () => {
   return dispatch => {
-    if (CookieStorageUtils.getItem(COOKIE_KEY.JWT)) {
+    if (CookieStorageUtils.getSub() != null) {
       dispatch(setSignned(true));
     } else {
       dispatch(setSignned(false));
@@ -25,20 +25,30 @@ export const getSignnedFromReducer = () => {
   };
 };
 
-export const setUIDToReducer = (oldId,newID) => {
-  return async dispatch => {
-    await put(
-      CHANGE_USER_OF_CART,
-      { old_id: oldId, new_id : newID },
-      {},
-      {}
-    ).then(res => {
-      dispatch(setUID(newID));
-    });
+export const setUIDToReducer = uid => {
+  let annonymousID = new DeviceUUID().get();  
+  if (uid !== undefined) {
+    return async dispatch => {
+      await put(
+        CHANGE_USER_OF_CART,
+        { old_id: annonymousID, new_id: uid },
+        {},
+        {}
+      ).then(res => {
+        if (res.status !== 400) {
+          console.log("RES");
+          dispatch(setUID(uid));
+        }
+      }).catch(err => {
+        console.log("ERR");
+        
+        dispatch(setUID(uid));
+      });
+    };
+  }
+  return dispatch => {
+      dispatch(setUID(annonymousID));
   };
-  // return dispatch => {
-  //   dispatch(setUID(uid));
-  // };
 };
 export const getUIDFromReducer = () => {
   return async dispatch => {
@@ -46,8 +56,8 @@ export const getUIDFromReducer = () => {
       dispatch(setUID(CookieStorageUtils.getItem(COOKIE_KEY.UID)));
     } else {
       let annonymousID = new DeviceUUID().get();
-      CookieStorageUtils.setItem(COOKIE_KEY.UID, annonymousID);
       dispatch(setUID(annonymousID));
+      CookieStorageUtils.setItem(COOKIE_KEY.UID, annonymousID);
     }
   };
 };

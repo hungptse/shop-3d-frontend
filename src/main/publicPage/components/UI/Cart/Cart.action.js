@@ -7,10 +7,11 @@ const removeCart = payload => ({ type: "REMOVE_FROM_CART", payload });
 
 const getCart = payload => ({ type: "GET_CART", payload });
 
+
 export const addCartToReducer = (product, uid) => {
   return async dispatch => {
     await post(
-      CART + "/" + uid,
+      CART + "/" + uid.trim(),
       {
         id: product.id,
         name: product.name,
@@ -54,13 +55,24 @@ export const removeCartFromReducer = (product, uid) => {
 };
 
 export const getCartFromAPI = (uid) => {
+  if (uid !== undefined) {
   return async dispatch => {
-    await get(CART + "/" + uid, {}, {})
+      await get(CART + "/" + uid, {}, {})
       .then(result => {
-        dispatch(getCart(result.data.cart));
+        if (result.data.cart !== undefined) {
+          dispatch(getCart(result.data.cart));
+        }
+        console.log(result, "AFTER LOGIN");
       })
       .catch(err => {
+        dispatch(getCart([]));
         console.log(err);
       });
-  };
+    };
+  } 
+  return dispatch => {
+    dispatch(getCart([]));
+  }
 };
+
+

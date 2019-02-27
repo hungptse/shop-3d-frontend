@@ -1,8 +1,7 @@
+import jwt_decode from "jwt-decode";
 export const COOKIE_KEY = {
   UID: "3d_uid",
   JWT: "3d_jwt"
-  // SENDER: "fcode_sendertoken",
-  // NOTIFICATION: "fcode_notification_v0"
 };
 
 class CookieStorageUtils {
@@ -18,6 +17,15 @@ class CookieStorageUtils {
     return value === undefined ? defaultValue : value.replace(name, "");
   }
 
+  getSub(){
+    if (this.getItem(COOKIE_KEY.JWT) === undefined) {
+      return null;
+    }
+    return jwt_decode(this.getItem(COOKIE_KEY.JWT)).sub;
+  }
+
+
+
   setItem(key, value) {
     let date = new Date();
     date.setTime(date.getTime() + 10 * 24 * 60 * 60 * 1000);
@@ -26,15 +34,16 @@ class CookieStorageUtils {
   }
 
   removeItem(key) {
-    let cookies = document.cookie.split(";");
+    // let cookies = document.cookie.split(";");
 
-    cookies.forEach(cookie => {
-      let eqPos = cookie.indexOf("=");
-      let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      if (name === key) {
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      }
-    });
+    // cookies.forEach(cookie => {
+    //   let eqPos = cookie.indexOf("=");
+    //   let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    //   if (name === key) {
+    //     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    //   }
+    // });
+    document.cookie = key + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 
   clear() {

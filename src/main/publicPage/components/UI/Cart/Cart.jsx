@@ -69,7 +69,7 @@ const CartItem = data => {
 
 class Cart extends Component {
   deleteCartItem(item) {
-    this.props.removeCartFromReducer && this.props.removeCartFromReducer(item, CookieStorageUtils.getItem(COOKIE_KEY.UID));
+    this.props.removeCartFromReducer && this.props.removeCartFromReducer(item, CookieStorageUtils.getItem(COOKIE_KEY.UID).trim());
   }
 
   render() {

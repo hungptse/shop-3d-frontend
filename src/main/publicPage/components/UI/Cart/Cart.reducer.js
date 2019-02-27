@@ -15,15 +15,17 @@ const addToCart = (state, payload) => {
   return { ...state, cart: [...state.cart, payload] };
 };
 
-
 const removeFromCart = (state, payload) => {
   return { ...state, cart: state.cart.filter(el => el.id !== payload.id) };
 };
 
 const setCartFromAPIToReducer = (state, payload) => {
-  // state.cart = payload;
-  return {...state, cart: payload}
-}
+  if (payload) {
+    return { ...state, cart: payload };
+  }
+  return { ...state };
+};
+
 
 export const cartReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -31,8 +33,8 @@ export const cartReducer = (state = initialState, { type, payload }) => {
       return addToCart(state, payload);
     case "REMOVE_FROM_CART":
       return removeFromCart(state, payload);
-      case "GET_CART":
-      return setCartFromAPIToReducer(state,payload);
+    case "GET_CART":
+      return setCartFromAPIToReducer(state, payload);
     default:
       return state;
   }
