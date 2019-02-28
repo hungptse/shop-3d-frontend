@@ -4,42 +4,22 @@ import React, { Component } from "react";
 import { Search } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { getListProductFromAPI } from "../../ProductPage/ProductPage.action";
+import { getListCateFromAPI } from "./Search.action";
 
-const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
-const loadListProductFromReducer = state => state[PRODUCT_PAGE_STORE].listProduct;
-
+const SEARCH_STORE = "SEARCH_STORE";
+const loadListCateFromReducer = state => state[SEARCH_STORE].listCate;
 
 const startSelector = createSelector(
-  loadListProductFromReducer,
-  listProduct => ({ listProduct: listProduct || [] })
+  loadListCateFromReducer,
+  listCate => ({ listCate: listCate || [] })
 );
 
-const getResults = () =>
-  _.times(5, () => ({
-    title: faker.company.companyName(),
-    description: faker.company.catchPhrase(),
-    image: faker.internet.avatar(),
-    price: faker.finance.amount(0, 100, 2, "$")
-  }));
-
-const source = _.range(0, 3).reduce(memo => {
-  const name = faker.hacker.noun();
-  memo[name] = {
-    name,
-    results: getResults()
-  };
-  return memo;
-}, {});
-
-
 class SearchBar extends Component {
-
   componentWillMount() {
     this.resetComponent();
   }
-  componentDidMount(){
-    this.props.getListProductFromAPI && this.props.getListProductFromAPI();
+  componentDidMount() {
+    this.props.getListCateFromAPI && this.props.getListCateFromAPI();
   }
 
   resetComponent = () =>
@@ -48,21 +28,53 @@ class SearchBar extends Component {
   handleResultSelect = (e, { result }) =>
     this.setState({ value: result.title });
 
+  reduceProduct = products => {
+    var afterReduce = [];
+    _.reduce(
+      products,
+      (obj, product) => {
+        obj = {
+          title: product.name,
+          description: product.description,
+          image: faker.internet.avatar(),
+          price: product.price + "$"
+        };
+        afterReduce.push(obj);
+      },
+      {}
+    );
+    return afterReduce;
+  };
+
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value });
-
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent();
 
-      const re = new RegExp(_.escapeRegExp(this.state.value), "i");
-      const isMatch = result => re.test(result.title);
+      const regex = new RegExp(_.escapeRegExp(this.state.value), "i");
+      const isMatch = product => regex.test(product.title);
+
+      const arrayToObject = array =>
+        array.reduce((obj, cate) => {
+          obj[cate.id] = {
+            name: cate.name,
+            products: this.reduceProduct(cate.product)
+          };
+          return obj;
+        }, {});
+
+      const source = arrayToObject(this.props.listCate);
 
       const filteredResults = _.reduce(
         source,
-        (memo, data, name) => {
-          const results = _.filter(data.results, isMatch);
-          if (results.length) memo[name] = { name, results }; // eslint-disable-line no-param-reassign
-          return memo;
+        (result, value, key) => {
+          let products = value.products;
+          let results = _.filter(products, isMatch);
+          let name = value.name;
+          if (results.length) {
+            result[name] = { name, results };
+          }
+          return result;
         },
         {}
       );
@@ -95,4 +107,7 @@ class SearchBar extends Component {
   }
 }
 
-export default connect(startSelector,{getListProductFromAPI})(SearchBar);
+export default connect(
+  startSelector,
+  { getListCateFromAPI }
+)(SearchBar);
