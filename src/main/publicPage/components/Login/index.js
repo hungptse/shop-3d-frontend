@@ -71,9 +71,9 @@ class LoginForm extends Component {
           loading: false,
           open: false
         });
-        this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         this.props.setUIDToReducer && this.props.setUIDToReducer(username);
         this.props.getCartFromAPI && this.props.getCartFromAPI(this.props.uid);
+        this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         window.location.reload();
       })
       .catch(() => {

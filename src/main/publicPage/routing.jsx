@@ -1,11 +1,8 @@
- import { store } from '../../store';
 
 import ProductPage from "./components/ProductPage/ProductPage.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
-import { productReducer } from './components/ProductPage/ProductPage.reducer';
+import CheckoutPage from "./components/CheckoutPage";
 
-
-const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
 
 
 const ThemeRoutes = [
@@ -17,13 +14,12 @@ const ThemeRoutes = [
   {
     path: 'product',
     name: 'Product',
-    component: ProductPage,
-    preProcess: () => store.injectReducer(PRODUCT_PAGE_STORE, productReducer)
+    component: ProductPage
   },
   {
-    path: '1',
-    name: 'Gundam',
-    component: ProductPage
+    path: 'checkout',
+    name: 'Checkout',
+    component: CheckoutPage
   },
   {
     path: '2',

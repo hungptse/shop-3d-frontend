@@ -4,6 +4,7 @@ import ThemeRoutes from "./routing.jsx";
 // import { Segment, Sidebar, Menu, Icon } from "semantic-ui-react";
 import HeaderPage from "./components/UI/Header";
 import Footer from "./components/UI/Footer";
+import { Breadcrumb } from "semantic-ui-react";
 
 class Fulllayout extends React.Component {
   render() {
@@ -15,9 +16,7 @@ class Fulllayout extends React.Component {
           location={this.props.location}
           listRouters={ThemeRoutes}
         />
-        <div
-          style={{ minHeight: 700, padding: "1em 0em", marginTop: "8em" }}
-        >
+        <div style={{ minHeight: 700, padding: "1em 0em", marginTop: "8em" }}>
           {renderRoutes(ThemeRoutes, this.props.match.path)}
         </div>
         {/* <Footer /> */}

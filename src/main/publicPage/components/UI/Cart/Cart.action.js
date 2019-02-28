@@ -7,6 +7,10 @@ const removeCart = payload => ({ type: "REMOVE_FROM_CART", payload });
 
 const getCart = payload => ({ type: "GET_CART", payload });
 
+const setCartIsActive = payload => ({ type: "SET_CART_ACTIVE", payload });
+
+
+
 
 export const addCartToReducer = (product, uid) => {
   return async dispatch => {
@@ -74,5 +78,11 @@ export const getCartFromAPI = (uid) => {
     dispatch(getCart([]));
   }
 };
+
+export const setCartIsActiveToReducer = (status) => {
+  return dispatch => {
+    dispatch(setCartIsActive(status));
+  }
+}
 
 

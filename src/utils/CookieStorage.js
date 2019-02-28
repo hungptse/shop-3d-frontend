@@ -59,6 +59,16 @@ class CookieStorageUtils {
       document.cookie = name + "=;" + expires + ";path=/";
     });
   }
+
+  getRole() {
+    const jwt = this.getItem(COOKIE_KEY.JWT);
+    if (jwt !== undefined) {
+        let decode = jwt_decode(jwt);
+        return decode.role;
+    }
+    return "Guest";
+}
+
 }
 
 export default new CookieStorageUtils();

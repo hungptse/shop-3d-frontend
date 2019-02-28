@@ -6,33 +6,32 @@ import CartIcon from "../Cart";
 import Cart from "../Cart/Cart.jsx";
 import "../Cart/cart.scss";
 import "../Cart/header.scss";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { getCartFromAPI } from "../Cart/Cart.action";
+import { getCartFromAPI, setCartIsActiveToReducer } from "../Cart/Cart.action";
 import Login from "../../Login";
 import SearchBar from "../Search";
-import  CookieStorageUtils,{ COOKIE_KEY } from "../../../../../utils/CookieStorage";
-const CART_STORE = 'CART_STORE';
-const AUTH_STORE = 'AUTH_STORE';
-
+import CookieStorageUtils, {
+  COOKIE_KEY
+} from "../../../../../utils/CookieStorage";
+const CART_STORE = "CART_STORE";
+const AUTH_STORE = "AUTH_STORE";
 
 const getCartFromReducer = state => state[CART_STORE].cart;
-// const getUIDFromReducer = state => state[AUTH_STORE].uid;
-
-
+const getCartIsActive = state => state[CART_STORE].cartIsActive;
 
 const startSelector = createSelector(
   getCartFromReducer,
-    (cart) => ({ cart: cart || [] })
+  getCartIsActive,
+  (cart, cartIsActive) => ({ cart: cart || [], cartIsActive : cartIsActive })
 );
-
 
 class HeaderPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItem: this.props.location.pathname,
-      cartIsActive: true,
+      // cartIsActive: true
     };
   }
 
@@ -41,16 +40,20 @@ class HeaderPage extends Component {
       this.setState({ activeItem: "/home" });
     } else {
       this.setState({ activeItem: this.props.location.pathname });
-    }    
-    this.props.getCartFromAPI && this.props.getCartFromAPI(CookieStorageUtils.getSub());
-   }
+    }
+    this.props.getCartFromAPI &&
+      this.props.getCartFromAPI(CookieStorageUtils.getSub());
+  }
 
   handldeActiveItem = path => {
     this.setState({ activeItem: "/" + path });
   };
 
   handleCartIcon = () => {
-    this.setState({ cartIsActive: !this.state.cartIsActive });
+
+    // this.setState({ cartIsActive: !this.state.cartIsActive });
+    
+    this.props.setCartIsActiveToReducer && this.props.setCartIsActiveToReducer(!this.props.cartIsActive);
     // if (this.state.cartIsActive) {
     //   document.body.classList.add("dark-overflow");
     // } else{
@@ -59,6 +62,7 @@ class HeaderPage extends Component {
   };
 
   render() {
+    const { cartIsActive } = this.props;
     return (
       <Menu
         fixed="top"
@@ -92,7 +96,7 @@ class HeaderPage extends Component {
                   </Link>
                 </Menu.Item>
               );
-            } 
+            }
           })}
           <Menu.Menu position="right">
             <Menu.Item>
@@ -102,17 +106,15 @@ class HeaderPage extends Component {
             <Menu.Item>
               <CartIcon
                 onClick={this.handleCartIcon}
-                cartIsActive={this.state.cartIsActive}
+                cartIsActive={cartIsActive}
               />
-              <div
-									className={this.state.cartIsActive ? 'mini-cart-open' : ''}
-								>
-									<Cart />
-								</div>
+              <div className={cartIsActive ? "mini-cart-open" : ""}>
+                <Cart />
+              </div>
             </Menu.Item>
             <Menu.Item>
               <Login />
-              
+
               {/* <Button primary>Login</Button> */}
             </Menu.Item>
           </Menu.Menu>
@@ -122,4 +124,7 @@ class HeaderPage extends Component {
   }
 }
 
-export default connect(startSelector, {getCartFromAPI})(HeaderPage);
+export default connect(
+  startSelector,
+  { getCartFromAPI, setCartIsActiveToReducer }
+)(HeaderPage);

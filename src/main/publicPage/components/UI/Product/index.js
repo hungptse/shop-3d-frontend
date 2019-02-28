@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Reveal, Button, Icon, Image, Label } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { addCartToReducer } from "../Cart/Cart.action";
+import { addCartToReducer, setCartIsActiveToReducer } from "../Cart/Cart.action";
 import firebase from "../../../../../utils/Firebase.js";
 import CookieStorageUtils, {
   COOKIE_KEY
@@ -12,11 +12,13 @@ const AUTH_STORE = "AUTH_STORE";
 const CART_STORE = "CART_STORE";
 
 const getCartFromReducer = state => state[CART_STORE].cart;
+const getCartIsActiveFromReducer = state => state[CART_STORE].cartIsActive;
+
 const uidFromReducer = state => state[AUTH_STORE].uid;
 
 const startSelector = createSelector(
-  [getCartFromReducer, uidFromReducer],
-  (cart, uid) => ({ cart: cart || [], uid: uid || "" })
+  getCartFromReducer, uidFromReducer, getCartIsActiveFromReducer,
+  (cart, uid, cartIsActive) => ({ cart: cart || [], uid: uid || "", cartIsActive : cartIsActive })
 );
 
 class Product extends Component {
@@ -34,7 +36,7 @@ class Product extends Component {
         },
         this.props.uid
       );
-
+        this.props.setCartIsActiveToReducer && this.props.setCartIsActiveToReducer(false);
     // firebase
     //   .database()
     //   .ref("/" + "demo")
@@ -81,5 +83,5 @@ class Product extends Component {
 
 export default connect(
   startSelector,
-  { addCartToReducer }
+  { addCartToReducer, setCartIsActiveToReducer }
 )(Product);

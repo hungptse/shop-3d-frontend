@@ -1,5 +1,6 @@
 const initialState = {
-  cart: []
+  cart: [],
+  cartIsActive: true
 };
 
 const addToCart = (state, payload) => {
@@ -26,6 +27,9 @@ const setCartFromAPIToReducer = (state, payload) => {
   return { ...state };
 };
 
+const setCartIsActive = (state, payload) => {
+    return { ...state, cartIsActive: payload };
+};
 
 export const cartReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -35,6 +39,8 @@ export const cartReducer = (state = initialState, { type, payload }) => {
       return removeFromCart(state, payload);
     case "GET_CART":
       return setCartFromAPIToReducer(state, payload);
+    case "SET_CART_ACTIVE":
+      return setCartIsActive(state, payload);
     default:
       return state;
   }
