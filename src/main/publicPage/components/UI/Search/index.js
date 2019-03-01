@@ -90,7 +90,7 @@ class SearchBar extends Component {
     const { isLoading, value, results } = this.state;
 
     return (
-      <div style={{}}>
+      <div style={{ borderRadius: "0px !important" }}>
         <Search
           category
           loading={isLoading}
@@ -100,7 +100,6 @@ class SearchBar extends Component {
           })}
           results={results}
           value={value}
-          style={{ borderRadius: "0px 0px 0px 0px !important" }}
         />
       </div>
     );

@@ -30,13 +30,13 @@ const CartIconActive = ({ cartIsActive }) => {
   if (!cartIsActive) {
     return (
       <div>
-        <img src={iconClose} style={{ minWidth: "20px" }} alt="Cart" />
+        <img src={iconClose} style={{ minWidth: "24px" }} alt="Cart" />
       </div>
     );
   }
   return (
     <div>
-      <img src={iconCart} style={{ minWidth: "20px" }} alt="Cart" />
+      <img src={iconCart} style={{ minWidth: "24px" }} alt="Cart" />
     </div>
   );
 };

@@ -7,7 +7,7 @@ import firebase from "../../../../../utils/Firebase.js";
 import CookieStorageUtils, {
   COOKIE_KEY
 } from "../../../../../utils/CookieStorage";
-
+import { NavLink } from "react-router-dom";
 const AUTH_STORE = "AUTH_STORE";
 const CART_STORE = "CART_STORE";
 
@@ -45,11 +45,19 @@ class Product extends Component {
     //   });
   };
 
+  linkToDetail = (e) =>{
+    e.preventDefault();
+    console.log(this.props);
+    this.props.history.push("/product/" + this.props.info.id);
+  }
+
+
+
   render() {
     const { info } = this.props;
     return (
       <Card key={info.id}>
-        <Reveal animated="move" instant>
+        <Reveal animated="move" instant onClick={this.linkToDetail}>
           <Reveal.Content visible>
             <Image src="https://react.semantic-ui.com/images/avatar/large/nan.jpg" />
           </Reveal.Content>
@@ -57,6 +65,7 @@ class Product extends Component {
             <Image src="https://react.semantic-ui.com/images/avatar/large/chris.jpg" />
           </Reveal.Content>
         </Reveal>
+
         <Card.Content>
           <Card.Meta style={{ textAlign: "right" }}>
             <Label tag as="a">

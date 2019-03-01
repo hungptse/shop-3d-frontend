@@ -68,7 +68,12 @@ class ProductPage extends Component {
                   {this.props.listProduct.map((product, key) => {
                     return (
                       <Grid.Column key={key}>
-                        <Product info={product} />{" "}
+                        <Product
+                          info={product}
+                          match={this.props.match}
+                          history={this.props.history}
+                          location={this.props.location}
+                        />{" "}
                       </Grid.Column>
                     );
                   })}

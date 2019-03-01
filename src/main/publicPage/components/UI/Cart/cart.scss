@@ -1,14 +1,14 @@
 .mini-cart {
   position: absolute;
   width: 480px;
-  top: 61px;
+  top: 65px;
   right: 0px;
   background: #fff;
   z-index: 99;
   box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.2);
   border: 1px solid #f3f3f3;
   border-width: 1px 0 0 1px;
-  transition: right 200ms ease-in-out;
+  transition: right 150ms ease-in-out;
   padding: 20px;
   text-align: left;
   font-size: 90%;
@@ -17,36 +17,7 @@
 }
 
 .mini-cart-open .mini-cart {
-  right: -850px;
-}
-
-.mini-cart-item-price {
-  padding-bottom: 6px
-}
-
-.cart-option-name {
-  color: #999;
-}
-
-.cart-quantity {
-  color: #999;
-}
-
-.mini-cart .product-old-price {
-  padding-right: 10px;
-  color: #636363;
-}
-
-.mini-cart .product-new-price {
-  color: #e72b1e;
-}
-
-.mini-cart .product-option {
-  margin-bottom: 15px;
-}
-
-.mini-cart .product-option-name {
-  color: #777;
+  right: -1100px;
 }
 
 .boderBot{
@@ -59,4 +30,8 @@
   position: fixed;
   width: 100%;
   z-index: 10000;
+}
+.ui.search .prompt{
+  border-radius: 0px !important;
+  padding: 0.5em;
 }

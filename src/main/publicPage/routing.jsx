@@ -2,6 +2,7 @@
 import ProductPage from "./components/ProductPage/ProductPage.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import CheckoutPage from "./components/CheckoutPage";
+import ProductDetailPage from "./components/ProductDetailPage";
 
 
 
@@ -12,7 +13,7 @@ const ThemeRoutes = [
     component: HomePage,
   },
   {
-    path: 'product',
+    path: 'products',
     name: 'Product',
     component: ProductPage
   },
@@ -22,14 +23,9 @@ const ThemeRoutes = [
     component: CheckoutPage
   },
   {
-    path: '2',
-    name: 'Figures',
-    component: ProductPage
-  },
-  {
-    path: '3',
-    name: 'About US',
-    component: ProductPage
+    path: 'product/:id',
+    name: 'Product Detail',
+    component: ProductDetailPage
   },
   { path: '/', pathTo: 'home', name: 'Home', redirect: true }
 ];

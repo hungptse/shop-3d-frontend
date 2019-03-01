@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logo from "../../../../../assets/images/azgundam-logo.png";
 import { Link } from "react-router-dom";
-import { Image, Menu, Container, Button, Input } from "semantic-ui-react";
+import { Image, Menu, Container, Button, Input, Divider } from "semantic-ui-react";
 import CartIcon from "../Cart";
 import Cart from "../Cart/Cart.jsx";
 import "../Cart/cart.scss";
@@ -49,12 +49,14 @@ class HeaderPage extends Component {
     this.setState({ activeItem: "/" + path });
   };
 
+
+
   handleCartIcon = () => {
 
     // this.setState({ cartIsActive: !this.state.cartIsActive });
     
     this.props.setCartIsActiveToReducer && this.props.setCartIsActiveToReducer(!this.props.cartIsActive);
-    // if (this.state.cartIsActive) {
+    // if (this.props.cartIsActive) {
     //   document.body.classList.add("dark-overflow");
     // } else{
     //   document.body.classList.remove("dark-overflow");
@@ -104,6 +106,9 @@ class HeaderPage extends Component {
               {/* <Input icon="search" placeholder="Search..." /> */}
             </Menu.Item>
             <Menu.Item>
+              <Login />
+            </Menu.Item>
+            <Menu.Item>
               <CartIcon
                 onClick={this.handleCartIcon}
                 cartIsActive={cartIsActive}
@@ -111,11 +116,6 @@ class HeaderPage extends Component {
               <div className={cartIsActive ? "mini-cart-open" : ""}>
                 <Cart />
               </div>
-            </Menu.Item>
-            <Menu.Item>
-              <Login />
-
-              {/* <Button primary>Login</Button> */}
             </Menu.Item>
           </Menu.Menu>
         </Container>
