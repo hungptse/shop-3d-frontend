@@ -10,7 +10,7 @@ const getListCate = payload => ({
 
 export const getListCateFromAPI = () => {
   return async dispatch => {
-    await get(PUBLIC_LIST_CATE, {}, {}).then(result => {
+    await get(PUBLIC_LIST_CATE(), {}, {}).then(result => {
       dispatch(getListCate(result.data));
     });
   };

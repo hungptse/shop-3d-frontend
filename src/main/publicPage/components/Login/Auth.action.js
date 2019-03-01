@@ -30,7 +30,7 @@ export const setUIDToReducer = uid => {
   if (uid !== undefined) {
     return async dispatch => {
       await put(
-        CHANGE_USER_OF_CART,
+        CHANGE_USER_OF_CART(),
         { old_id: annonymousID, new_id: uid },
         {},
         {}

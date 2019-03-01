@@ -6,12 +6,15 @@ import {
   Header,
   Breadcrumb,
   Segment,
-  Image
+  Image,
+  Placeholder,
+  Button
 } from "semantic-ui-react";
 import Product from "../UI/Product";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { getListProductFromAPI } from "./ProductPage.action";
+import _ from "lodash";
 const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
 
 const loadListProductFromReducer = state =>
@@ -32,57 +35,103 @@ class ProductPage extends Component {
   renderLoading() {
     if (this.props.listProduct.length == 0) {
       return (
-        <Segment loading>
-          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-        </Segment>
+        <Card.Group doubling itemsPerRow={3} stackable>
+          {_.range(0, 9).map(value => {
+            return (
+              <Card>
+                <Placeholder>
+                  <Placeholder.Image square />
+                </Placeholder>
+                <Card.Content>
+                  <Placeholder>
+                    <Placeholder.Header>
+                      <Placeholder.Line length="very short" />
+                      <Placeholder.Line length="medium" />
+                    </Placeholder.Header>
+                    <Placeholder.Paragraph>
+                      <Placeholder.Line length="short" />
+                    </Placeholder.Paragraph>
+                  </Placeholder>
+                </Card.Content>
+                <Card.Content extra>
+                  <Button color="blue" fluid disabled>
+                    Add to cart
+                  </Button>
+                </Card.Content>
+              </Card>
+            );
+          })}
+        </Card.Group>
       );
+
+      // return (
+      //   <Card.Group doubling itemsPerRow={3} stackable>
+      //     <Card>
+      //       <Placeholder>
+      //         <Placeholder.Image square />
+      //       </Placeholder>
+      //       <Card.Content>
+      //         <Placeholder>
+      //           <Placeholder.Header>
+      //             <Placeholder.Line length="very short" />
+      //             <Placeholder.Line length="medium" />
+      //           </Placeholder.Header>
+      //           <Placeholder.Paragraph>
+      //             <Placeholder.Line length="short" />
+      //           </Placeholder.Paragraph>
+      //         </Placeholder>
+      //       </Card.Content>
+      //       <Card.Content extra>
+      //         <Button animated color="blue" fluid disable>
+      //           Add to cart
+      //         </Button>
+      //       </Card.Content>
+      //     </Card>
+      //   </Card.Group>
+      // );
     }
   }
 
   render() {
     return (
-      <div>
-        <Container>
-          <Breadcrumb>
-            <Breadcrumb.Section link>Home</Breadcrumb.Section>
-            <Breadcrumb.Divider />
-            <Breadcrumb.Section active>Product</Breadcrumb.Section>
-          </Breadcrumb>
-          <Header as="h1">Product</Header>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={4}>
-                <Card>
-                  <Card.Content>
-                    <Card.Description>
-                      Matthew is a musician living in Nashville.
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-              <Grid.Column width={12}>
-                {this.renderLoading()}
-                <Grid columns={3}>
-                  {this.props.listProduct.map((product, key) => {
-                    return (
-                      <Grid.Column key={key}>
-                        <Product
-                          info={product}
-                          match={this.props.match}
-                          history={this.props.history}
-                          location={this.props.location}
-                        />{" "}
-                      </Grid.Column>
-                    );
-                  })}
-                </Grid>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
-      </div>
+      <Container>
+        <Breadcrumb>
+          <Breadcrumb.Section link>Home</Breadcrumb.Section>
+          <Breadcrumb.Divider />
+          <Breadcrumb.Section active>Product</Breadcrumb.Section>
+        </Breadcrumb>
+        <Header as="h1">Product</Header>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={4}>
+              <Card>
+                <Card.Content>
+                  <Card.Description>
+                    Matthew is a musician living in Nashville.
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+            <Grid.Column width={12}>
+              {this.renderLoading()}
+              <Grid columns={3}>
+                {this.props.listProduct.map((product, key) => {
+                  return (
+                    <Grid.Column key={key}>
+                      <Product
+                        info={product}
+                        match={this.props.match}
+                        history={this.props.history}
+                        location={this.props.location}
+                      />
+                    </Grid.Column>
+                  );
+                })}
+              </Grid>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     );
   }
 }

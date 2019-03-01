@@ -1,5 +1,5 @@
 import { get, post, put } from "../../../../../utils/ApiCaller";
-import { CART } from "../../../../../utils/ApiEndpoint";
+import { CART, CART_BY_UID } from "../../../../../utils/ApiEndpoint";
 
 const addCart = payload => ({ type: "ADD_TO_CART", payload });
 
@@ -9,13 +9,10 @@ const getCart = payload => ({ type: "GET_CART", payload });
 
 const setCartIsActive = payload => ({ type: "SET_CART_ACTIVE", payload });
 
-
-
-
 export const addCartToReducer = (product, uid) => {
   return async dispatch => {
     await post(
-      CART + "/" + uid.trim(),
+      CART_BY_UID(uid.trim()),
       {
         id: product.id,
         name: product.name,
@@ -27,7 +24,7 @@ export const addCartToReducer = (product, uid) => {
     )
       .then(result => {
         console.log(result.data);
-        
+
         dispatch(addCart(product));
         dispatch(getCart(result.data.cart));
       })
@@ -43,7 +40,7 @@ export const addCartToReducer = (product, uid) => {
 
 export const removeCartFromReducer = (product, uid) => {
   return async dispatch => {
-    await put(CART + "/" + uid, { id: product.id }, {}, {})
+    await put(CART_BY_UID(uid), { id: product.id }, {}, {})
       .then(result => {
         dispatch(removeCart(product));
         dispatch(getCart(result.data.cart));
@@ -58,31 +55,29 @@ export const removeCartFromReducer = (product, uid) => {
   // };
 };
 
-export const getCartFromAPI = (uid) => {
+export const getCartFromAPI = uid => {
   if (uid !== undefined) {
-  return async dispatch => {
-      await get(CART + "/" + uid, {}, {})
-      .then(result => {
-        if (result.data.cart !== undefined) {
-          dispatch(getCart(result.data.cart));
-        }
-        console.log(result, "AFTER LOGIN");
-      })
-      .catch(err => {
-        dispatch(getCart([]));
-        console.log(err);
-      });
+    return async dispatch => {
+      await get(CART_BY_UID(uid), {}, {})
+        .then(result => {
+          if (result.data.cart !== undefined) {
+            dispatch(getCart(result.data.cart));
+          }
+          console.log(result, "AFTER LOGIN");
+        })
+        .catch(err => {
+          dispatch(getCart([]));
+          console.log(err);
+        });
     };
-  } 
+  }
   return dispatch => {
     dispatch(getCart([]));
-  }
+  };
 };
 
-export const setCartIsActiveToReducer = (status) => {
+export const setCartIsActiveToReducer = status => {
   return dispatch => {
     dispatch(setCartIsActive(status));
-  }
-}
-
-
+  };
+};

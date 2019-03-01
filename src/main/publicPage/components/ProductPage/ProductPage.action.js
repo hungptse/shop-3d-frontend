@@ -12,7 +12,7 @@ const setLoading = payload => ({ type: "SET_LOADING", payload });
 export const getListProductFromAPI = () => {
   return async dispatch => {
     // dispatch(getListProductRequest());
-    await get(PUBLIC_LIST_PRODUCT, {}, {}).then(result => {
+    await get(PUBLIC_LIST_PRODUCT(), {}, {}).then(result => {
       dispatch(getListProductsSuccess(result.data));
     });
   };

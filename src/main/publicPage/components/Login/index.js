@@ -63,7 +63,7 @@ class LoginForm extends Component {
   };
 
   async onLogin(username, password, getToken) {
-    await post(AUTH__LOGIN, { username: username, password: password }, {}, {})
+    await post(AUTH__LOGIN(), { username: username, password: password }, {}, {})
       .then(res => {
         getToken(res.headers.authorization.replace("Bearer ", ""));
         this.setState({
