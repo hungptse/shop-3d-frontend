@@ -22,6 +22,10 @@ import {
   addCartToReducer,
   setCartIsActiveToReducer
 } from "../UI/Cart/Cart.action";
+
+import AdditionalInfo from "./AdditionalInfo.jsx";
+import Feedback from "./FeedBack.jsx";
+
 const AUTH_STORE = "AUTH_STORE";
 const CART_STORE = "CART_STORE";
 
@@ -42,13 +46,21 @@ const startSelector = createSelector(
 );
 
 class ProductDetailPage extends Component {
-  state = { product: {}, quantity: 1};
+  state = { product: {}, quantity: 1 };
 
   async componentWillMount() {
-    await get(GET_PRODUCT_BY_ID(this.props.match.params.id), {}, {}).then(res => {
+    await get(GET_PRODUCT_BY_ID(this.props.match.params.id), {}, {}).then(
+      res => {
+        this.setState({ product: res.data });
+      }
+    );
+  }
+  async componentWillReceiveProps(newProps) {
+    await get(GET_PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
       this.setState({ product: res.data });
     });
   }
+
   addToCart = e => {
     e.preventDefault();
     this.props.addCartToReducer &&
@@ -77,12 +89,12 @@ class ProductDetailPage extends Component {
         <Grid padded>
           <Grid.Row>
             <Grid.Column width={10}>
-              <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+              <Image src="#" />
             </Grid.Column>
             <Grid.Column width={6}>
               <Header as="h2">{product.name} </Header>
               <Divider horizontal>
-                <Header as="h4">
+                <Header as="h5">
                   <Icon name="tag" />
                   General Infomation
                 </Header>
@@ -119,11 +131,11 @@ class ProductDetailPage extends Component {
                 panes={[
                   {
                     menuItem: "Additional Information",
-                    render: () => <Tab.Pane loading>Tab 1 Content</Tab.Pane>
+                    render: () => <Tab.Pane><AdditionalInfo/></Tab.Pane>
                   },
                   {
                     menuItem: "Ratting & Feedback",
-                    render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>
+                    render: () => <Tab.Pane><Feedback /></Tab.Pane>
                   }
                 ]}
                 menu={{ secondary: true, pointing: true }}

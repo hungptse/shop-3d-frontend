@@ -1,12 +1,21 @@
 import React, { Component } from "react";
-import { Card, Reveal, Button, Icon, Image, Label, Dimmer, Header } from "semantic-ui-react";
+import {
+  Card,
+  Reveal,
+  Button,
+  Icon,
+  Image,
+  Label,
+  Dimmer,
+  Header
+} from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import {
   addCartToReducer,
   setCartIsActiveToReducer
 } from "../Cart/Cart.action";
-// import firebase from "../../../../../utils/Firebase.js";
+import firebase from "../../../../../utils/Firebase";
 // import CookieStorageUtils, {
 //   COOKIE_KEY
 // } from "../../../../../utils/CookieStorage";
@@ -30,7 +39,7 @@ const startSelector = createSelector(
 );
 
 class Product extends Component {
-  state = { id: this.props.info.id , active : false};
+  state = { id: this.props.info.id, active: false };
 
   addToCart = e => {
     e.preventDefault();
@@ -46,12 +55,6 @@ class Product extends Component {
       );
     this.props.setCartIsActiveToReducer &&
       this.props.setCartIsActiveToReducer(false);
-    // firebase
-    //   .database()
-    //   .ref("/" + "demo")
-    //   .set({
-    //     cart: this.props.cart
-    //   });
   };
 
   linkToDetail = e => {
@@ -60,44 +63,46 @@ class Product extends Component {
     this.props.history.push("/product/" + this.props.info.id);
   };
 
-  handleShow = () => this.setState({ active: true })
-  handleHide = () => this.setState({ active: false })
+  handleShow = () => this.setState({ active: true });
+  handleHide = () => this.setState({ active: false });
 
   render() {
     const { info } = this.props;
     const { active } = this.state;
 
-
     const content = (
       <div>
-        <Header as='h3' inverted>
+        <Header as="h3" inverted>
           Model : {info.model}
         </Header>
-
-        <Button color='youtube' onClick={this.linkToDetail}><Icon name='search' />  Quick View</Button>
+        <Button color="vk" onClick={this.linkToDetail}>
+          <Icon name="search" /> Quick View
+        </Button>
       </div>
-    )
+    );
+    // console.log(
+    //   firebase
+    //     .storage()
+    //     .ref()
+    //     .child("productsImg/" + info.thumbnail)
+    //     .getDownloadURL()
+    //     .then(res => {
+    //       console.log(res);
+    //     })
+    // );
 
     return (
       <Card key={info.id}>
         <Dimmer.Dimmable
           as={Image}
+          blurring
           dimmed={active}
           dimmer={{ active, content }}
           onMouseEnter={this.handleShow}
           onMouseLeave={this.handleHide}
           size="medium"
-          src="https://react.semantic-ui.com/images/avatar/large/chris.jpg"
+          src=""
         />
-        {/* <Reveal animated="move" instant onClick={this.linkToDetail}>
-          <Reveal.Content visible>
-            <Image src="https://react.semantic-ui.com/images/avatar/large/nan.jpg" />
-          </Reveal.Content>
-          <Reveal.Content hidden>
-            <Image src="" />
-          </Reveal.Content>
-        </Reveal> */}
-
         <Card.Content>
           <Label color="black" ribbon="right">
             <Icon name="dollar sign" />
@@ -109,7 +114,7 @@ class Product extends Component {
           <Card.Description>{info.description}</Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Button animated='fade' color="blue" fluid onClick={this.addToCart}>
+          <Button animated="fade" color="blue" fluid onClick={this.addToCart}>
             <Button.Content visible>
               <Icon name="add to cart" />
             </Button.Content>

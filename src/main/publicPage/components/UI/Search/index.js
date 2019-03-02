@@ -30,7 +30,7 @@ class SearchBar extends Component {
   
 
   handleResultSelect = (e, { result }) => {
-    this.setState({ value: result.title });
+    // this.setState({ value: result.title });
     var id = -1;
     this.props.listCate.map(cate => {
       var products = cate.product;
@@ -40,7 +40,7 @@ class SearchBar extends Component {
       }
     });
     this.props.history.push("/product/" + id);
-    window.location.reload();
+    this.resetComponent();
   };
 
   reduceProduct = products => {
@@ -52,7 +52,7 @@ class SearchBar extends Component {
           title: product.name,
           description: product.description,
           image: faker.internet.avatar(),
-          price: product.price + "$"
+          price: product.price + "$",
         };
         afterReduce.push(obj);
       },
@@ -67,7 +67,8 @@ class SearchBar extends Component {
       if (this.state.value.length < 1) return this.resetComponent();
 
       const regex = new RegExp(_.escapeRegExp(this.state.value), "i");
-      const isMatch = product => regex.test(product.title);
+      // search title + description
+      const isMatch = product => regex.test(product.title+product.description);
 
       const arrayToObject = array =>
         array.reduce((obj, cate) => {
