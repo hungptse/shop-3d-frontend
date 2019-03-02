@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Form } from "semantic-ui-react";
 
 export default class Quantity extends React.PureComponent {
-  state = { quantity : 1};
+  state = { quantity: 1 };
 
-//   componentWillReceiveProps(nextProps) {
-//     if (this.state.quantity > nextProps.maxQuantity) {
-//       this.setQuantity(nextProps.maxQuantity);
-//     }
-//   }
+  componentWillReceiveProps(nextProps) {
+    if (this.state.quantity > nextProps.maxQuantity) {
+      this.setQuantity(nextProps.maxQuantity);
+    }
+  }
 
   handleChange = event => {
     this.setQuantity(event.target.value);
@@ -18,7 +18,7 @@ export default class Quantity extends React.PureComponent {
     const intQuantity = parseInt(quantity);
     if (intQuantity > 0 && intQuantity <= this.props.maxQuantity) {
       this.setState({ quantity: intQuantity });
-    //   this.props.onChange(intQuantity);
+      this.props.onChangeQuantity(intQuantity);
     }
   };
 
@@ -39,9 +39,9 @@ export default class Quantity extends React.PureComponent {
     const value = disabled ? 0 : quantity;
 
     return (
-      <Fragment>
+      <Form.Group inline>
+        <label>Quantity</label>
         <div className="product-quantity">
-		
           <a className="decrement" onClick={this.decrement} />
           <input
             value={value}
@@ -53,7 +53,7 @@ export default class Quantity extends React.PureComponent {
           />
           <a className="increment" onClick={this.increment} />
         </div>
-      </Fragment>
+      </Form.Group>
     );
   }
 }

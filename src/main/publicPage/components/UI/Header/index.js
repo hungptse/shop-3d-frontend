@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import logo from "../../../../../assets/images/azgundam-logo.png";
 import { Link } from "react-router-dom";
-import { Image, Menu, Container, Button, Input, Divider } from "semantic-ui-react";
+import {
+  Image,
+  Menu,
+  Container,
+  Button,
+  Input,
+  Divider
+} from "semantic-ui-react";
 import CartIcon from "../Cart";
 import Cart from "../Cart/Cart.jsx";
 import "../Cart/cart.scss";
@@ -23,14 +30,14 @@ const getCartIsActive = state => state[CART_STORE].cartIsActive;
 const startSelector = createSelector(
   getCartFromReducer,
   getCartIsActive,
-  (cart, cartIsActive) => ({ cart: cart || [], cartIsActive : cartIsActive })
+  (cart, cartIsActive) => ({ cart: cart || [], cartIsActive: cartIsActive })
 );
 
 class HeaderPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: this.props.location.pathname,
+      activeItem: this.props.location.pathname
       // cartIsActive: true
     };
   }
@@ -49,13 +56,11 @@ class HeaderPage extends Component {
     this.setState({ activeItem: "/" + path });
   };
 
-
-
   handleCartIcon = () => {
-
     // this.setState({ cartIsActive: !this.state.cartIsActive });
-    
-    this.props.setCartIsActiveToReducer && this.props.setCartIsActiveToReducer(!this.props.cartIsActive);
+
+    this.props.setCartIsActiveToReducer &&
+      this.props.setCartIsActiveToReducer(!this.props.cartIsActive);
     // if (this.props.cartIsActive) {
     //   document.body.classList.add("dark-overflow");
     // } else{
@@ -102,7 +107,11 @@ class HeaderPage extends Component {
           })}
           <Menu.Menu position="right">
             <Menu.Item>
-              <SearchBar />
+              <SearchBar
+                match={this.props.match}
+                history={this.props.history}
+                location={this.props.location}
+              />
               {/* <Input icon="search" placeholder="Search..." /> */}
             </Menu.Item>
             <Menu.Item>

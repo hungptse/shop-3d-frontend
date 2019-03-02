@@ -19,14 +19,29 @@ class SearchBar extends Component {
     this.resetComponent();
   }
   componentDidMount() {
-    this.props.getListCateFromAPI && this.props.getListCateFromAPI();
+    if (this.props.listCate.length === 0) {
+      this.props.getListCateFromAPI && this.props.getListCateFromAPI();
+    }
   }
 
   resetComponent = () =>
     this.setState({ isLoading: false, results: [], value: "" });
 
-  handleResultSelect = (e, { result }) =>
+  
+
+  handleResultSelect = (e, { result }) => {
     this.setState({ value: result.title });
+    var id = -1;
+    this.props.listCate.map(cate => {
+      var products = cate.product;
+      if (products.length !== 0) {    
+        var pFound = products.find(p => p.name === result.title);
+        if (pFound) id = pFound.id;
+      }
+    });
+    this.props.history.push("/product/" + id);
+    window.location.reload();
+  };
 
   reduceProduct = products => {
     var afterReduce = [];

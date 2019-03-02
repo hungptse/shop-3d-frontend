@@ -74,7 +74,7 @@ class Product extends Component {
           Model : {info.model}
         </Header>
 
-        <Button color='instagram' onClick={this.linkToDetail}><Icon name='search' />  Quick View</Button>
+        <Button color='youtube' onClick={this.linkToDetail}><Icon name='search' />  Quick View</Button>
       </div>
     )
 

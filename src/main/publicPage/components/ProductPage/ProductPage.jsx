@@ -38,7 +38,7 @@ class ProductPage extends Component {
         <Card.Group doubling itemsPerRow={3} stackable>
           {_.range(0, 9).map(value => {
             return (
-              <Card>
+              <Card key={value}>
                 <Placeholder>
                   <Placeholder.Image square />
                 </Placeholder>

@@ -6,7 +6,6 @@ import { cartReducer } from "./main/publicPage/components/UI/Cart/Cart.reducer";
 import { authReducer } from "./main/publicPage/components/Login/Auth.reducer";
 import { productReducer } from "./main/publicPage/components/ProductPage/ProductPage.reducer";
 import { searchReducer } from "./main/publicPage/components/UI/Search/Search.reducer";
-
 import { store } from "./store";
 import "./App.css";
 
