@@ -25,9 +25,9 @@ export const getSignnedFromReducer = () => {
   };
 };
 
-export const setUIDToReducer = uid => {
+export const setUIDToReducer = (uid, flag) => {
   let annonymousID = new DeviceUUID().get();  
-  if (uid !== undefined) {
+  if (uid !== undefined && flag == true) {
     return async dispatch => {
       await put(
         CHANGE_USER_OF_CART(),
@@ -45,6 +45,10 @@ export const setUIDToReducer = uid => {
         dispatch(setUID(uid));
       });
     };
+  } else if (flag == false) {
+    return dispatch => {
+      dispatch(setUID(uid));
+  };
   }
   return dispatch => {
       dispatch(setUID(annonymousID));

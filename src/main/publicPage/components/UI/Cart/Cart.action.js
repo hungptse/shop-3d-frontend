@@ -64,7 +64,6 @@ export const getCartFromAPI = uid => {
           if (result.data.cart !== undefined) {
             dispatch(getCart(result.data.cart));
           }
-          console.log(result, "AFTER LOGIN");
         })
         .catch(err => {
           dispatch(getCart([]));

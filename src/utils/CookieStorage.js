@@ -64,8 +64,6 @@ class CookieStorageUtils {
     const jwt = this.getItem(COOKIE_KEY.JWT, "Guest");
     if (jwt !== undefined) {
         let decode = jwt_decode(jwt);
-        console.log(decode);
-        
         return decode.role;
     }
     return "Guest";

@@ -45,7 +45,7 @@ class HeaderPage extends Component {
   componentDidMount() {
     if (this.state.activeItem === "/") {
       this.setState({ activeItem: "store/home" });
-    } else {      
+    } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
     this.props.getCartFromAPI &&
@@ -90,7 +90,10 @@ class HeaderPage extends Component {
               return (
                 <Menu.Item
                   active={
-                    this.state.activeItem === this.props.match.path +  "/" + route.path ? true : false
+                    this.state.activeItem ===
+                    this.props.match.path + "/" + route.path
+                      ? true
+                      : false
                   }
                   key={key}
                 >
@@ -115,7 +118,11 @@ class HeaderPage extends Component {
               {/* <Input icon="search" placeholder="Search..." /> */}
             </Menu.Item>
             <Menu.Item>
-              <Login />
+              <Login
+                match={this.props.match}
+                history={this.props.history}
+                location={this.props.location}
+              />
             </Menu.Item>
             <Menu.Item>
               <CartIcon

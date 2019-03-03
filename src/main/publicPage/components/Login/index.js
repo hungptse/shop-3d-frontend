@@ -26,6 +26,7 @@ import {
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { getCartFromAPI } from "../UI/Cart/Cart.action";
+import jwt_decode from "jwt-decode";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
 const uidFromReducer = state => state[AUTH_STORE].uid;
@@ -58,10 +59,13 @@ class LoginForm extends Component {
       if (token) {
         CookieStorageUtils.setItem(COOKIE_KEY.JWT, token);
         CookieStorageUtils.setItem(COOKIE_KEY.UID, this.state.username);
-      }
-      if (CookieStorageUtils.getRole() === 'Admin') {
-        console.log(this.props); 
-      } else {
+        if (jwt_decode(token).role === 'Admin') {
+          console.log(this.props);
+          this.props.history.push("/admin");
+          this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username,false);
+        } else {
+          this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username,true);
+        }
       }
     });
   };
@@ -75,10 +79,9 @@ class LoginForm extends Component {
           loading: false,
           open: false
         });
-        this.props.setUIDToReducer && this.props.setUIDToReducer(username);
-        this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         this.props.getCartFromAPI && this.props.getCartFromAPI(this.props.uid);
-        window.location.reload();
+        this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
+        // window.location.reload();
       })
       .catch(() => {
         this.setState({ error: false, loading: false });
