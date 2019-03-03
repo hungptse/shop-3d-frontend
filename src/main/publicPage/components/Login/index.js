@@ -64,6 +64,8 @@ class LoginForm extends Component {
           this.props.history.push("/admin");
           this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username,false);
         } else {
+          console.log(this.props);
+          
           this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username,true);
         }
       }

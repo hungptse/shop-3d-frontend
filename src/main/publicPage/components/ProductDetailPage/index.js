@@ -11,7 +11,9 @@ import {
   Form,
   Button,
   Menu,
-  Tab
+  Tab,
+  Sticky,
+  Rating
 } from "semantic-ui-react";
 import { GET_PRODUCT_BY_ID } from "../../../../utils/ApiEndpoint";
 import { get } from "../../../../utils/ApiCaller";
@@ -26,7 +28,6 @@ import {
 import AdditionalInfo from "./AdditionalInfo.jsx";
 import Feedback from "./FeedBack.jsx";
 import Gallery from "./Gallery.jsx";
-
 
 const AUTH_STORE = "AUTH_STORE";
 const CART_STORE = "CART_STORE";
@@ -90,7 +91,12 @@ class ProductDetailPage extends Component {
         <Grid padded>
           <Grid.Row>
             <Grid.Column width={10}>
-              <Gallery images={['https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/productsImg%2FHG-BD-JEGAN-BLAST-MASTER-5.jpg?alt=media&token=f636e27a-4363-4c2f-8d45-d8c5835918e2','https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/productsImg%2FHG-BD-JEGAN-BLAST-MASTER-6.jpg?alt=media&token=f89e28b6-c14e-474d-882f-3820b45bb722']} />
+              <Gallery
+                images={[
+                  "https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/productsImg%2FHG-BD-JEGAN-BLAST-MASTER-5.jpg?alt=media&token=f636e27a-4363-4c2f-8d45-d8c5835918e2",
+                  "https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/productsImg%2FHG-BD-JEGAN-BLAST-MASTER-6.jpg?alt=media&token=f89e28b6-c14e-474d-882f-3820b45bb722"
+                ]}
+              />
             </Grid.Column>
             <Grid.Column width={6}>
               <Header as="h2">{product.name} </Header>
@@ -107,6 +113,16 @@ class ProductDetailPage extends Component {
                     <Icon name="dollar sign" />
                     {product.price}
                   </Label>
+                </Form.Group>
+                <Form.Group inline>
+                  <label>Rating</label>
+                  <label style={{ marginLeft: "15px" }}>4.0</label>
+                  <Rating
+                    size='large'
+                    maxRating={5}
+                    defaultRating={4}
+                    disabled
+                  />
                 </Form.Group>
                 <Quantity
                   maxQuantity={product.quantity}
@@ -126,17 +142,39 @@ class ProductDetailPage extends Component {
               </Button>
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row>
+          <Grid.Row style={{marginTop : '10px'}}>
             <Grid.Column width={16}>
               <Tab
                 panes={[
                   {
-                    menuItem: "Additional Information",
-                    render: () => <Tab.Pane><AdditionalInfo product={product}/></Tab.Pane>
+                    menuItem: (
+                      <Button
+                        basic
+                        color="blue"
+                        content="Additional Infomation"
+                        icon="fork"
+                      />
+                    ),
+                    render: () => (
+                      <Tab.Pane>
+                        <AdditionalInfo product={product} />
+                      </Tab.Pane>
+                    )
                   },
                   {
-                    menuItem: "Ratting & Feedback",
-                    render: () => <Tab.Pane><Feedback /></Tab.Pane>
+                    menuItem: (
+                      <Button
+                        basic
+                        color="red"
+                        content="Ratting & Feedback"
+                        icon="heart"
+                      />
+                    ),
+                    render: () => (
+                      <Tab.Pane>
+                        <Feedback />
+                      </Tab.Pane>
+                    )
                   }
                 ]}
                 menu={{ secondary: true, pointing: true }}

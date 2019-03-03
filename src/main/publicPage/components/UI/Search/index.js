@@ -39,7 +39,7 @@ class SearchBar extends Component {
         if (pFound) id = pFound.id;
       }
     });
-    this.props.history.push("/product/" + id);
+    this.props.history.push("/store/product/" + id);
     this.resetComponent();
   };
 
