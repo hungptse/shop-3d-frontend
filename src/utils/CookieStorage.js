@@ -43,7 +43,7 @@ class CookieStorageUtils {
     //     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     //   }
     // });
-    document.cookie = key + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = key + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
   }
 
   clear() {
@@ -61,9 +61,11 @@ class CookieStorageUtils {
   }
 
   getRole() {
-    const jwt = this.getItem(COOKIE_KEY.JWT);
+    const jwt = this.getItem(COOKIE_KEY.JWT, "Guest");
     if (jwt !== undefined) {
         let decode = jwt_decode(jwt);
+        console.log(decode);
+        
         return decode.role;
     }
     return "Guest";

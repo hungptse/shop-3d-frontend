@@ -31,7 +31,7 @@ export const renderRoutes = (routes, url) => {
         if (prop.redirect) {
           return <Redirect from={url + prop.path} to={url + prop.pathTo} key={key} />;
         }
-        else {
+        else {          
           return (
             <Route
               path={url + prop.path}

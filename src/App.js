@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   render() {
-    return <BrowserRouter>{renderRoutes(indexRoutes, "")}</BrowserRouter>;
+    return <BrowserRouter><div>{renderRoutes(indexRoutes, "")}</div></BrowserRouter>;
   }
 }
 

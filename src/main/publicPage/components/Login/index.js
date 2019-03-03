@@ -59,6 +59,10 @@ class LoginForm extends Component {
         CookieStorageUtils.setItem(COOKIE_KEY.JWT, token);
         CookieStorageUtils.setItem(COOKIE_KEY.UID, this.state.username);
       }
+      if (CookieStorageUtils.getRole() === 'Admin') {
+        console.log(this.props); 
+      } else {
+      }
     });
   };
 
@@ -72,8 +76,8 @@ class LoginForm extends Component {
           open: false
         });
         this.props.setUIDToReducer && this.props.setUIDToReducer(username);
-        this.props.getCartFromAPI && this.props.getCartFromAPI(this.props.uid);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
+        this.props.getCartFromAPI && this.props.getCartFromAPI(this.props.uid);
         window.location.reload();
       })
       .catch(() => {

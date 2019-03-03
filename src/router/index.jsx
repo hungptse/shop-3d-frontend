@@ -12,7 +12,7 @@ const withUser = withUserRouteComponent("/");
 
 const indexRoutes = [
     {
-        path: '/',
+        path: '/store',
         name: 'Public',
         component: PublicPage
     },
@@ -26,7 +26,7 @@ const indexRoutes = [
         name: 'User',
         component: withUser(UserPage)
     },
-    { path: '/', pathTo: '/', name: 'Public', redirect: true }
+    { path: '/', pathTo: '/store', name: 'Public', redirect: true }
 ];
 
 export default indexRoutes;

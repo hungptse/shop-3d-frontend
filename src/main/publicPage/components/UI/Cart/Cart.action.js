@@ -17,7 +17,8 @@ export const addCartToReducer = (product, uid) => {
         id: product.id,
         name: product.name,
         quantity: product.quantity,
-        price: product.price
+        price: product.price,
+        thumbnail : product.thumbnail
       },
       {},
       {}

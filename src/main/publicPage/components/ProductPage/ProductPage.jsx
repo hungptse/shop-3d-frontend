@@ -31,67 +31,6 @@ class ProductPage extends Component {
       this.props.getListProductFromAPI && this.props.getListProductFromAPI();
     }
   }
-
-  renderLoading() {
-    if (this.props.listProduct.length == 0) {
-      return (
-        <Card.Group doubling itemsPerRow={3} stackable>
-          {_.range(0, 9).map(value => {
-            return (
-              <Card key={value}>
-                <Placeholder>
-                  <Placeholder.Image square />
-                </Placeholder>
-                <Card.Content>
-                  <Placeholder>
-                    <Placeholder.Header>
-                      <Placeholder.Line length="very short" />
-                      <Placeholder.Line length="medium" />
-                    </Placeholder.Header>
-                    <Placeholder.Paragraph>
-                      <Placeholder.Line length="short" />
-                    </Placeholder.Paragraph>
-                  </Placeholder>
-                </Card.Content>
-                <Card.Content extra>
-                  <Button color="blue" fluid disabled>
-                    Add to cart
-                  </Button>
-                </Card.Content>
-              </Card>
-            );
-          })}
-        </Card.Group>
-      );
-
-      // return (
-      //   <Card.Group doubling itemsPerRow={3} stackable>
-      //     <Card>
-      //       <Placeholder>
-      //         <Placeholder.Image square />
-      //       </Placeholder>
-      //       <Card.Content>
-      //         <Placeholder>
-      //           <Placeholder.Header>
-      //             <Placeholder.Line length="very short" />
-      //             <Placeholder.Line length="medium" />
-      //           </Placeholder.Header>
-      //           <Placeholder.Paragraph>
-      //             <Placeholder.Line length="short" />
-      //           </Placeholder.Paragraph>
-      //         </Placeholder>
-      //       </Card.Content>
-      //       <Card.Content extra>
-      //         <Button animated color="blue" fluid disable>
-      //           Add to cart
-      //         </Button>
-      //       </Card.Content>
-      //     </Card>
-      //   </Card.Group>
-      // );
-    }
-  }
-
   render() {
     return (
       <Container>
@@ -113,7 +52,6 @@ class ProductPage extends Component {
               </Card>
             </Grid.Column>
             <Grid.Column width={12}>
-              {this.renderLoading()}
               <Grid columns={3}>
                 {this.props.listProduct.map((product, key) => {
                   return (

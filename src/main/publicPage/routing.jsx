@@ -8,26 +8,26 @@ import ProductDetailPage from "./components/ProductDetailPage";
 
 const ThemeRoutes = [
   {
-    path: 'home',
+    path: '/home',
     name: 'Home',
     component: HomePage,
   },
   {
-    path: 'products',
+    path: '/products',
     name: 'Product',
     component: ProductPage
   },
   {
-    path: 'checkout',
+    path: '/checkout',
     name: 'Checkout',
     component: CheckoutPage
   },
   {
-    path: 'product/:id',
+    path: '/product/:id',
     name: 'Product Detail',
     component: ProductDetailPage
   },
-  { path: '/', pathTo: 'home', name: 'Home', redirect: true }
+  { path: '/', pathTo: '/home', name: 'Home', redirect: true }
 ];
 
 export default ThemeRoutes;

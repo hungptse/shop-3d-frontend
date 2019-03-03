@@ -7,7 +7,8 @@ import {
   Image,
   Label,
   Dimmer,
-  Header
+  Header,
+  Placeholder
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
@@ -15,7 +16,8 @@ import {
   addCartToReducer,
   setCartIsActiveToReducer
 } from "../Cart/Cart.action";
-import firebase from "../../../../../utils/Firebase";
+import firebase from "../../../../../utils/FirebaseUitls";
+import defaultImg from "../../../../../assets/images/default-product.jpg";
 // import CookieStorageUtils, {
 //   COOKIE_KEY
 // } from "../../../../../utils/CookieStorage";
@@ -39,7 +41,12 @@ const startSelector = createSelector(
 );
 
 class Product extends Component {
-  state = { id: this.props.info.id, active: false };
+  state = { id: this.props.info.id, active: false, imgUrl: "", loaded : false };
+
+  async componentWillMount() {
+    await firebase.getLinkImages(this.props.info.thumbnail).then(res => this.setState({ imgUrl : res}));
+    this.setState({loaded : true});
+  }
 
   addToCart = e => {
     e.preventDefault();
@@ -49,7 +56,8 @@ class Product extends Component {
           id: this.props.info.id,
           name: this.props.info.name,
           price: this.props.info.price,
-          quantity: 1
+          quantity: 1,
+          thumbnail: this.state.imgUrl
         },
         this.props.uid
       );
@@ -59,8 +67,7 @@ class Product extends Component {
 
   linkToDetail = e => {
     e.preventDefault();
-    console.log(this.props);
-    this.props.history.push("/product/" + this.props.info.id);
+    this.props.history.push("/store/product/" + this.props.info.id);
   };
 
   handleShow = () => this.setState({ active: true });
@@ -80,49 +87,66 @@ class Product extends Component {
         </Button>
       </div>
     );
-    // console.log(
-    //   firebase
-    //     .storage()
-    //     .ref()
-    //     .child("productsImg/" + info.thumbnail)
-    //     .getDownloadURL()
-    //     .then(res => {
-    //       console.log(res);
-    //     })
-    // );
+      if (this.state.loaded) {
+        return (
+          <Card key={info.id}>
+            <Dimmer.Dimmable
+              as={Image}
+              blurring
+              dimmed={active}
+              dimmer={{ active, content }}
+              onMouseEnter={this.handleShow}
+              onMouseLeave={this.handleHide}
+              size="medium"
+              src={this.state.imgUrl === "" ? defaultImg : this.state.imgUrl}
+            />
+            <Card.Content>
+              <Label color="black" ribbon="right">
+                <Icon name="dollar sign" />
+                {info.price}
+              </Label>
+              <Card.Meta style={{ textAlign: "right" }} />
+              <Card.Header>{info.name}</Card.Header>
+    
+              <Card.Description>{info.description}</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Button animated="fade" color="blue" fluid onClick={this.addToCart}>
+                <Button.Content visible>
+                  <Icon name="add to cart" />
+                </Button.Content>
+                <Button.Content hidden>Add to cart</Button.Content>
+              </Button>
+            </Card.Content>
+          </Card>
+        );
+      } else {
+        return (
+          <Card>
+                <Placeholder>
+                  <Placeholder.Image square />
+                </Placeholder>
+                <Card.Content>
+                  <Placeholder>
+                    <Placeholder.Header>
+                      <Placeholder.Line length="very short" />
+                      <Placeholder.Line length="medium" />
+                    </Placeholder.Header>
+                    <Placeholder.Paragraph>
+                      <Placeholder.Line length="short" />
+                    </Placeholder.Paragraph>
+                  </Placeholder>
+                </Card.Content>
+                <Card.Content extra>
+                  <Button color="blue" fluid disabled>
+                    Add to cart
+                  </Button>
+                </Card.Content>
+              </Card>
+        );
+      }
 
-    return (
-      <Card key={info.id}>
-        <Dimmer.Dimmable
-          as={Image}
-          blurring
-          dimmed={active}
-          dimmer={{ active, content }}
-          onMouseEnter={this.handleShow}
-          onMouseLeave={this.handleHide}
-          size="medium"
-          src=""
-        />
-        <Card.Content>
-          <Label color="black" ribbon="right">
-            <Icon name="dollar sign" />
-            {info.price}
-          </Label>
-          <Card.Meta style={{ textAlign: "right" }} />
-          <Card.Header>{info.name}</Card.Header>
-
-          <Card.Description>{info.description}</Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <Button animated="fade" color="blue" fluid onClick={this.addToCart}>
-            <Button.Content visible>
-              <Icon name="add to cart" />
-            </Button.Content>
-            <Button.Content hidden>Add to cart</Button.Content>
-          </Button>
-        </Card.Content>
-      </Card>
-    );
+    
   }
 }
 

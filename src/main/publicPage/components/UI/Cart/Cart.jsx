@@ -17,12 +17,12 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { removeCartFromReducer } from "./Cart.action";
 import CookieStorageUtils,{ COOKIE_KEY  } from "../../../../../utils/CookieStorage";
-
+import firebase from "../../../../../utils/FirebaseUitls";
 const CART_STORE = "CART_STORE";
 
 const getCartFromReducer = state => state[CART_STORE].cart;
 const startSelector = createSelector(
-  [getCartFromReducer],
+  getCartFromReducer,
   (cart) => ({ cart: cart || []})
 );
 
@@ -31,7 +31,7 @@ const CartItem = data => {
     <Grid columns={2}>
       <Grid.Row>
         <Grid.Column width={4}>
-          <Image src={faker.image.avatar()} />
+          <Image src={data.item.thumbnail} />
         </Grid.Column>
         <Grid.Column width={12}>
           <Grid>
@@ -68,9 +68,11 @@ const CartItem = data => {
 };
 
 class Cart extends Component {
+
   deleteCartItem(item) {
     this.props.removeCartFromReducer && this.props.removeCartFromReducer(item, CookieStorageUtils.getItem(COOKIE_KEY.UID).trim());
   }
+  
 
   render() {
     if (this.props.cart && this.props.cart.length > 0) {
