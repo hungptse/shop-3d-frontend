@@ -1,13 +1,64 @@
-body {
-  /* background-color: #f0f2f5;  */
-  
+.content-container {
+  padding: 0 50px;
 }
 
-.content-container {
-  padding: 0 50px; }
+.slick-next {
+  margin-right: 30px !important;
+}
+.slick-prev {
+  margin-left: 30px !important;
+  z-index: 1000;
+}
+.stick-dots {
+  position: absolute;
+  bottom: -25px;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+.stick-dots li {
+  display: inline-block !important;
+  /* padding: 10px 18px !important; */
+  color: #222 !important;
+}
+.slick-dots li button{
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  cursor: pointer;
+  color: transparent;
+  border: 0;
+}
+.slick-dots li button:before{
+  content: '' !important;
+}
 
-@media screen and (max-width: 640px) {
-  .ant-layout-header {
-    padding: 0; }
-  .ant-layout-content {
-    padding: 0; } }
+.p4 li {
+  width: 25px !important;
+  height: 25px !important;
+  line-height: 40px !important;
+  border-radius: 100% !important;
+  padding: 0 !important;
+  text-align: center !important;
+  position: relative !important;
+  border: 3px solid #00b5ad !important;
+  cursor: pointer;
+
+}
+
+.p4 .slick-active:before {
+  content: "" !important;
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 100% !important;
+  background-color: #00b5ad !important;
+  position: absolute !important;
+  top: 2px !important;
+  left: 2px !important;
+}
