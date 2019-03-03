@@ -112,7 +112,7 @@ class Cart extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Button fluid style={{ background: "#00b366" }}>
+          <Button fluid  color='instagram'>
             <NavLink
               style={{ textTransform: "uppercase", color: "white" }}
               to="/checkout"
