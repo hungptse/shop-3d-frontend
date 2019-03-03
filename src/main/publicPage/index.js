@@ -28,7 +28,7 @@ class Fulllayout extends React.Component {
             {renderRoutes(ThemeRoutes, this.props.match.path)}
           </ScrollToTop>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     );
   }

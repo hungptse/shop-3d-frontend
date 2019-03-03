@@ -6,7 +6,8 @@ import {
   Button,
   Segment,
   Container,
-  TextArea
+  TextArea,
+  Icon
 } from "semantic-ui-react";
 
 import { connect } from "react-redux";
@@ -39,7 +40,11 @@ class FeedBack extends Component {
         </Comment>
       );
     } else {
-      return <p><i>Please login to feedback and rating</i></p>
+      return (
+        <p>
+          <i>Please login to feedback and rating</i>
+        </p>
+      );
     }
   };
 
@@ -86,7 +91,9 @@ class FeedBack extends Component {
             <Comment.Content>
               <Comment.Author as="a">Joe Henderson</Comment.Author>
               <Comment.Metadata>
-                <span>5 days ago</span>
+                <span>
+                  <Icon name="star" />5 Stars
+                </span>
               </Comment.Metadata>
               <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
             </Comment.Content>

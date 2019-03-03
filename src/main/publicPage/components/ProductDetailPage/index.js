@@ -28,6 +28,7 @@ import {
 import AdditionalInfo from "./AdditionalInfo.jsx";
 import Feedback from "./FeedBack.jsx";
 import Gallery from "./Gallery.jsx";
+import FirebaseUitls from "../../../../utils/FirebaseUitls";
 
 const AUTH_STORE = "AUTH_STORE";
 const CART_STORE = "CART_STORE";
@@ -49,7 +50,7 @@ const startSelector = createSelector(
 );
 
 class ProductDetailPage extends Component {
-  state = { product: {}, quantity: 1 };
+  state = { product: {}, quantity: 1, urlThumbail : '' };
 
   async componentWillMount() {
     await get(GET_PRODUCT_BY_ID(this.props.match.params.id), {}, {}).then(
@@ -57,11 +58,22 @@ class ProductDetailPage extends Component {
         this.setState({ product: res.data });
       }
     );
+    await FirebaseUitls.getLinkImages(this.state.product.thumbnail).then(
+      res => {
+        this.setState({ urlThumbail : res });
+      }
+    );
+
   }
   async componentWillReceiveProps(newProps) {
     await get(GET_PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
       this.setState({ product: res.data });
     });
+    await FirebaseUitls.getLinkImages(this.state.product.thumbnail).then(
+      res => {
+        this.setState({ urlThumbail : res });
+      }
+    );
   }
 
   addToCart = e => {
@@ -72,7 +84,8 @@ class ProductDetailPage extends Component {
           id: this.state.product.id,
           name: this.state.product.name,
           price: this.state.product.price,
-          quantity: this.state.quantity
+          quantity: this.state.quantity,
+          thumbnail: this.state.urlThumbail,
         },
         this.props.uid
       );
