@@ -7,7 +7,7 @@ import { CHANGE_USER_OF_CART } from "../../../../utils/ApiEndpoint";
 
 const setSignned = payload => ({ type: "SET_SIGNNED", payload });
 const setUID = payload => ({ type: "SET_UID", payload });
-
+const setOpen = payload => ({ type: "SET_OPEN", payload });
 
 export const setSignnedToReducer = signned => {
   return dispatch => {
@@ -63,5 +63,11 @@ export const getUIDFromReducer = () => {
       dispatch(setUID(annonymousID));
       CookieStorageUtils.setItem(COOKIE_KEY.UID, annonymousID);
     }
+  };
+};
+
+export const setOpenToReducer = open => {
+  return dispatch => {
+    dispatch(setOpen(open));
   };
 };

@@ -21,7 +21,8 @@ import {
   setSignnedToReducer,
   getSignnedFromReducer,
   setUIDToReducer,
-  getUIDFromReducer
+  getUIDFromReducer,
+  setOpenToReducer
 } from "../Login/Auth.action";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
@@ -30,23 +31,31 @@ import jwt_decode from "jwt-decode";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
 const uidFromReducer = state => state[AUTH_STORE].uid;
+const openFromReducer = state => state[AUTH_STORE].open;
 
 const startSelector = createSelector(
-  [signnedFromReducer, uidFromReducer],
-  (signned, uid) => ({ signned: signned, uid: uid })
+  signnedFromReducer,
+  uidFromReducer,
+  openFromReducer,
+  (signned, uid, open) => ({ signned: signned, uid: uid, open: open })
 );
 
 class LoginForm extends Component {
   state = {
-    open: false,
+    // open: false,
     username: "",
     password: "",
     error: true,
     loading: false
   };
 
-  show = () => this.setState({ open: true });
-  close = () => this.setState({ open: false, error: true });
+  show = () => {
+    this.props.setOpenToReducer && this.props.setOpenToReducer(true);
+  };
+  close = () => {
+    this.props.setOpenToReducer && this.props.setOpenToReducer(false);
+    this.setState({ error: true });
+  };
 
   componentDidMount() {
     this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
@@ -59,31 +68,35 @@ class LoginForm extends Component {
       if (token) {
         CookieStorageUtils.setItem(COOKIE_KEY.JWT, token);
         CookieStorageUtils.setItem(COOKIE_KEY.UID, this.state.username);
-        if (jwt_decode(token).role === 'Admin') {
-          console.log(this.props);
+        if (jwt_decode(token).role === "Admin") {
           this.props.history.push("/admin");
-          this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username,false);
+          this.props.setUIDToReducer &&
+            this.props.setUIDToReducer(this.state.username, false);
         } else {
-          console.log(this.props);
-          
-          this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username,true);
+          this.props.setUIDToReducer &&
+            this.props.setUIDToReducer(this.state.username, true);
         }
       }
     });
   };
 
   async onLogin(username, password, getToken) {
-    await post(AUTH__LOGIN(), { username: username, password: password }, {}, {})
+    await post(
+      AUTH__LOGIN(),
+      { username: username, password: password },
+      {},
+      {}
+    )
       .then(res => {
         getToken(res.headers.authorization.replace("Bearer ", ""));
         this.setState({
           error: true,
-          loading: false,
-          open: false
+          loading: false
         });
+        this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.getCartFromAPI && this.props.getCartFromAPI(this.props.uid);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
-        // window.location.reload();
+        window.location.reload();
       })
       .catch(() => {
         this.setState({ error: false, loading: false });
@@ -98,8 +111,8 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { open, error, loading } = this.state;
-    const { signned, uid } = this.props;
+    const { error, loading } = this.state;
+    const { signned, uid, open } = this.props;
 
     const LogginButton = () => {
       if (signned) {
@@ -208,6 +221,7 @@ export default connect(
     getSignnedFromReducer,
     setUIDToReducer,
     getUIDFromReducer,
-    getCartFromAPI
+    getCartFromAPI,
+    setOpenToReducer
   }
 )(LoginForm);

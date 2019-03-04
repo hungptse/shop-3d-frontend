@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
 import "../Cart/cart.scss";
 import "../Cart/header.scss";
-import faker from "faker";
 import {
   Button,
   Icon,
@@ -15,15 +13,19 @@ import {
 
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { removeCartFromReducer } from "./Cart.action";
-import CookieStorageUtils,{ COOKIE_KEY  } from "../../../../../utils/CookieStorage";
-import firebase from "../../../../../utils/FirebaseUitls";
+import { removeCartFromReducer, setCartIsActiveToReducer } from "./Cart.action";
+import { setOpenToReducer } from "../../Login/Auth.action";
+import CookieStorageUtils, {
+  COOKIE_KEY
+} from "../../../../../utils/CookieStorage";
 const CART_STORE = "CART_STORE";
-
+const AUTH_STORE = "AUTH_STORE";
+const signnedFromReducer = state => state[AUTH_STORE].signned;
 const getCartFromReducer = state => state[CART_STORE].cart;
 const startSelector = createSelector(
   getCartFromReducer,
-  (cart) => ({ cart: cart || []})
+  signnedFromReducer,
+  (cart, signned) => ({ cart: cart || [], signned: signned })
 );
 
 const CartItem = data => {
@@ -68,16 +70,33 @@ const CartItem = data => {
 };
 
 class Cart extends Component {
-
   deleteCartItem(item) {
-    this.props.removeCartFromReducer && this.props.removeCartFromReducer(item, CookieStorageUtils.getItem(COOKIE_KEY.UID).trim());
+    this.props.removeCartFromReducer &&
+      this.props.removeCartFromReducer(
+        item,
+        CookieStorageUtils.getItem(COOKIE_KEY.UID).trim()
+      );
   }
-  
+
+  handleCheckout = () => {
+    this.props.setCartIsActiveToReducer &&
+        this.props.setCartIsActiveToReducer(true);
+    if (this.props.signned) {
+      this.props.history.push("/store/checkout");
+    } else {
+      this.props.setOpenToReducer && this.props.setOpenToReducer(true);
+    }
+    
+  };
 
   render() {
     if (this.props.cart && this.props.cart.length > 0) {
       const items = this.props.cart.map(item => (
-        <CartItem key={item.id} item={item} onClick={() => this.deleteCartItem(item)} />
+        <CartItem
+          key={item.id}
+          item={item}
+          onClick={() => this.deleteCartItem(item)}
+        />
       ));
       const itemsPrice = this.props.cart.map(item => {
         return parseInt(item.quantity) * parseInt(item.price);
@@ -112,14 +131,18 @@ class Cart extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Button fluid  color='instagram'>
-            <NavLink
+          <Button
+            fluid
+            color="instagram"
+            style={{ textTransform: "uppercase", color: "white" }}
+            onClick={this.handleCheckout}
+          >
+            {/* <Link
               style={{ textTransform: "uppercase", color: "white" }}
-              to="/checkout"
-              // onClick={cartToggle}
-            >
-              Go To Checkout
-            </NavLink>
+              to="/store/checkout"
+            > */}
+            Go To Checkout
+            {/* </Link> */}
           </Button>
         </div>
       );
@@ -134,5 +157,5 @@ class Cart extends Component {
 
 export default connect(
   startSelector,
-  { removeCartFromReducer }
+  { removeCartFromReducer, setCartIsActiveToReducer, setOpenToReducer }
 )(Cart);

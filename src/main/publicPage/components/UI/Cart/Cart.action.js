@@ -24,8 +24,6 @@ export const addCartToReducer = (product, uid) => {
       {}
     )
       .then(result => {
-        console.log(result.data);
-
         dispatch(addCart(product));
         dispatch(getCart(result.data.cart));
       })
@@ -59,7 +57,7 @@ export const removeCartFromReducer = (product, uid) => {
 export const getCartFromAPI = uid => {
   if (uid !== undefined) {
     return async dispatch => {
-      await get(CART_BY_UID(uid), {}, {})
+      await get(CART_BY_UID(uid.trim()), {}, {})
         .then(result => {
           if (result.data.cart !== undefined) {
             dispatch(getCart(result.data.cart));

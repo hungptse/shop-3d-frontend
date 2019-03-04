@@ -49,7 +49,7 @@ class HeaderPage extends Component {
       this.setState({ activeItem: this.props.location.pathname });
     }
     this.props.getCartFromAPI &&
-      this.props.getCartFromAPI(CookieStorageUtils.getSub());
+      this.props.getCartFromAPI(CookieStorageUtils.getItem(COOKIE_KEY.UID));
   }
 
   handldeActiveItem = path => {
@@ -130,7 +130,11 @@ class HeaderPage extends Component {
                 cartIsActive={cartIsActive}
               />
               <div className={cartIsActive ? "mini-cart-open" : ""}>
-                <Cart />
+                <Cart
+                  match={this.props.match}
+                  history={this.props.history}
+                  location={this.props.location}
+                />
               </div>
             </Menu.Item>
           </Menu.Menu>
