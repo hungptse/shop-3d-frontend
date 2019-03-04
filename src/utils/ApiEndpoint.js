@@ -17,8 +17,15 @@ export const GET_PRODUCT_BY_ID = (id) => {
 
 export const PUBLIC_LIST_CATE = () => {
     return `${BASE_URL}/api/category`;
+};
+
+export const ADMIN_LIST_CATE_NAME = () => {
+    return `${BASE_URL}/api/category/name`;
 } ;
 
+export const ADMIN_ADD_PRODUCT = () => {
+    return `${BASE_URL}/api/product`;
+} ;
 
 export const CART = () => {
     return `${BASE_URL}/api/cart`;

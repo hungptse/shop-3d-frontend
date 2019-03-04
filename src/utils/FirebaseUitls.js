@@ -10,8 +10,17 @@ class FirebaseUitls {
     return value;
   }
 
-  
-
-
+  uploadImages(images) {
+    images.map(img => {
+      var imgRef = firebase
+        .storage()
+        .ref()
+        .child("productsImg/" + img.name)
+        .put(img)
+        .then(snapshot => {
+          console.log("Uploaded", snapshot);
+        });
+    });
+  }
 }
 export default new FirebaseUitls();
