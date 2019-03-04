@@ -1,5 +1,6 @@
 export const BASE_URL = "https://localhost:5001";
 
+
 // Login
 export const AUTH__LOGIN = () =>{
     return `${BASE_URL}/auth/login`;

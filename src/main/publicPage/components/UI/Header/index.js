@@ -68,6 +68,10 @@ class HeaderPage extends Component {
     // }
   };
 
+  backToHome = () => {
+    this.props.history.push("/store/home");
+  }
+
   render() {
     const { cartIsActive } = this.props;
     return (
@@ -83,7 +87,9 @@ class HeaderPage extends Component {
           <Image
             floated="left"
             src={logo}
-            style={{ marginTop: "0.5em", marginLeft: "0.5em" }}
+            as='a'
+            style={{ marginTop: "0.5em", marginLeft: "0.5em", cursor : 'pointer' }}
+            onClick={this.backToHome}
           />
           {this.props.listRouters.map((route, key) => {
             if (!route.redirect) {
