@@ -13,7 +13,8 @@ import {
   Menu,
   Tab,
   Sticky,
-  Rating
+  Rating,
+  Segment
 } from "semantic-ui-react";
 import { GET_PRODUCT_BY_ID } from "../../../../utils/ApiEndpoint";
 import { get } from "../../../../utils/ApiCaller";
@@ -50,7 +51,7 @@ const startSelector = createSelector(
 );
 
 class ProductDetailPage extends Component {
-  state = { product: {}, quantity: 1, urlThumbail : '' };
+  state = { product: {}, quantity: 1, urlThumbail: "" };
 
   async componentWillMount() {
     await get(GET_PRODUCT_BY_ID(this.props.match.params.id), {}, {}).then(
@@ -60,10 +61,9 @@ class ProductDetailPage extends Component {
     );
     await FirebaseUitls.getLinkImages(this.state.product.thumbnail).then(
       res => {
-        this.setState({ urlThumbail : res });
+        this.setState({ urlThumbail: res });
       }
     );
-
   }
   async componentWillReceiveProps(newProps) {
     await get(GET_PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
@@ -71,7 +71,7 @@ class ProductDetailPage extends Component {
     });
     await FirebaseUitls.getLinkImages(this.state.product.thumbnail).then(
       res => {
-        this.setState({ urlThumbail : res });
+        this.setState({ urlThumbail: res });
       }
     );
   }
@@ -85,7 +85,7 @@ class ProductDetailPage extends Component {
           name: this.state.product.name,
           price: this.state.product.price,
           quantity: this.state.quantity,
-          thumbnail: this.state.urlThumbail,
+          thumbnail: this.state.urlThumbail
         },
         this.props.uid
       );
@@ -131,7 +131,7 @@ class ProductDetailPage extends Component {
                   <label>Rating</label>
                   <label style={{ marginLeft: "15px" }}>4.0</label>
                   <Rating
-                    size='large'
+                    size="large"
                     maxRating={5}
                     defaultRating={4}
                     disabled
@@ -155,7 +155,7 @@ class ProductDetailPage extends Component {
               </Button>
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row style={{marginTop : '10px'}}>
+          <Grid.Row style={{ marginTop: "10px" }}>
             <Grid.Column width={16}>
               <Tab
                 panes={[
@@ -166,6 +166,7 @@ class ProductDetailPage extends Component {
                         color="blue"
                         content="Additional Infomation"
                         icon="fork"
+                        key={1}
                       />
                     ),
                     render: () => (
@@ -177,6 +178,7 @@ class ProductDetailPage extends Component {
                   {
                     menuItem: (
                       <Button
+                        key={2}
                         basic
                         color="red"
                         content="Ratting & Feedback"

@@ -1,31 +1,43 @@
 import React from "react";
-import Slider from "react-slick";
-import { Image, Icon, Container, Segment } from "semantic-ui-react";
+import { Icon, Container, Divider, Button, Image as ImageUI } from "semantic-ui-react";
+import {
+  CarouselProvider,
+  Slide,
+  Slider,
+  Dot,
+  ImageWithZoom,
+  Image,
+  ButtonBack
+} from "pure-react-carousel";
 
 export default class Gallery extends React.Component {
   render() {
     const { images } = this.props;
-    const settings = {
-      dots: true,
-      lazyLoad: true,
-      dotsClass: "slick-dots p4",
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    };
     return (
-      <Container >
-        <Slider {...settings}>
-          {images.map((image, key) => {
+      <CarouselProvider
+        naturalSlideWidth={100}
+        naturalSlideHeight={100}
+        totalSlides={images.length}
+        orientation={'vertical'}
+      >
+        <Slider>
+          {images.map((img, key) => {
             return (
-              <div key={key}>
-                <Image size="massive" src={image} />
-              </div>
+              <Slide tag="a" index={key} key={key}> 
+                <Image size="large" src={img} />
+              </Slide>
             );
           })}
         </Slider>
-      </Container>
+        <Divider />
+        <Container textAlign="center">
+          <Button.Group size="mini">
+            {[...Array(images.length).keys()].map(index => (
+              <Button  as={Dot} key={index}  basic slide={index}  style={{marginLeft : '5px', padding : '0'}} ><ImageUI src={images[index]} size='tiny' /></Button>
+            ))}
+          </Button.Group>
+        </Container>
+      </CarouselProvider>
     );
   }
 }

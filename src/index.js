@@ -4,6 +4,7 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import App from "./App.js";
 import $ from "jquery";
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 window.$ = $;
 const appStore = store.configureStore();
