@@ -14,7 +14,7 @@ import {
 import { get, post } from "../../../../utils/ApiCaller";
 import {
   ADMIN_LIST_CATE_NAME,
-  ADMIN_ADD_PRODUCT
+  PRODUCT_ENDPOINT
 } from "../../../../utils/ApiEndpoint";
 import _ from "lodash";
 import ImageUploader from "react-images-upload";
@@ -65,7 +65,7 @@ class AddProduct extends Component {
     FirebaseUitls.uploadImages(this.state.picture);
     var product = this.state.product;
     post(
-      ADMIN_ADD_PRODUCT(),
+      PRODUCT_ENDPOINT(),
       {
         name: product.name,
         model: product.model,

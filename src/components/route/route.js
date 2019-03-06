@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import PageNotFound from "../../main/publicPage/components/ProductPage/ProductPage.jsx";
+
 class RouteContent extends React.Component {
   constructor(props) {
     super(props);

@@ -63,6 +63,8 @@ class FullLayoutAdmin extends Component {
                       //     ? true
                       //     : false
                       // }
+                      active
+                      style= {{paddingLeft : '3.5em' }}
                       key={key}
                     >
                       <Link

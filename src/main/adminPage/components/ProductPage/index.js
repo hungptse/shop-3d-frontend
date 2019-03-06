@@ -15,12 +15,15 @@ import {
 } from "semantic-ui-react";
 import { get, post } from "../../../../utils/ApiCaller";
 import {
-  PUBLIC_LIST_PRODUCT,
+  PRODUCT_ENDPOINT,
 } from "../../../../utils/ApiEndpoint";
 import _ from "lodash";
-import ImageUploader from "react-images-upload";
 import AddProduct from "./AddProduct.jsx";
 class ProductManage extends Component {
+  componentDidMount(){
+
+  }
+
   render() {
     return (
       <Grid>

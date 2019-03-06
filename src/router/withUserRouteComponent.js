@@ -21,7 +21,7 @@ const withUserRouteComponent = redirectUrl => Child =>
             
             if (LocalStorageUtils.getRole()  === "User") {
                 return <Child {...props} />;
-            } else {
+            } else {                
                 return <Redirect to={redirectUrl} />;
             }
         };

@@ -35,9 +35,14 @@ class LocalStorageUtils {
 
   getRole() {
     const jwt = this.getItem(LOCAL_STORAGE_KEY.JWT, "Guest");
-    if (jwt !== undefined) {
-      let decode = jwt_decode(jwt);
-      return decode.role;
+    try {
+      if (jwt !== undefined) {
+        let decode = jwt_decode(jwt);
+        return decode.role;
+      }
+    } catch (err) {
+      console.log(err);
+      
     }
     return "Guest";
   }

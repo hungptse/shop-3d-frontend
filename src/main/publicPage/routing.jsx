@@ -4,7 +4,8 @@ import HomePage from "./components/HomePage/HomePage.jsx";
 import CheckoutPage from "./components/CheckoutPage";
 import ProductDetailPage from "./components/ProductDetailPage";
 
-
+import withUserRouteComponent from "../../router/withUserRouteComponent";
+const withUser = withUserRouteComponent("/");
 
 const ThemeRoutes = [
   {
@@ -20,7 +21,7 @@ const ThemeRoutes = [
   {
     path: '/checkout',
     name: 'Checkout',
-    component: CheckoutPage
+    component: withUser(CheckoutPage)
   },
   {
     path: '/product/:id',

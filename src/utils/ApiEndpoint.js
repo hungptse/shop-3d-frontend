@@ -7,7 +7,7 @@ export const AUTH__LOGIN = () =>{
 };
 
 // List Prodct
-export const PUBLIC_LIST_PRODUCT = () => {
+export const PRODUCT_ENDPOINT = () => {
     return `${BASE_URL}/api/product`;
 };
 
@@ -23,7 +23,4 @@ export const ADMIN_LIST_CATE_NAME = () => {
     return `${BASE_URL}/api/category/name`;
 } ;
 
-export const ADMIN_ADD_PRODUCT = () => {
-    return `${BASE_URL}/api/product`;
-} ;
 

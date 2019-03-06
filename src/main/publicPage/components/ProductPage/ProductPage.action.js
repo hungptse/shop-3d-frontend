@@ -1,5 +1,5 @@
 import { get } from "../../../../utils/ApiCaller";
-import { PUBLIC_LIST_PRODUCT } from "../../../../utils/ApiEndpoint";
+import { PRODUCT_ENDPOINT } from "../../../../utils/ApiEndpoint";
 
 // const getListProductRequest = () => ({ type: "GET_LIST_PRODUCT_REQUEST" });
 const getListProductsSuccess = payload => ({
@@ -12,7 +12,7 @@ const setLoading = payload => ({ type: "SET_LOADING", payload });
 export const getListProductFromAPI = () => {
   return async dispatch => {
     // dispatch(getListProductRequest());
-    await get(PUBLIC_LIST_PRODUCT(), {}, {}).then(result => {
+    await get(PRODUCT_ENDPOINT(), {}, {}).then(result => {
       dispatch(getListProductsSuccess(result.data));
     });
   };
