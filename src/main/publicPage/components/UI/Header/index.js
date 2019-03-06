@@ -35,7 +35,6 @@ class HeaderPage extends Component {
     super(props);
     this.state = {
       activeItem: this.props.location.pathname
-      // cartIsActive: true
     };
   }
 
@@ -47,6 +46,7 @@ class HeaderPage extends Component {
     }
     
     this.props.getCartFromLocal && this.props.getCartFromLocal();
+    
   }
 
   handldeActiveItem = path => {

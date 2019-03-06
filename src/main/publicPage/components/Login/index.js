@@ -20,7 +20,6 @@ import LocalStorageUtils, {
 import {
   setSignnedToReducer,
   getSignnedFromReducer,
-  setUIDToReducer,
   setOpenToReducer
 } from "../Login/Auth.action";
 import { connect } from "react-redux";
@@ -56,7 +55,7 @@ class LoginForm extends Component {
 
   componentDidMount() {
     this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
-    this.setState({ uid : LocalStorageUtils.getSub()})
+    this.setState({ uid : LocalStorageUtils.getSub()});
   }
 
   handleSubmit = () => {
@@ -64,7 +63,6 @@ class LoginForm extends Component {
     this.onLogin(this.state.username, this.state.password, token => {
       if (token) {
         LocalStorageUtils.setItem(LOCAL_STORAGE_KEY.JWT, token);
-        this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username);
         if (jwt_decode(token).role === "Admin") {
           this.props.history.push("/admin");
         }
@@ -85,6 +83,7 @@ class LoginForm extends Component {
           error: true,
           loading: false
         });
+        this.setState({ uid : LocalStorageUtils.getSub()});
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         // window.location.reload();
@@ -101,8 +100,8 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { error, loading } = this.state;
-    const { signned, open, uid } = this.props;
+    const { error, loading, uid } = this.state;
+    const { signned, open  } = this.props;
 
     const LogginButton = () => {
       if (signned) {
@@ -209,7 +208,6 @@ export default connect(
   {
     setSignnedToReducer,
     getSignnedFromReducer,
-    setUIDToReducer,
     setOpenToReducer
   }
 )(LoginForm);
