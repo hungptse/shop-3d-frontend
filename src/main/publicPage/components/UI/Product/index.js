@@ -57,7 +57,8 @@ class Product extends Component {
           name: this.props.info.name,
           price: this.props.info.price,
           quantity: 1,
-          thumbnail: this.state.imgUrl
+          thumbnail: this.state.imgUrl,
+          maxQuantity : this.props.info.quantity
         },
         this.props.uid
       );

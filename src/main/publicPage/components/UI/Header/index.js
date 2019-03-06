@@ -15,12 +15,15 @@ import "../Cart/cart.scss";
 import "../Cart/header.scss";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { getCartFromAPI, setCartIsActiveToReducer } from "../Cart/Cart.action";
+import {  setCartIsActiveToReducer, getCartFromLocal } from "../Cart/Cart.action";
 import Login from "../../Login";
 import SearchBar from "../Search";
 import CookieStorageUtils, {
   COOKIE_KEY
 } from "../../../../../utils/CookieStorage";
+import LocalStorageUtils, {
+  LOCAL_STORAGE_KEY
+} from "../../../../../utils/LocalStorage";
 const CART_STORE = "CART_STORE";
 const AUTH_STORE = "AUTH_STORE";
 
@@ -48,8 +51,8 @@ class HeaderPage extends Component {
     } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
-    this.props.getCartFromAPI &&
-      this.props.getCartFromAPI(CookieStorageUtils.getItem(COOKIE_KEY.UID));
+    
+    this.props.getCartFromLocal && this.props.getCartFromLocal();
   }
 
   handldeActiveItem = path => {
@@ -152,5 +155,5 @@ class HeaderPage extends Component {
 
 export default connect(
   startSelector,
-  { getCartFromAPI, setCartIsActiveToReducer }
+  {  setCartIsActiveToReducer, getCartFromLocal }
 )(HeaderPage);

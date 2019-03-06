@@ -1,78 +1,34 @@
-import { get, post, put } from "../../../../../utils/ApiCaller";
-import { CART, CART_BY_UID } from "../../../../../utils/ApiEndpoint";
+import CartLocal from "../../../../../utils/CartLocal";
 
 const addCart = payload => ({ type: "ADD_TO_CART", payload });
 
 const removeCart = payload => ({ type: "REMOVE_FROM_CART", payload });
 
-const getCart = payload => ({ type: "GET_CART", payload });
+const setCart = payload => ({ type: "SET_CART", payload });
+
 
 const setCartIsActive = payload => ({ type: "SET_CART_ACTIVE", payload });
 
 export const addCartToReducer = (product, uid) => {
-  return async dispatch => {
-    await post(
-      CART_BY_UID(uid.trim()),
-      {
-        id: product.id,
-        name: product.name,
-        quantity: product.quantity,
-        price: product.price,
-        thumbnail : product.thumbnail
-      },
-      {},
-      {}
-    )
-      .then(result => {
-        dispatch(addCart(product));
-        dispatch(getCart(result.data.cart));
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  return  dispatch => {
+    CartLocal.addToCart(product);
+    dispatch(addCart(product));    
   };
-
-  // return (dispatch) => {
-  //   dispatch(addCart(cart));
-  // };
 };
 
-export const removeCartFromReducer = (product, uid) => {
-  return async dispatch => {
-    await put(CART_BY_UID(uid), { id: product.id }, {}, {})
-      .then(result => {
-        dispatch(removeCart(product));
-        dispatch(getCart(result.data.cart));
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  // return dispatch => {
-  //   dispatch(removeCart(id));
-  // };
-};
-
-export const getCartFromAPI = uid => {
-  if (uid !== undefined) {
-    return async dispatch => {
-      await get(CART_BY_UID(uid.trim()), {}, {})
-        .then(result => {
-          if (result.data.cart !== undefined) {
-            dispatch(getCart(result.data.cart));
-          }
-        })
-        .catch(err => {
-          dispatch(getCart([]));
-          console.log(err);
-        });
-    };
-  }
+export const removeCartFromReducer = (product) => {
   return dispatch => {
-    dispatch(getCart([]));
+    CartLocal.removeProduct(product.id);
+    dispatch(removeCart(product));
   };
 };
+
+export const getCartFromLocal = () => {
+  return dispatch => {    
+    dispatch(setCart(CartLocal.getCart()));
+  };
+}
+
 
 export const setCartIsActiveToReducer = status => {
   return dispatch => {

@@ -71,22 +71,17 @@ const CartItem = data => {
 
 class Cart extends Component {
   deleteCartItem(item) {
-    this.props.removeCartFromReducer &&
-      this.props.removeCartFromReducer(
-        item,
-        CookieStorageUtils.getItem(COOKIE_KEY.UID).trim()
-      );
+    this.props.removeCartFromReducer && this.props.removeCartFromReducer(item);
   }
 
   handleCheckout = () => {
     this.props.setCartIsActiveToReducer &&
-        this.props.setCartIsActiveToReducer(true);
+      this.props.setCartIsActiveToReducer(true);
     if (this.props.signned) {
       this.props.history.push("/store/checkout");
     } else {
       this.props.setOpenToReducer && this.props.setOpenToReducer(true);
     }
-    
   };
 
   render() {

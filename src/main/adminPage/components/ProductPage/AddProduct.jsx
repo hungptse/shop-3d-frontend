@@ -60,7 +60,7 @@ class AddProduct extends Component {
   }
 
   handleSumbit = () => {
-    // console.log(this.state.picture);
+    console.log(this.state.picture);
     // console.log(this.state.product);
     FirebaseUitls.uploadImages(this.state.picture);
     var product = this.state.product;

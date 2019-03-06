@@ -85,7 +85,8 @@ class ProductDetailPage extends Component {
           name: this.state.product.name,
           price: this.state.product.price,
           quantity: this.state.quantity,
-          thumbnail: this.state.urlThumbail
+          thumbnail: this.state.urlThumbail,
+          maxQuantity : this.state.product.quantity
         },
         this.props.uid
       );

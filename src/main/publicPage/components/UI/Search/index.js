@@ -51,7 +51,7 @@ class SearchBar extends Component {
         obj = {
           title: product.name,
           description: product.description,
-          image: faker.internet.avatar(),
+          image: product.thumbnail,
           price: product.price + "$",
         };
         afterReduce.push(obj);

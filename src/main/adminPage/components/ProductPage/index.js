@@ -15,12 +15,10 @@ import {
 } from "semantic-ui-react";
 import { get, post } from "../../../../utils/ApiCaller";
 import {
-  ADMIN_LIST_CATE_NAME,
-  ADMIN_ADD_PRODUCT
+  PUBLIC_LIST_PRODUCT,
 } from "../../../../utils/ApiEndpoint";
 import _ from "lodash";
 import ImageUploader from "react-images-upload";
-import FirebaseUitls from "../../../../utils/FirebaseUitls";
 import AddProduct from "./AddProduct.jsx";
 class ProductManage extends Component {
   render() {

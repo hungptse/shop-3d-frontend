@@ -3,13 +3,19 @@ const initialState = {
   cartIsActive: true
 };
 
+const initCart = (state, payload) => {
+  return { ...state, cart:  payload };
+}
+
 const addToCart = (state, payload) => {
   if (payload) {
     var product = state.cart.find(p => p.id === payload.id);
     if (product) {
-      // console.log("Duplicate", state.cart.map(el => el === product ? payload : el));
-      payload.quantity = product.quantity++;
-      // console.log("Quantity", payload.quantity);
+      var newQuantity = product.quantity + payload.quantity;
+      if (newQuantity >= product.maxQuantity) {
+        newQuantity = product.maxQuantity;
+      }
+      product.quantity = newQuantity;
       return { ...state, cart: [...state.cart] };
     }
   }
@@ -20,15 +26,8 @@ const removeFromCart = (state, payload) => {
   return { ...state, cart: state.cart.filter(el => el.id !== payload.id) };
 };
 
-const setCartFromAPIToReducer = (state, payload) => {
-  if (payload) {
-    return { ...state, cart: payload };
-  }
-  return { ...state };
-};
-
 const setCartIsActive = (state, payload) => {
-    return { ...state, cartIsActive: payload };
+  return { ...state, cartIsActive: payload };
 };
 
 export const cartReducer = (state = initialState, { type, payload }) => {
@@ -37,10 +36,10 @@ export const cartReducer = (state = initialState, { type, payload }) => {
       return addToCart(state, payload);
     case "REMOVE_FROM_CART":
       return removeFromCart(state, payload);
-    case "GET_CART":
-      return setCartFromAPIToReducer(state, payload);
     case "SET_CART_ACTIVE":
       return setCartIsActive(state, payload);
+    case "SET_CART":
+      return initCart(state, payload);
     default:
       return state;
   }

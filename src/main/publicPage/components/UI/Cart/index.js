@@ -16,8 +16,8 @@ const startSelector = createSelector(
 );
 
 const CartCount = ({ cart, cartIsActive }) => {
-  if (cart.length > 0 && cartIsActive) {
-    var count = 0;
+  if (cart.length > 0 && cartIsActive) {    
+    var count = 0;    
     cart.forEach(product => {
       count += product.quantity;
     });

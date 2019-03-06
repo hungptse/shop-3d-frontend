@@ -26,7 +26,6 @@ import {
 } from "../Login/Auth.action";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { getCartFromAPI } from "../UI/Cart/Cart.action";
 import jwt_decode from "jwt-decode";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
@@ -94,7 +93,6 @@ class LoginForm extends Component {
           loading: false
         });
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
-        this.props.getCartFromAPI && this.props.getCartFromAPI(this.props.uid);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         window.location.reload();
       })
@@ -221,7 +219,6 @@ export default connect(
     getSignnedFromReducer,
     setUIDToReducer,
     getUIDFromReducer,
-    getCartFromAPI,
     setOpenToReducer
   }
 )(LoginForm);
