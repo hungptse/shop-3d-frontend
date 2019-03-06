@@ -14,14 +14,13 @@ import {
 } from "semantic-ui-react";
 import { post } from "../../../../utils/ApiCaller";
 import { AUTH__LOGIN } from "../../../../utils/ApiEndpoint";
-import CookieStorageUtils, {
-  COOKIE_KEY
-} from "../../../../utils/CookieStorage";
+import LocalStorageUtils, {
+  LOCAL_STORAGE_KEY
+} from "../../../../utils/LocalStorage";
 import {
   setSignnedToReducer,
   getSignnedFromReducer,
   setUIDToReducer,
-  getUIDFromReducer,
   setOpenToReducer
 } from "../Login/Auth.action";
 import { connect } from "react-redux";
@@ -41,7 +40,6 @@ const startSelector = createSelector(
 
 class LoginForm extends Component {
   state = {
-    // open: false,
     username: "",
     password: "",
     error: true,
@@ -58,22 +56,17 @@ class LoginForm extends Component {
 
   componentDidMount() {
     this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
-    this.props.getUIDFromReducer && this.props.getUIDFromReducer();
+    this.setState({ uid : LocalStorageUtils.getSub()})
   }
 
   handleSubmit = () => {
     this.setState({ loading: true });
     this.onLogin(this.state.username, this.state.password, token => {
       if (token) {
-        CookieStorageUtils.setItem(COOKIE_KEY.JWT, token);
-        CookieStorageUtils.setItem(COOKIE_KEY.UID, this.state.username);
+        LocalStorageUtils.setItem(LOCAL_STORAGE_KEY.JWT, token);
+        this.props.setUIDToReducer && this.props.setUIDToReducer(this.state.username);
         if (jwt_decode(token).role === "Admin") {
           this.props.history.push("/admin");
-          this.props.setUIDToReducer &&
-            this.props.setUIDToReducer(this.state.username, false);
-        } else {
-          this.props.setUIDToReducer &&
-            this.props.setUIDToReducer(this.state.username, true);
         }
       }
     });
@@ -94,7 +87,7 @@ class LoginForm extends Component {
         });
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch(() => {
         this.setState({ error: false, loading: false });
@@ -102,15 +95,14 @@ class LoginForm extends Component {
   }
 
   handleLogout = () => {
-    CookieStorageUtils.removeItem(COOKIE_KEY.JWT);
+    LocalStorageUtils.removeItem(LOCAL_STORAGE_KEY.JWT);
     this.props.setSignnedToReducer && this.props.setSignnedToReducer(false);
-    this.props.setUIDToReducer && this.props.setUIDToReducer(undefined);
-    window.location.reload();
+    // window.location.reload();
   };
 
   render() {
     const { error, loading } = this.state;
-    const { signned, uid, open } = this.props;
+    const { signned, open, uid } = this.props;
 
     const LogginButton = () => {
       if (signned) {
@@ -218,7 +210,6 @@ export default connect(
     setSignnedToReducer,
     getSignnedFromReducer,
     setUIDToReducer,
-    getUIDFromReducer,
     setOpenToReducer
   }
 )(LoginForm);

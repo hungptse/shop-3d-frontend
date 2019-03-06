@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import CookieStorageUtils from "../utils/CookieStorage";
+import LocalStorageUtils from "../utils/LocalStorage";
 
 const withUserRouteComponent = redirectUrl => Child =>
     class RequireAuthorizedComponent extends Component {
@@ -19,7 +19,7 @@ const withUserRouteComponent = redirectUrl => Child =>
         _renderIfAuthenticated = () => {
             const { props } = this;
             
-            if (CookieStorageUtils.getRole()  === "User") {
+            if (LocalStorageUtils.getRole()  === "User") {
                 return <Child {...props} />;
             } else {
                 return <Redirect to={redirectUrl} />;

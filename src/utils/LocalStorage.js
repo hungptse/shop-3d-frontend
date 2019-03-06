@@ -1,5 +1,5 @@
 import uuidv4 from "uuid/v4";
-import JWT_Decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 export const LOCAL_STORAGE_KEY = {
   UID: "3d_uid",
@@ -33,20 +33,22 @@ class LocalStorageUtils {
     }
   }
 
-  isRole() {
-    const jwt = this.getItem(LOCAL_STORAGE_KEY.JWT);
-
+  getRole() {
+    const jwt = this.getItem(LOCAL_STORAGE_KEY.JWT, "Guest");
     if (jwt !== undefined) {
-      let decode = JWT_Decode(jwt);
-
-      if (decode.isAdmin) {
-        return "isAdmin";
-      } else {
-        return "isUser";
-      }
+      let decode = jwt_decode(jwt);
+      return decode.role;
     }
+    return "Guest";
+  }
 
-    return "isGuest";
+  getSub() {
+    const jwt = this.getItem(LOCAL_STORAGE_KEY.JWT);
+    if (jwt !== undefined) {
+      let decode = jwt_decode(jwt);
+      return decode.sub;
+    }
+    return null;
   }
 
   getJWT() {

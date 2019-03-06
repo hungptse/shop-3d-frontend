@@ -15,9 +15,6 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { removeCartFromReducer, setCartIsActiveToReducer } from "./Cart.action";
 import { setOpenToReducer } from "../../Login/Auth.action";
-import CookieStorageUtils, {
-  COOKIE_KEY
-} from "../../../../../utils/CookieStorage";
 const CART_STORE = "CART_STORE";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;

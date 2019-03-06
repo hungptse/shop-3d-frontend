@@ -34,7 +34,6 @@ class CartLocal {
       );
     }
   }
-
   getCart() {
     var cart =
       LocalStorage.getCart() === undefined

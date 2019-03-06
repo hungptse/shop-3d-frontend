@@ -27,18 +27,3 @@ export const ADMIN_ADD_PRODUCT = () => {
     return `${BASE_URL}/api/product`;
 } ;
 
-
-
-export const CART = () => {
-    return `${BASE_URL}/api/cart`;
-};
-
-
-export const CART_BY_UID = (uid) => {
-    return `${BASE_URL}/api/cart/${uid}`;
-};
-
-
-export const CHANGE_USER_OF_CART = () =>{
-  return `${BASE_URL}/api/cart/changeUser`;
-};

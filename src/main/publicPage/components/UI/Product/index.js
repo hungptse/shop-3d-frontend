@@ -18,9 +18,6 @@ import {
 } from "../Cart/Cart.action";
 import firebase from "../../../../../utils/FirebaseUitls";
 import defaultImg from "../../../../../assets/images/default-product.jpg";
-// import CookieStorageUtils, {
-//   COOKIE_KEY
-// } from "../../../../../utils/CookieStorage";
 const AUTH_STORE = "AUTH_STORE";
 const CART_STORE = "CART_STORE";
 

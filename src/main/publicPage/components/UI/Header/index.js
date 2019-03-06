@@ -18,14 +18,8 @@ import { createSelector } from "reselect";
 import {  setCartIsActiveToReducer, getCartFromLocal } from "../Cart/Cart.action";
 import Login from "../../Login";
 import SearchBar from "../Search";
-import CookieStorageUtils, {
-  COOKIE_KEY
-} from "../../../../../utils/CookieStorage";
-import LocalStorageUtils, {
-  LOCAL_STORAGE_KEY
-} from "../../../../../utils/LocalStorage";
+
 const CART_STORE = "CART_STORE";
-const AUTH_STORE = "AUTH_STORE";
 
 const getCartFromReducer = state => state[CART_STORE].cart;
 const getCartIsActive = state => state[CART_STORE].cartIsActive;
