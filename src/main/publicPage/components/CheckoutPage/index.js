@@ -1,24 +1,25 @@
 import React, { Component } from "react";
 import {
-  Step,
-  Icon,
   Container,
   Segment,
   Grid,
   Card,
-  Header,
-  Divider
+  Divider,
+  Button,
+  Label,
+  Image
 } from "semantic-ui-react";
-
+import OrderSummary from "./OrderSummary";
 class CheckoutPage extends Component {
   render() {
+   
     return (
-      <Container>
-        <Grid container>
+      <Container style={{ marginTop: "2em" }}>
+        <Grid>
           <Grid.Row>
-            <Grid.Column width={8}>ABC</Grid.Column>
+            <Grid.Column width={8}>ACC</Grid.Column>
             <Grid.Column width={8}>
-              
+              <OrderSummary />
             </Grid.Column>
           </Grid.Row>
         </Grid>

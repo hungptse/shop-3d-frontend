@@ -113,7 +113,7 @@ class Product extends Component {
                 <Button.Content visible hidden={info.quantity === 0 ? true : false}>
                   <Icon name="add to cart" />
                 </Button.Content>
-                <Button.Content content={info.quantity === 0 ? 'Out of stock' : 'Add to cart'} hidden={info.quantity === 0 ? false : true}></Button.Content>
+                <Button.Content content={info.quantity === 0 ? 'Out of stock' : 'Add to cart'} hidden={info.quantity === 0 ? false : true} />
               </Button>
             </Card.Content>
           </Card>
