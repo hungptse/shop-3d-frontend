@@ -48,7 +48,7 @@ class OrderSummary extends Component {
                   </Grid.Column>
                   <Grid.Column width={12}>
                     <Grid>
-                      <Grid.Column floated="left" width={4}>
+                      <Grid.Column floated="left" width={6}>
                         {product.name}
                       </Grid.Column>
                       <Grid.Column width={4}>
@@ -71,7 +71,7 @@ class OrderSummary extends Component {
           <Segment padded piled compact style={{ marginBottom: 0 }}>
             <Segment.Inline style={{ marginBottom: "1em" }}>
               <Label size="large">Total in order: </Label>
-              <Button size="small" secondary floated="right">
+              <Button size="mini" secondary floated="right">
                 ${itemsPrice.reduce((sum, cur) => sum + cur)}
               </Button>
             </Segment.Inline>
