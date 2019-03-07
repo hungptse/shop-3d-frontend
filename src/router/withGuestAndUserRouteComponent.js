@@ -19,7 +19,7 @@ const withUserRouteComponent = redirectUrl => Child =>
         _renderIfAuthenticated = () => {
             const { props } = this;
             
-            if (LocalStorageUtils.getRole()  === "Guest" || LocalStorageUtils.getRole()  === "User") {
+            if (LocalStorageUtils.getRole()  !== "Admin") {
                 return <Child {...props} />;
             } else {                
                 return <Redirect to={redirectUrl} />;

@@ -8,6 +8,7 @@ import {
   Input,
   Divider
 } from "semantic-ui-react";
+import Login from "../../../../publicPage/components/Login";
 
 class HeaderAdmin extends Component {
   backToHome = () => {
@@ -24,27 +25,17 @@ class HeaderAdmin extends Component {
         style={{ paddingBottom: "1em", background: "#ffffff" }}
         className="boderBot"
       >
-        {/* <Container style={{ backgroudColor: "white" }} >
-          <Menu position="right">
+        <Container fluid style={{ backgroudColor: "white" }} style={{paddingRight: '2em'}}>
+          <Menu.Menu position="right">
             <Menu.Item>
-              ABC
-              <SearchBar
-                match={this.props.match}
-                history={this.props.history}
-                location={this.props.location}
-              />
-              <Input icon="search" placeholder="Search..." />
-            </Menu.Item>
-            <Menu.Item>
-              CDF
               <Login
                 match={this.props.match}
                 history={this.props.history}
                 location={this.props.location}
               />
             </Menu.Item>
-          </Menu>
-        </Container> */}
+          </Menu.Menu>
+        </Container>
       </Menu>
     );
   }

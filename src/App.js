@@ -10,11 +10,11 @@ import { store } from "./store";
 import "./App.css";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+
 const CART_STORE = 'CART_STORE';
 const AUTH_STORE = 'AUTH_STORE';
 const PRODUCT_PAGE_STORE = 'PRODUCT_PAGE_STORE';
 const SEARCH_STORE = 'SEARCH_STORE';
-
 
 
 
@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   render() {
-    return <BrowserRouter><div>{renderRoutes(indexRoutes, "")}</div></BrowserRouter>;
+    return <BrowserRouter>{renderRoutes(indexRoutes, "")}</BrowserRouter>;
   }
 }
 

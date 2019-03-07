@@ -34,7 +34,7 @@ const ThemeRoutes = [
   {
     path: "/order",
     name: "Manage Order",
-    icon: "money bill alternate outline",
+    icon: "dollar sign",
     component: OrderMange
   },
   { path: "/", pathTo: "/products", name: "Product Manage", redirect: true }

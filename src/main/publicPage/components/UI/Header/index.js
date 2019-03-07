@@ -39,6 +39,7 @@ class HeaderPage extends Component {
   }
 
   componentDidMount() {
+    
     if (this.state.activeItem === "/") {
       this.setState({ activeItem: "store/home" });
     } else {
@@ -50,7 +51,10 @@ class HeaderPage extends Component {
   }
 
   handldeActiveItem = path => {
-    this.setState({ activeItem: this.props.match.path + "/" + path });
+    console.log(this.state, this.props.match.path + path);
+    
+    
+    this.setState({ activeItem: this.props.match.path + path });
   };
 
   handleCartIcon = () => {
@@ -94,14 +98,14 @@ class HeaderPage extends Component {
                 <Menu.Item
                   active={
                     this.state.activeItem ===
-                    this.props.match.path + "/" + route.path
+                    this.props.match.path + route.path
                       ? true
                       : false
                   }
                   key={key}
                 >
                   <Link
-                    to={this.props.match.path + "/" + route.path}
+                    to={this.props.match.path  + route.path}
                     style={{ color: "black" }}
                     onClick={() => this.handldeActiveItem(route.path)}
                   >

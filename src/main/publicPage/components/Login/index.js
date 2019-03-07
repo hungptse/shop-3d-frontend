@@ -55,7 +55,7 @@ class LoginForm extends Component {
 
   componentDidMount() {
     this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
-    this.setState({ uid : LocalStorageUtils.getSub()});
+    this.setState({ uid: LocalStorageUtils.getSub() });
   }
 
   handleSubmit = () => {
@@ -83,7 +83,7 @@ class LoginForm extends Component {
           error: true,
           loading: false
         });
-        this.setState({ uid : LocalStorageUtils.getSub()});
+        this.setState({ uid: LocalStorageUtils.getSub() });
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         // window.location.reload();
@@ -96,17 +96,20 @@ class LoginForm extends Component {
   handleLogout = () => {
     LocalStorageUtils.removeItem(LOCAL_STORAGE_KEY.JWT);
     this.props.setSignnedToReducer && this.props.setSignnedToReducer(false);
-    // window.location.reload();
+    window.location.reload();
   };
 
   render() {
     const { error, loading, uid } = this.state;
-    const { signned, open  } = this.props;
+    const { signned, open } = this.props;
 
     const LogginButton = () => {
       if (signned) {
         return (
-          <Dropdown trigger={dropdownBtn} pointing="top left">
+          <Dropdown
+            trigger={dropdownBtn}
+            pointing="top left"
+          >
             <Dropdown.Menu>
               <Dropdown.Item disabled>
                 Signed in as <strong>{uid}</strong>
@@ -136,7 +139,8 @@ class LoginForm extends Component {
         <Image
           avatar
           src="https://s3.amazonaws.com/uifaces/faces/twitter/javorszky/128.jpg"
-        />{" "}
+          size="mini"
+        />
         Hello, {uid}
       </span>
     );
