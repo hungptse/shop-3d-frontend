@@ -109,11 +109,11 @@ class Product extends Component {
               <Card.Description>{info.description}</Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <Button animated="fade" color="blue" fluid onClick={this.addToCart}>
-                <Button.Content visible>
+              <Button animated="fade" color="vk" fluid onClick={this.addToCart} disabled={info.quantity === 0 ? true : false}  >
+                <Button.Content visible hidden={info.quantity === 0 ? true : false}>
                   <Icon name="add to cart" />
                 </Button.Content>
-                <Button.Content hidden>Add to cart</Button.Content>
+                <Button.Content content={info.quantity === 0 ? 'Out of stock' : 'Add to cart'} hidden={info.quantity === 0 ? false : true}></Button.Content>
               </Button>
             </Card.Content>
           </Card>
