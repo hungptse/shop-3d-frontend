@@ -7,6 +7,12 @@ const ThemeRoutes = [
     icon: "paper plane outline",
     component: ProductManage
   },
+  {
+    path: "/cates",
+    name: "Category Manage",
+    icon: "clone outline",
+    component: ProductManage
+  },
   { path: "/", pathTo: "/products", name: "Product Manage", redirect: true }
 ];
 

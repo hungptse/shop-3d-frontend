@@ -20,10 +20,20 @@ import { renderRoutes } from "../../components/route";
 import logo from "../../assets/images/azgundam-logo.png";
 
 class FullLayoutAdmin extends Component {
+  state = {activeItem : this.props.location.pathname}
+
   backToHome = () => {
     this.props.history.push("/admin");
   };
-
+  componentDidMount(){
+    console.log(this.props);
+    if (this.state.activeItem === "/") {
+      this.setState({ activeItem: "admin/products" });
+    } else {
+      this.setState({ activeItem: this.props.location.pathname });
+    }
+    
+  }
   render() {
     return (
       <div>
@@ -57,13 +67,12 @@ class FullLayoutAdmin extends Component {
                 if (!route.redirect) {
                   return (
                     <Menu.Item
-                      // active={
-                      //   this.state.activeItem ===
-                      //   this.props.match.path + "/" + route.path
-                      //     ? true
-                      //     : false
-                      // }
-                      active
+                      active={
+                        this.state.activeItem ===
+                        this.props.match.path + route.path
+                          ? true
+                          : false
+                      }
                       style= {{paddingLeft : '3.5em' }}
                       key={key}
                     >

@@ -136,7 +136,7 @@ class Product extends Component {
                   </Placeholder>
                 </Card.Content>
                 <Card.Content extra>
-                  <Button color="blue" fluid disabled>
+                  <Button color="vk" fluid disabled>
                     Add to cart
                   </Button>
                 </Card.Content>

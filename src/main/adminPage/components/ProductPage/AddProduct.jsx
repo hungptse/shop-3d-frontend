@@ -95,9 +95,7 @@ class AddProduct extends Component {
     const { cates, open } = this.state;
     return (
       <div>
-        <Button basic onClick={this.openModal}>
-          Add New
-        </Button>
+        <Button basic onClick={this.openModal} icon="add" content="Add New" />
         <Modal
           centered={false}
           dimmer="inverted"
