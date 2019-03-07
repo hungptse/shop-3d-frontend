@@ -23,7 +23,7 @@ class ProductManage extends Component {
   state = { products: [] };
   componentDidMount() {
     get(PRODUCT_ENDPOINT(), {}, {}).then(res => {
-      console.log(res);
+      // console.log(res);
       this.setState({ products: res.data });
     });
   }

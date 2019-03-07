@@ -4,12 +4,12 @@ import HomePage from "./components/HomePage/HomePage.jsx";
 
 const MenuRoutes = [
   {
-    path: 'home',
+    path: '/home',
     name: 'Home',
     component: HomePage,
   },
   {
-    path: 'products',
+    path: '/products',
     name: 'Product',
     component: ProductPage
   },

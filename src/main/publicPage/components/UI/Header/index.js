@@ -50,10 +50,7 @@ class HeaderPage extends Component {
     
   }
 
-  handldeActiveItem = path => {
-    console.log(this.state, this.props.match.path + path);
-    
-    
+  handldeActiveItem = path => {    
     this.setState({ activeItem: this.props.match.path + path });
   };
 

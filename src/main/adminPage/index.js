@@ -26,8 +26,10 @@ class FullLayoutAdmin extends Component {
     this.props.history.push("/admin");
   };
   componentDidMount() {
+    console.log(this.state.activeItem);
+    
     if (this.state.activeItem === "/admin") {
-      this.setState({ activeItem: "admin/products" });
+      this.setState({ activeItem: "/admin/products" });
     } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
@@ -66,12 +68,6 @@ class FullLayoutAdmin extends Component {
               <Divider />
               {MenuRoutes.map((route, key) => {
                 if (!route.redirect) {
-                  {
-                    console.log(
-                      this.props.match.path + route.path,
-                      this.state.activeItem
-                    );
-                  }
                   return (
                     <Menu.Item
                       active={
