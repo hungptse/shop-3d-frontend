@@ -20,20 +20,22 @@ import { renderRoutes } from "../../components/route";
 import logo from "../../assets/images/azgundam-logo.png";
 
 class FullLayoutAdmin extends Component {
-  state = {activeItem : this.props.location.pathname}
+  state = { activeItem: this.props.location.pathname };
 
   backToHome = () => {
     this.props.history.push("/admin");
   };
-  componentDidMount(){
+  componentDidMount() {
     console.log(this.props);
     if (this.state.activeItem === "/") {
       this.setState({ activeItem: "admin/products" });
     } else {
       this.setState({ activeItem: this.props.location.pathname });
     }
-    
   }
+  handldeActiveItem = path => {
+    this.setState({ activeItem: this.props.match.path  + path });
+  };
   render() {
     return (
       <div>
@@ -43,7 +45,7 @@ class FullLayoutAdmin extends Component {
           location={this.props.location}
         />
         <div style={{ height: "800px", marginTop: "8em" }}>
-          <Sidebar animation='overlay' visible>
+          <Sidebar animation="overlay" visible>
             <Menu
               vertical
               fluid
@@ -65,6 +67,12 @@ class FullLayoutAdmin extends Component {
               <Divider />
               {MenuRoutes.map((route, key) => {
                 if (!route.redirect) {
+                  {
+                    console.log(
+                      this.props.match.path + route.path,
+                      this.state.activeItem
+                    );
+                  }
                   return (
                     <Menu.Item
                       active={
@@ -73,15 +81,15 @@ class FullLayoutAdmin extends Component {
                           ? true
                           : false
                       }
-                      style= {{paddingLeft : '3.5em' }}
+                      style={{ paddingLeft: "3.5em" }}
                       key={key}
                     >
                       <Link
                         to={this.props.match.path + route.path}
                         style={{ color: "black" }}
-                        // onClick={() => this.handldeActiveItem(route.path)}
+                        onClick={() => this.handldeActiveItem(route.path)}
                       >
-                        <Icon name={route.icon} size="large" />
+                        <Icon name={route.icon} size="large" style={{marginRight : '0.5em'}} />
                         {route.name}
                       </Link>
                     </Menu.Item>
