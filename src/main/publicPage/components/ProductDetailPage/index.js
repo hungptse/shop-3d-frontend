@@ -2,20 +2,14 @@ import React, { Component } from "react";
 import {
   Container,
   Grid,
-  Card,
-  Image,
   Header,
   Label,
   Icon,
   Divider,
   Form,
   Button,
-  Menu,
   Tab,
-  Sticky,
-  Rating,
-  Segment
-} from "semantic-ui-react";
+  Rating} from "semantic-ui-react";
 import { GET_PRODUCT_BY_ID } from "../../../../utils/ApiEndpoint";
 import { get } from "../../../../utils/ApiCaller";
 import Quantity from "./Quantity.jsx";

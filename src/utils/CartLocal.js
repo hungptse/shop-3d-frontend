@@ -11,11 +11,11 @@ class CartLocal {
       cart.findIndex(p => p.id === product.id) > -1 ? true : false;
     if (isExisted) {
       var newQuantity =
-        cart.find(p => p.id == product.id).quantity + product.quantity;
+        cart.find(p => p.id === product.id).quantity + product.quantity;
       if (newQuantity >= product.maxQuantity) {
         newQuantity = product.maxQuantity;
       }
-      cart.find(p => p.id == product.id).quantity = newQuantity;
+      cart.find(p => p.id === product.id).quantity = newQuantity;
     } else {
       cart.push(product);
     }

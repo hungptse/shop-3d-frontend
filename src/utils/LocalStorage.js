@@ -1,4 +1,3 @@
-import uuidv4 from "uuid/v4";
 import jwt_decode from "jwt-decode";
 
 export const LOCAL_STORAGE_KEY = {

@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Grid, Form } from "semantic-ui-react";
+import React from "react";
+import {  Form } from "semantic-ui-react";
 
 export default class Quantity extends React.PureComponent {
   state = { quantity: 1 };
@@ -42,7 +42,7 @@ export default class Quantity extends React.PureComponent {
       <Form.Group inline>
         <label>Quantity</label>
         <div className="product-quantity">
-          <a className="decrement" onClick={this.decrement} />
+          <a  className="decrement" onClick={this.decrement} />
           <input
             value={value}
             onChange={this.handleChange}

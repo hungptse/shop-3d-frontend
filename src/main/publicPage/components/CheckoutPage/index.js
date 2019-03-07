@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import {
   Container,
-  Segment,
-  Grid,
-  Card,
-  Divider,
-  Button,
-  Label,
-  Image
-} from "semantic-ui-react";
+  Grid} from "semantic-ui-react";
 import OrderSummary from "./OrderSummary";
 class CheckoutPage extends Component {
   render() {

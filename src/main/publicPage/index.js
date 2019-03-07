@@ -7,7 +7,6 @@ import ScrollToTop from "../../utils/ScrollToTop";
 // import { Segment, Sidebar, Menu, Icon } from "semantic-ui-react";
 import HeaderPage from "./components/UI/Header";
 import Footer from "./components/UI/Footer";
-import { Breadcrumb } from "semantic-ui-react";
 
 class Fulllayout extends React.Component {
   render() {

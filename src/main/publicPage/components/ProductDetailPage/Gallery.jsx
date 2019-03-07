@@ -1,14 +1,11 @@
 import React from "react";
-import { Icon, Container, Divider, Button, Image as ImageUI } from "semantic-ui-react";
+import { Container, Divider, Button, Image as ImageUI } from "semantic-ui-react";
 import {
   CarouselProvider,
   Slide,
   Slider,
   Dot,
-  ImageWithZoom,
-  Image,
-  ButtonBack
-} from "pure-react-carousel";
+  Image} from "pure-react-carousel";
 
 export default class Gallery extends React.Component {
   render() {

@@ -1,13 +1,7 @@
 import React, { Component } from "react";
-import logo from "../../../../../assets/images/azgundam-logo.png";
 import {
-  Image,
   Menu,
-  Container,
-  Button,
-  Input,
-  Divider
-} from "semantic-ui-react";
+  Container} from "semantic-ui-react";
 import Login from "../../../../publicPage/components/Login";
 
 class HeaderAdmin extends Component {
@@ -25,7 +19,7 @@ class HeaderAdmin extends Component {
         style={{ paddingBottom: "1em", background: "#ffffff" }}
         className="boderBot"
       >
-        <Container fluid style={{ backgroudColor: "white" }} style={{paddingRight: '2em'}}>
+        <Container fluid style={{ backgroudColor: "white",paddingRight: '2em' }}>
           <Menu.Menu position="right">
             <Menu.Item>
               <Login

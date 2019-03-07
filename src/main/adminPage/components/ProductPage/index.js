@@ -1,23 +1,13 @@
 import React, { Component } from "react";
 import {
-  Form,
   Grid,
-  Container,
-  Input,
-  Header,
-  Dropdown,
-  Label,
-  Modal,
-  Image,
   Button,
   Table,
   Icon,
-  Pagination,
   Menu
 } from "semantic-ui-react";
-import { get, post } from "../../../../utils/ApiCaller";
+import { get } from "../../../../utils/ApiCaller";
 import { PRODUCT_ENDPOINT } from "../../../../utils/ApiEndpoint";
-import _ from "lodash";
 import AddProduct from "./AddProduct.jsx";
 class ProductManage extends Component {
   state = { products: [] };

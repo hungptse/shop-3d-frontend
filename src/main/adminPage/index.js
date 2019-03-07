@@ -6,10 +6,6 @@ import {
   Menu,
   Icon,
   Image,
-  Header,
-  Segment,
-  Input,
-  Container,
   Divider
 } from "semantic-ui-react";
 import HeaderAdmin from "../adminPage/components/UI/Header";

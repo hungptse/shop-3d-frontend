@@ -2,13 +2,10 @@ import React, { Component } from "react";
 import {
   Form,
   Grid,
-  Container,
   Input,
   Header,
   Dropdown,
-  Label,
   Modal,
-  Image,
   Button
 } from "semantic-ui-react";
 import { get, post } from "../../../../utils/ApiCaller";
@@ -79,7 +76,7 @@ class AddProduct extends Component {
       },
       {},
       {}
-    ).then(res => {
+    ).then(() => {
       window.location.reload();
     });
   };

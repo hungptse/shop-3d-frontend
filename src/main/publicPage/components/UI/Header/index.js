@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import {
   Image,
   Menu,
-  Container,
-  Button,
-  Input,
-  Divider
-} from "semantic-ui-react";
+  Container} from "semantic-ui-react";
 import CartIcon from "../Cart";
 import Cart from "../Cart/Cart.jsx";
 import "../Cart/cart.scss";

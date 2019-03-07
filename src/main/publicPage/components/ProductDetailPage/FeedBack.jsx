@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import {
   Comment,
-  Header,
   Form,
   Button,
-  Segment,
   Container,
   TextArea,
   Icon

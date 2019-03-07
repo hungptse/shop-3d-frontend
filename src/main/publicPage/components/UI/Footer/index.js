@@ -3,11 +3,8 @@ import {
   Container,
   Grid,
   Header,
-  List,
   Segment,
-  Image,
-  Form
-} from "semantic-ui-react";
+  Image} from "semantic-ui-react";
 import reactLogo from "../../../../../assets/images/react.png";
 import reduxLogo from "../../../../../assets/images/redux.png";
 import aspLogo from "../../../../../assets/images/asp.png";

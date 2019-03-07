@@ -4,17 +4,11 @@ import {
   Card,
   Grid,
   Header,
-  Breadcrumb,
-  Segment,
-  Image,
-  Placeholder,
-  Button
-} from "semantic-ui-react";
+  Breadcrumb} from "semantic-ui-react";
 import Product from "../UI/Product";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { getListProductFromAPI } from "./ProductPage.action";
-import _ from "lodash";
 const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
 
 const loadListProductFromReducer = state =>
@@ -27,7 +21,7 @@ const startSelector = createSelector(
 
 class ProductPage extends Component {
   componentDidMount() {
-    if (this.props.listProduct.length == 0) {
+    if (this.props.listProduct.length === 0) {
       this.props.getListProductFromAPI && this.props.getListProductFromAPI();
     }
   }

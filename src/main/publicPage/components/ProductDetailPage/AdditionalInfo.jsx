@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Segment, Container, Header, Icon } from "semantic-ui-react";
+import { Container, Header, Icon } from "semantic-ui-react";
 
 class AdditionalInfo extends Component {
   render() {
