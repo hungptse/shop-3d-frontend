@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-  Menu
-} from "semantic-ui-react";
+import { Grid, Button, Table, Icon, Menu } from "semantic-ui-react";
 import { get } from "../../../../utils/ApiCaller";
 import { PRODUCT_ENDPOINT } from "../../../../utils/ApiEndpoint";
 import AddProduct from "./AddProduct.jsx";
+import SignalrClient from "../../../../utils/SignalrClient";
+
 class ProductManage extends Component {
   state = { products: [] };
   componentDidMount() {
@@ -16,6 +12,7 @@ class ProductManage extends Component {
       // console.log(res);
       this.setState({ products: res.data });
     });
+    console.log(SignalrClient.connectHubProduct());
   }
 
   render() {
@@ -48,7 +45,12 @@ class ProductManage extends Component {
                       <Table.Cell>{product.quantity}</Table.Cell>
                       <Table.Cell>{product.cate.name}</Table.Cell>
                       <Table.Cell>
-                        <Button basic color="teal" icon="edit outline" content="Edit Product" />
+                        <Button
+                          basic
+                          color="teal"
+                          icon="edit outline"
+                          content="Edit Product"
+                        />
                       </Table.Cell>
                     </Table.Row>
                   );
