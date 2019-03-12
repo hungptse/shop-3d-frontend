@@ -23,4 +23,13 @@ export const ADMIN_LIST_CATE_NAME = () => {
     return `${BASE_URL}/api/category/name`;
 } ;
 
+export const CHECK_OUT_CART = () => {
+    return `${BASE_URL}/api/order/checkout`;
+};
+
+
+export const PROFILE_ACCOUNT = (uid) => {
+    return `${BASE_URL}/api/account/${uid}`;
+};
+
 

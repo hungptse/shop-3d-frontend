@@ -11,7 +11,7 @@ class FirebaseUitls {
   }
 
   uploadImages(image) {
-    var imgRef = firebase
+    firebase
       .storage()
       .ref()
       .child("productsImg/" + image.name)

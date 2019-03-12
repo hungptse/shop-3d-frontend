@@ -41,5 +41,32 @@ class CartLocal {
         : JSON.parse(LocalStorage.getCart());
     return cart;
   }
+
+  getCheckoutCart(){
+    var cart = this.getCart();
+    var array = [];
+    cart.map(p => {
+      array.push({
+        id : p.id,
+        quantity : p.quantity,
+        price : p.price
+      });
+    });
+    return array;
+  }
+
+  getTotal(){
+    var cart = this.getCart();
+    var total = 0;
+    cart.map(p => {
+      total += p.quantity * p.price;
+    });
+    return total;
+  }
+
+  checkout(){
+    LocalStorage.setItem(LOCAL_STORAGE_KEY.CART, []);
+    return [];
+  }
 }
 export default new CartLocal();

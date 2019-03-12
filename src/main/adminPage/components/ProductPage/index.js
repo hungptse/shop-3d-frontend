@@ -4,25 +4,45 @@ import { get } from "../../../../utils/ApiCaller";
 import { PRODUCT_ENDPOINT } from "../../../../utils/ApiEndpoint";
 import AddProduct from "./AddProduct.jsx";
 import SignalrClient from "../../../../utils/SignalrClient";
+import { connect } from "react-redux";
+import { createSelector } from "reselect";
+import {
+  getListProductFromAPI,
+  setListProductsToReducer
+} from "../../../publicPage/components/ProductPage/ProductPage.action";
+
+const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
+const loadListProductFromReducer = state =>
+  state[PRODUCT_PAGE_STORE].listProduct;
+const startSelector = createSelector(
+  loadListProductFromReducer,
+  listProduct => ({ listProduct: listProduct || [] })
+);
 
 class ProductManage extends Component {
-  state = { products: [] };
   componentDidMount() {
-    get(PRODUCT_ENDPOINT(), {}, {}).then(res => {
-      // console.log(res);
-      this.setState({ products: res.data });
-    });
-    console.log(SignalrClient.connectHubProduct());
+    if (this.props.listProduct.length === 0) {
+      this.props.getListProductFromAPI && this.props.getListProductFromAPI();
+    }
   }
+  
+  addProduct = () => {
+    SignalrClient.sendAddProduct(data => {
+      console.log(data);
+      
+      // this.props.setListProductsToReducer &&
+      //   this.props.setListProductsToReducer(data);
+    });
+  };
 
   render() {
-    const { products } = this.state;
+    const { listProduct } = this.props;
     return (
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column width={2} />
-          <Grid.Column width={13}>
-            <AddProduct />
+          <Grid.Column width={13}>  
+            <AddProduct addProduct={this.addProduct} />
             <Table padded="very" selectable>
               <Table.Header fullWidth>
                 <Table.Row>
@@ -36,7 +56,7 @@ class ProductManage extends Component {
               </Table.Header>
 
               <Table.Body>
-                {products.map(product => {
+                {listProduct.map(product => {
                   return (
                     <Table.Row key={product.id}>
                       <Table.Cell>{product.thumbnail}</Table.Cell>
@@ -83,4 +103,7 @@ class ProductManage extends Component {
   }
 }
 
-export default ProductManage;
+export default connect(
+  startSelector,
+  { getListProductFromAPI, setListProductsToReducer }
+)(ProductManage);

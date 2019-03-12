@@ -53,15 +53,17 @@ class AddProduct extends Component {
     });
   }
   onDrop(picture) {
+    
     this.setState({ picture: picture });
   }
 
-  handleSumbit = () => {
-    console.log(this.state.picture);
+   handleSumbit = async () => {
+    // console.log(this.state.picture);
     // console.log(this.state.product);
-    FirebaseUitls.uploadImages(this.state.picture);
+    // FirebaseUitls.uploadImages(this.state.picture[0]);
+    
     var product = this.state.product;
-    post(
+    await post(
       PRODUCT_ENDPOINT(),
       {
         name: product.name,
@@ -72,12 +74,14 @@ class AddProduct extends Component {
         weight: product.weight,
         price: product.price,
         quantity: product.quantity,
-        imgThumb: this.state.picture.name
+        imgThumb: "Demo"
       },
       {},
       {}
     ).then(() => {
-      window.location.reload();
+      // this.props.addProduct();
+      this.close();
+      // window.location.reload();
     });
   };
 

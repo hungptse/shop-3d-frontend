@@ -41,7 +41,7 @@ class FullLayoutAdmin extends Component {
           history={this.props.history}
           location={this.props.location}
         />
-        <div style={{ height: "800px", marginTop: "8em" }}>
+        <div style={{  marginTop: "8em" }}>
           <Sidebar animation="overlay" visible>
             <Menu
               vertical

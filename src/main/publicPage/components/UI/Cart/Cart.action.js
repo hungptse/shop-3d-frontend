@@ -35,3 +35,10 @@ export const setCartIsActiveToReducer = status => {
     dispatch(setCartIsActive(status));
   };
 };
+
+export const checkoutCart = () => {
+  return dispatch => {
+    dispatch(setCart(CartLocal.checkout()));
+  };
+};
+
