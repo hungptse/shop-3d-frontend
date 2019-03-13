@@ -33,3 +33,9 @@ export const PROFILE_ACCOUNT = (uid) => {
 };
 
 
+
+export const ORDER_LIST = () => {
+    return `${BASE_URL}/api/order`;
+};
+
+

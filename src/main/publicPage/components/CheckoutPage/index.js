@@ -106,6 +106,7 @@ class CheckoutPage extends Component {
                       fluid
                       color="instagram"
                       className="btn-checkout"
+                      disabled={CartLocal.getTotal() === 0}
                     >
                       Checkout
                     </Form.Button>
