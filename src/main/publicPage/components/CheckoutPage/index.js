@@ -19,6 +19,8 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import OrderSummary from "./OrderSummary";
 
+import { setProfileToReducer } from "../Login/Auth.action";
+
 const startSelector = createSelector(
   getCartFromLocal,
   cart => ({ cart: cart || [] })
@@ -124,4 +126,4 @@ class CheckoutPage extends Component {
   }
 }
 
-export default connect(startSelector,{ checkoutCart })(CheckoutPage);
+export default connect(startSelector,{ checkoutCart, setProfileToReducer })(CheckoutPage);

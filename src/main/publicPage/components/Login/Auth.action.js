@@ -1,7 +1,11 @@
 import LocalStorageUtils from "../../../../utils/LocalStorage";
+import {PROFILE_ACCOUNT} from "../../../../utils/ApiEndpoint";
+import {get} from "../../../../utils/ApiCaller";
 
 const setSignned = payload => ({ type: "SET_SIGNNED", payload });
 const setOpen = payload => ({ type: "SET_OPEN", payload });
+const setProfile = payload => ({ type: "SET_PROFILE", payload });
+
 
 export const setSignnedToReducer = signned => {
   return dispatch => {
@@ -23,5 +27,13 @@ export const getSignnedFromReducer = () => {
 export const setOpenToReducer = open => {
   return dispatch => {
     dispatch(setOpen(open));
+  };
+};
+
+export const setProfileToReducer = () => {
+  return async dispatch => {
+    await get(PROFILE_ACCOUNT(LocalStorageUtils.getSub())).then(res => {
+      dispatch(setProfile(res.data));
+    })
   };
 };

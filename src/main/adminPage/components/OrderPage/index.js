@@ -12,7 +12,7 @@ import {
 import { get } from "../../../../utils/ApiCaller";
 import { ORDER_LIST } from "../../../../utils/ApiEndpoint";
 class OrderMange extends Component {
-  state = { orders: [], details: [], user : {}, orderSelected : [] };
+  state = { orders: [], details: [], user: {}, orderSelected: [] };
   componentDidMount() {
     get(ORDER_LIST(), {}, {}).then(res => {
       this.setState({ orders: res.data });
@@ -49,6 +49,7 @@ class OrderMange extends Component {
   };
   render() {
     const { orders, details, user, orderSelected } = this.state;
+
     return (
       <Grid>
         <Grid.Row columns={2}>
@@ -126,53 +127,71 @@ class OrderMange extends Component {
                     </Table.Footer>
                   </Table>
                 </Grid.Column>
-                <Grid.Column width={6}>
-                  <Segment>
-                    <Grid container>
-                      <Grid.Row centered>
-                        <Header as="h2">Order Detail #{orderSelected.id}</Header>
+                {this.state.orderSelected.length !== 0 ? (
+                  <Grid.Column width={6} >
+                    <Segment>
+                      <Grid container>
+                      <Grid.Row textAlign="right"> 
+                      <Header as="h5">
+                            Created at: {orderSelected.createdTime}
+                          </Header>
                       </Grid.Row>
-                      <Grid.Row columns={2}>
-                        <Grid.Column>Customer: {user.name}</Grid.Column>
-                        <Grid.Column>Address: {user.address}</Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row columns={2}>
-                        <Grid.Column>Phone: {user.phone}</Grid.Column>
-                        <Grid.Column>Email: {user.email}</Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row columns={1}>
-                        <Grid.Column>Note: {orderSelected.note === "" ? "None" : orderSelected.note}</Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row columns={1} centered>
-                        <Grid.Column as="h3">Total: ${orderSelected.total}</Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                  </Segment>
-                  <Table padded="very" selectable>
-                    <Table.Header fullWidth>
-                      <Table.Row>
-                        <Table.HeaderCell>Name</Table.HeaderCell>
-                        <Table.HeaderCell>Quanitty</Table.HeaderCell>
-                        <Table.HeaderCell>Price</Table.HeaderCell>
-                        <Table.HeaderCell>Subtotal</Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                      {details.map(product => {
-                        return (
-                          <Table.Row key={product.id}>
-                            <Table.Cell>{product.pro.name}</Table.Cell>
-                            <Table.Cell>{product.quantity}</Table.Cell>
-                            <Table.Cell>${product.price}</Table.Cell>
-                            <Table.Cell>
-                              ${product.price * product.quantity}
-                            </Table.Cell>
-                          </Table.Row>
-                        );
-                      })}
-                    </Table.Body>
-                  </Table>
-                </Grid.Column>
+                        <Grid.Row centered>
+                          <Header as="h2">
+                            Order Detail #{orderSelected.id}
+                          </Header>
+                        </Grid.Row>
+                        <Grid.Row columns={2}>
+                          <Grid.Column>Customer: {user.name}</Grid.Column>
+                          <Grid.Column>Address: {user.address}</Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row columns={2}>
+                          <Grid.Column>Phone: {user.phone}</Grid.Column>
+                          <Grid.Column>Email: {user.email}</Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row columns={1}>
+                          <Grid.Column>
+                            Note:{" "}
+                            {orderSelected.note === ""
+                              ? "None"
+                              : orderSelected.note}
+                          </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row columns={1} centered>
+                          <Grid.Column>
+                            Total: ${orderSelected.total}
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Segment>
+                    <Table padded="very" selectable>
+                      <Table.Header fullWidth>
+                        <Table.Row>
+                          <Table.HeaderCell>Name</Table.HeaderCell>
+                          <Table.HeaderCell>Quanitty</Table.HeaderCell>
+                          <Table.HeaderCell>Price</Table.HeaderCell>
+                          <Table.HeaderCell>Subtotal</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {details.map(product => {
+                          return (
+                            <Table.Row key={product.id}>
+                              <Table.Cell>{product.pro.name}</Table.Cell>
+                              <Table.Cell>{product.quantity}</Table.Cell>
+                              <Table.Cell>${product.price}</Table.Cell>
+                              <Table.Cell>
+                                ${product.price * product.quantity}
+                              </Table.Cell>
+                            </Table.Row>
+                          );
+                        })}
+                      </Table.Body>
+                    </Table>
+                  </Grid.Column>
+                ) : (
+                  <div />
+                )}
               </Grid.Row>
             </Grid>
           </Grid.Column>

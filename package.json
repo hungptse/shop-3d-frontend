@@ -30,12 +30,14 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "^2.1.5",
     "react-tap-event-plugin": "^3.0.3",
+    "react-to-print": "^2.0.0-alpha.7",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "semantic-ui-react": "^0.85.0",
     "slick-carousel": "^1.8.1",
     "tabler-react": "^1.28.0",
+    "timeago-react": "^2.0.1",
     "uuid": "^3.3.2"
   },
   "scripts": {

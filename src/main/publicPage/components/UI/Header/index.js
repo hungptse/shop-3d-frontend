@@ -14,7 +14,7 @@ import { createSelector } from "reselect";
 import {  setCartIsActiveToReducer, getCartFromLocal } from "../Cart/Cart.action";
 import Login from "../../Login";
 import SearchBar from "../Search";
-
+import { setProfileToReducer } from "../../Login/Auth.action";
 const CART_STORE = "CART_STORE";
 
 const getCartFromReducer = state => state[CART_STORE].cart;
@@ -43,7 +43,7 @@ class HeaderPage extends Component {
     }
     
     this.props.getCartFromLocal && this.props.getCartFromLocal();
-    
+    this.props.setProfileToReducer && this.props.setProfileToReducer();
   }
 
   handldeActiveItem = path => {    
@@ -146,5 +146,5 @@ class HeaderPage extends Component {
 
 export default connect(
   startSelector,
-  {  setCartIsActiveToReducer, getCartFromLocal }
+  {  setCartIsActiveToReducer, getCartFromLocal, setProfileToReducer }
 )(HeaderPage);

@@ -1,6 +1,7 @@
 const initialState = {
   signned: false,
-  open: false
+  open: false,
+  profile: {}
 };
 
 const setSignned = (state, payload) => {
@@ -9,6 +10,9 @@ const setSignned = (state, payload) => {
 const setOpen = (state, payload) => {
   return { ...state, open: payload };
 };
+const setProfile = (state, payload) => {
+  return { ...state, profile: payload };
+};
 
 export const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -16,6 +20,8 @@ export const authReducer = (state = initialState, { type, payload }) => {
       return setSignned(state, payload);
     case "SET_OPEN":
       return setOpen(state, payload);
+    case "SET_PROFILE":
+      return setProfile(state, payload);
     default:
       return state;
   }

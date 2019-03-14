@@ -32,6 +32,10 @@ export const PROFILE_ACCOUNT = (uid) => {
     return `${BASE_URL}/api/account/${uid}`;
 };
 
+export const FEEDBACK = () => {
+    return `${BASE_URL}/api/feedback`;
+};
+
 
 
 export const ORDER_LIST = () => {

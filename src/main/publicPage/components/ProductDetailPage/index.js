@@ -182,7 +182,7 @@ class ProductDetailPage extends Component {
                     ),
                     render: () => (
                       <Tab.Pane>
-                        <Feedback />
+                        <Feedback feedbacks={product.feedback} proId={product.id}/>
                       </Tab.Pane>
                     )
                   }
