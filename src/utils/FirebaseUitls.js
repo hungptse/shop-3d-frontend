@@ -20,5 +20,6 @@ class FirebaseUitls {
         console.log("Uploaded", snapshot);
       });
   }
+ 
 }
 export default new FirebaseUitls();
