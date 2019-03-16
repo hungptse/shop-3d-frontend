@@ -1,8 +1,18 @@
 import React, { Component } from "react";
-import { Grid, Table, Icon, Menu } from "semantic-ui-react";
+import { Grid, Table, Icon, Menu, Button, Rating, Label } from "semantic-ui-react";
+import { get } from "../../../../utils/ApiCaller";
+import { FEEDBACK } from "../../../../utils/ApiEndpoint";
 
 class FeedbackMange extends Component {
+  state = { feedbacks: [] };
+  async componentDidMount() {
+    await get(FEEDBACK(), {}, {}, {}).then(res => {
+      this.setState({ feedbacks: res.data });
+    });
+  }
+
   render() {
+    const { feedbacks } = this.state;
     return (
       <Grid>
         <Grid.Row columns={2}>
@@ -12,30 +22,50 @@ class FeedbackMange extends Component {
             <Table padded="very" selectable>
               <Table.Header fullWidth>
                 <Table.Row>
-                  <Table.HeaderCell>Thumbnail</Table.HeaderCell>
-                  <Table.HeaderCell>Name</Table.HeaderCell>
-                  <Table.HeaderCell>Price</Table.HeaderCell>
-                  <Table.HeaderCell>Quantity</Table.HeaderCell>
-                  <Table.HeaderCell>Category</Table.HeaderCell>
+                  <Table.HeaderCell>ID-Feedback</Table.HeaderCell>
+                  <Table.HeaderCell>Rate</Table.HeaderCell>
+                  <Table.HeaderCell>Owner</Table.HeaderCell>
+                  <Table.HeaderCell>Posted Time</Table.HeaderCell>
+                  <Table.HeaderCell>Status</Table.HeaderCell>
                   <Table.HeaderCell>Action</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
 
               <Table.Body>
-                {/* {products.map(product => {
-                      return (
-                        <Table.Row key={product.id}>
-                          <Table.Cell>{product.thumbnail}</Table.Cell>
-                          <Table.Cell>{product.name}</Table.Cell>
-                          <Table.Cell>{product.price}</Table.Cell>
-                          <Table.Cell>{product.quantity}</Table.Cell>
-                          <Table.Cell>{product.cate.name}</Table.Cell>
-                          <Table.Cell>
-                            <Button basic color="teal" icon="edit outline" content="Edit Product" />
-                          </Table.Cell>
-                        </Table.Row>
-                      );
-                    })} */}
+                {feedbacks.map(feedback => {
+                  return (
+                    <Table.Row key={feedback.id}>
+                      <Table.Cell>{feedback.id}</Table.Cell>
+                      <Table.Cell>
+                        <Rating
+                          icon="heart"
+                          defaultRating={feedback.rate}
+                          maxRating={5}
+                          disabled
+                        />
+                      </Table.Cell>
+                      <Table.Cell>{feedback.userId}</Table.Cell>
+                      <Table.Cell>{feedback.comment}</Table.Cell>
+                      <Table.Cell>
+                        <Label as="a" basic color={feedback.isApprove ? "green" : "red"}>
+                          {feedback.isApprove ? "Judged" : "Not Judge"}
+                        </Label>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Button
+                          color="teal"
+                          icon="edit outline"
+                          content="Approve Rate"
+                        />
+                        <Button
+                          color="teal"
+                          icon="edit outline"
+                          content="Denied Rate"
+                        />
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })}
               </Table.Body>
 
               <Table.Footer>

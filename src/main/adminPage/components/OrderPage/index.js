@@ -127,7 +127,7 @@ class OrderMange extends Component {
                             as="tr"
                             onClick={() => this.viewDetailOrder(order.id)}
                           >
-                            <Table.Cell>{order.id}</Table.Cell>
+                            <Table.Cell>#{order.id}</Table.Cell>
                             <Table.Cell>{order.userId}</Table.Cell>
                             <Table.Cell>
                               {" "}
@@ -144,14 +144,14 @@ class OrderMange extends Component {
                               <Table.Cell>
                                 <Button
                                   color="green"
-                                  icon="edit outline"
+                                  icon="check"
                                   content="Accept"
                                   size="small"
                                   onClick={() => this.approveOrder(order.id)}
                                 />
                                 <Button
                                   color="red"
-                                  icon="edit outline"
+                                  icon="times"
                                   content="Cancel"
                                   size="small"
                                   onClick={() => this.deniedOrder(order.id)}
