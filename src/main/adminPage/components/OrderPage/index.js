@@ -7,10 +7,13 @@ import {
   Button,
   Label,
   Segment,
-  Header
+  Header,
+  Tab
 } from "semantic-ui-react";
-import { get } from "../../../../utils/ApiCaller";
-import { ORDER_LIST } from "../../../../utils/ApiEndpoint";
+import { get, put } from "../../../../utils/ApiCaller";
+import { ORDER_LIST, ORDER_CHANGE_STATUS } from "../../../../utils/ApiEndpoint";
+import TimeAgo from "timeago-react";
+
 class OrderMange extends Component {
   state = { orders: [], details: [], user: {}, orderSelected: [] };
   componentDidMount() {
@@ -29,6 +32,30 @@ class OrderMange extends Component {
     });
   };
 
+  approveOrder = async id => {
+    await put(ORDER_CHANGE_STATUS(id, 2), {}, {}, {})
+      .then(res => {
+        this.setState({
+          orders: this.state.orders.map(order => order.id === id ? {...order, status : 2} : order)
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  deniedOrder = async id => {
+    await put(ORDER_CHANGE_STATUS(id, 3), {}, {}, {})
+      .then(res => {
+        this.setState({
+          orders: this.state.orders.map(order => order.id === id ? {...order, status : 3} : order)
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   renderStatus = status => {
     switch (status) {
       case 1:
@@ -45,17 +72,38 @@ class OrderMange extends Component {
           </Label>
         );
         break;
+      case 3:
+        return (
+          <Label as="a" basic color="red">
+            Denieded
+          </Label>
+        );
+        break;
     }
   };
   render() {
     const { orders, details, user, orderSelected } = this.state;
-
+    const panes = [
+      {
+        menuItem: "Tab 1",
+        render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane>
+      },
+      {
+        menuItem: "Tab 2",
+        render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
+      },
+      {
+        menuItem: "Tab 3",
+        render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
+      }
+    ];
     return (
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column width={2} />
           <Grid.Column width={13}>
             {/* <AddProduct /> */}
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
             <Grid>
               <Grid.Row columns={2}>
                 <Grid.Column width={details.length === 0 ? 16 : 10}>
@@ -81,27 +129,37 @@ class OrderMange extends Component {
                           >
                             <Table.Cell>{order.id}</Table.Cell>
                             <Table.Cell>{order.userId}</Table.Cell>
-                            <Table.Cell>{order.createdTime}</Table.Cell>
+                            <Table.Cell>
+                              {" "}
+                              <TimeAgo
+                                datetime={order.createdTime}
+                                locale="en"
+                              />
+                            </Table.Cell>
                             <Table.Cell>${order.total}</Table.Cell>
                             <Table.Cell>
                               {this.renderStatus(order.status)}
                             </Table.Cell>
-                            <Table.Cell>
-                              <Button
-                                basic
-                                color="green"
-                                icon="edit outline"
-                                content="Accept"
-                                size="small"
-                              />
-                              <Button
-                                basic
-                                color="red"
-                                icon="edit outline"
-                                content="Cancel"
-                                size="small"
-                              />
-                            </Table.Cell>
+                            {order.status === 1 ? (
+                              <Table.Cell>
+                                <Button
+                                  color="green"
+                                  icon="edit outline"
+                                  content="Accept"
+                                  size="small"
+                                  onClick={() => this.approveOrder(order.id)}
+                                />
+                                <Button
+                                  color="red"
+                                  icon="edit outline"
+                                  content="Cancel"
+                                  size="small"
+                                  onClick={() => this.deniedOrder(order.id)}
+                                />
+                              </Table.Cell>
+                            ) : (
+                              <Table.Cell />
+                            )}
                           </Table.Row>
                         );
                       })}
@@ -128,14 +186,14 @@ class OrderMange extends Component {
                   </Table>
                 </Grid.Column>
                 {this.state.orderSelected.length !== 0 ? (
-                  <Grid.Column width={6} >
+                  <Grid.Column width={6}>
                     <Segment>
                       <Grid container>
-                      <Grid.Row textAlign="right"> 
-                      <Header as="h5">
-                            Created at: {orderSelected.createdTime}
+                        <Grid.Row textAlign="right">
+                          <Header as="h5">
+                            Created at: {new Date(orderSelected.createdTime).toLocaleString()}
                           </Header>
-                      </Grid.Row>
+                        </Grid.Row>
                         <Grid.Row centered>
                           <Header as="h2">
                             Order Detail #{orderSelected.id}

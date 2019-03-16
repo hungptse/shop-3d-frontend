@@ -43,3 +43,8 @@ export const ORDER_LIST = () => {
 };
 
 
+export const ORDER_CHANGE_STATUS = (id,status) => {
+    return `${BASE_URL}/api/order/change/${id}/status/${status}`;
+};
+
+
