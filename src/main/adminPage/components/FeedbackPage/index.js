@@ -53,14 +53,16 @@ class FeedbackMange extends Component {
                       </Table.Cell>
                       <Table.Cell>
                         <Button
-                          color="teal"
-                          icon="edit outline"
-                          content="Approve Rate"
+                          size="small"
+                          color="green"
+                          icon="check"
+                          content="Approve"
                         />
                         <Button
-                          color="teal"
-                          icon="edit outline"
-                          content="Denied Rate"
+                          size="small"
+                          color="red"
+                          icon="times"
+                          content="Denied"
                         />
                       </Table.Cell>
                     </Table.Row>
