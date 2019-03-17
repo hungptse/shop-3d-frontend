@@ -36,6 +36,10 @@ export const FEEDBACK = () => {
     return `${BASE_URL}/api/feedback`;
 };
 
+export const FEEDBACK_CHANGE = (id) => {
+    return `${BASE_URL}/api/feedback/${id}`;
+};
+
 
 
 export const ORDER_LIST = () => {
