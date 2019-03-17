@@ -41,6 +41,11 @@ export const FEEDBACK_CHANGE = (id) => {
 };
 
 
+export const CATE_CHANGE_NAME = (id) => {
+    return `${BASE_URL}/api/category/${id}`;
+};
+
+
 
 export const ORDER_LIST = () => {
     return `${BASE_URL}/api/order`;

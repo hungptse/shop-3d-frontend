@@ -83,7 +83,7 @@ class FeedbackMange extends Component {
                           basic
                           color={feedback.isApprove ? "green" : "red"}
                         >
-                          {feedback.isApprove ? "Judged" : "Not Judge"}
+                          {feedback.isApprove ? "Approved" : "Rejected"}
                         </Label>
                       </Table.Cell>
                       <Table.Cell>
