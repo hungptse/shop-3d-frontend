@@ -52,7 +52,7 @@ class FeedbackMange extends Component {
                   <Table.HeaderCell>ID-Feedback</Table.HeaderCell>
                   <Table.HeaderCell>Posted Time</Table.HeaderCell>
                   <Table.HeaderCell>Product</Table.HeaderCell>
-                  <Table.HeaderCell>Owner</Table.HeaderCell>
+                  <Table.HeaderCell>User</Table.HeaderCell>
                   <Table.HeaderCell>Rate</Table.HeaderCell>
                   <Table.HeaderCell>Comment</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>

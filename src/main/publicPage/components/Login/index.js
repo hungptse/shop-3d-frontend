@@ -86,7 +86,7 @@ class LoginForm extends Component {
         this.setState({ uid: LocalStorageUtils.getSub() });
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
-        // window.location.reload();
+        window.location.reload();
       })
       .catch(() => {
         this.setState({ error: false, loading: false });

@@ -10,7 +10,7 @@ import {
   Button,
   Tab,
   Rating} from "semantic-ui-react";
-import { GET_PRODUCT_BY_ID } from "../../../../utils/ApiEndpoint";
+import { GET_PRODUCT_BY_ID, PRODUCT_RATE } from "../../../../utils/ApiEndpoint";
 import { get } from "../../../../utils/ApiCaller";
 import Quantity from "./Quantity.jsx";
 import { connect } from "react-redux";
@@ -45,7 +45,7 @@ const startSelector = createSelector(
 );
 
 class ProductDetailPage extends Component {
-  state = { product: {}, quantity: 1, urlThumbail: "" };
+  state = { product: {}, quantity: 1, urlThumbail: "" ,rate : 5};
 
   async componentWillMount() {
     await get(GET_PRODUCT_BY_ID(this.props.match.params.id), {}, {}).then(
@@ -58,6 +58,10 @@ class ProductDetailPage extends Component {
         this.setState({ urlThumbail: res });
       }
     );
+    await get(PRODUCT_RATE(this.props.match.params.id)).then(res => {
+      this.setState({ rate : res.data});
+    })
+    console.log(this.state.rate);
   }
   async componentWillReceiveProps(newProps) {
     await get(GET_PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
@@ -68,6 +72,10 @@ class ProductDetailPage extends Component {
         this.setState({ urlThumbail: res });
       }
     );
+    await get(PRODUCT_RATE(this.props.match.params.id)).then(res => {
+      this.setState({ rate : res.data});
+    })
+    
   }
 
   addToCart = e => {
@@ -93,7 +101,7 @@ class ProductDetailPage extends Component {
   };
 
   render() {
-    const { product } = this.state;
+    const { product, rate } = this.state;
     return (
       <Container>
         <Grid padded>
@@ -124,11 +132,12 @@ class ProductDetailPage extends Component {
                 </Form.Group>
                 <Form.Group inline>
                   <label>Rating</label>
-                  <label style={{ marginLeft: "15px" }}>4.0</label>
+                  <label style={{ marginLeft: "15px" }}>{rate}/5.0</label>
                   <Rating
-                    size="large"
+                    icon="heart"
+                    size="small"
                     maxRating={5}
-                    defaultRating={4}
+                    rating={rate}
                     disabled
                   />
                 </Form.Group>

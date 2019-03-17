@@ -7,9 +7,9 @@ class AdditionalInfo extends Component {
     return (
       <div>
         <Container fluid textAlign="justified">
-          <Header as="h5"><Icon name='flag' /> Model: {product.model}</Header>
-          <Header as="h5"><Icon name='flag' /> Height: {product.height} cm || Weight: {product.weight} kg </Header>
-          <Header as="h5"><Icon name='flag' /> Description: {product.description} </Header>
+          <Header as="h5"><Icon name='address card outline' /> Model: {product.model}</Header>
+          <Header as="h5"><Icon name='align center' /> Height: {product.height} cm || Weight: {product.weight} kg </Header>
+          <Header as="h5"><Icon name='comments outline' /> Description: {product.description} </Header>
         </Container>
       </div>
     );

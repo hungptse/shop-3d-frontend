@@ -46,6 +46,9 @@ export const CATE_CHANGE_NAME = (id) => {
 };
 
 
+export const PRODUCT_RATE = (id) => {
+    return `${BASE_URL}/api/product/rate/${id}`;
+};
 
 export const ORDER_LIST = () => {
     return `${BASE_URL}/api/order`;

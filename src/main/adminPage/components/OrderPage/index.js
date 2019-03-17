@@ -103,7 +103,7 @@ class OrderMange extends Component {
           <Grid.Column width={2} />
           <Grid.Column width={13}>
             {/* <AddProduct /> */}
-            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+            {/* <Tab menu={{ secondary: true, pointing: true }} panes={panes} /> */}
             <Grid>
               <Grid.Row columns={2}>
                 <Grid.Column width={details.length === 0 ? 16 : 10}>
