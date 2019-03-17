@@ -18,6 +18,8 @@ class FeedbackMange extends Component {
     await get(FEEDBACK(), {}, {}, {}).then(res => {
       this.setState({ feedbacks: res.data });
     });
+    console.log(this.state.feedbacks);
+    
   }
 
   changeStatus = async (id, status) => {
@@ -49,9 +51,10 @@ class FeedbackMange extends Component {
                 <Table.Row>
                   <Table.HeaderCell>ID-Feedback</Table.HeaderCell>
                   <Table.HeaderCell>Posted Time</Table.HeaderCell>
-                  <Table.HeaderCell>Rate</Table.HeaderCell>
+                  <Table.HeaderCell>Product</Table.HeaderCell>
                   <Table.HeaderCell>Owner</Table.HeaderCell>
-                  <Table.HeaderCell>comment</Table.HeaderCell>
+                  <Table.HeaderCell>Rate</Table.HeaderCell>
+                  <Table.HeaderCell>Comment</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                   <Table.HeaderCell>Action</Table.HeaderCell>
                 </Table.Row>
@@ -67,6 +70,8 @@ class FeedbackMange extends Component {
                       <Table.Cell>
                         {new Date(feedback.postedTime).toLocaleString()}
                       </Table.Cell>
+                      <Table.Cell>{feedback.pro.name}</Table.Cell>
+                      <Table.Cell>{feedback.acc.name}</Table.Cell>
                       <Table.Cell>
                         <Rating
                           icon="heart"
@@ -75,7 +80,6 @@ class FeedbackMange extends Component {
                           disabled
                         />
                       </Table.Cell>
-                      <Table.Cell>{feedback.userId}</Table.Cell>
                       <Table.Cell>{feedback.comment}</Table.Cell>
                       <Table.Cell>
                         <Label

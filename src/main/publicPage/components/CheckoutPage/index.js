@@ -113,6 +113,7 @@ class CheckoutPage extends Component {
                       Checkout
                     </Form.Button>
                   </Form.Group>
+                  <i style={{marginTop : "1em", color : "red"}}>*Note: Please confirm all information is correct. We are acceptable order within 2-4 days working</i>
                 </Form>
               </Card>
             </Grid.Column>
