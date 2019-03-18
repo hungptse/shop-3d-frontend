@@ -99,6 +99,10 @@ class LoginForm extends Component {
     window.location.reload();
   };
 
+  handleAccount = () => {
+    this.props.history.push("/user");
+  }
+
   render() {
     const { error, loading, uid } = this.state;
     const { signned, open } = this.props;
@@ -106,15 +110,12 @@ class LoginForm extends Component {
     const LogginButton = () => {
       if (signned) {
         return (
-          <Dropdown
-            trigger={dropdownBtn}
-            pointing="top left"
-          >
+          <Dropdown trigger={dropdownBtn} pointing="top left">
             <Dropdown.Menu>
               <Dropdown.Item disabled>
                 Signed in as <strong>{uid}</strong>
               </Dropdown.Item>
-              <Dropdown.Item>
+              <Dropdown.Item  onClick={this.handleAccount}>
                 <Icon name="user" /> Account
               </Dropdown.Item>
               <Dropdown.Item>

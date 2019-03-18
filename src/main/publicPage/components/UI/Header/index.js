@@ -115,7 +115,6 @@ class HeaderPage extends Component {
                 history={this.props.history}
                 location={this.props.location}
               />
-              {/* <Input icon="search" placeholder="Search..." /> */}
             </Menu.Item>
             <Menu.Item>
               <Login

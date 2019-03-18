@@ -1,13 +1,19 @@
-import Starter from '../components/starter.jsx';
+import AccountProfile from './components/AccontProfile';
+import OrderHistory from './components/OrderUser';
+
 
 const ThemeRoutes = [
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    icon: 'ti-loop',
-    component: Starter
+    path: '/profile',
+    name: 'Profile',
+    component: AccountProfile
   },
-  { path: '/', pathTo: '/dashboard', name: 'Dashboard', redirect: true }
+  {
+    path: '/order',
+    name: 'Order history',
+    component: OrderHistory
+  },
+  { path: '/', pathTo: '/profile', name: 'Profile', redirect: true }
 ];
 
 export default ThemeRoutes;

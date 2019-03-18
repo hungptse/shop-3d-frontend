@@ -132,7 +132,7 @@ class ProductDetailPage extends Component {
                 </Form.Group>
                 <Form.Group inline>
                   <label>Rating</label>
-                  <label style={{ marginLeft: "15px" }}>{rate}/5.0</label>
+                  <label style={{ marginLeft: "15px" }}>{Math.round(rate * 10) / 10}/5.0</label>
                   <Rating
                     icon="heart"
                     size="small"
