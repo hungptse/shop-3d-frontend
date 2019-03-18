@@ -22,13 +22,14 @@ import MomentLocaleUtils, {
   parseDate
 } from "react-day-picker/moment";
 import moment from "moment";
-// const AUTH_STORE = "AUTH_STORE";
-// const profileFromReducer = state => state[AUTH_STORE].profile;
+import { setProfileToReducer } from "../../../publicPage/components/Login/Auth.action";
+const AUTH_STORE = "AUTH_STORE";
+const profileFromReducer = state => state[AUTH_STORE].profile;
 
-// const startSelector = createSelector(
-//   profileFromReducer,
-//   profile => ({ profile: profile })
-// );
+const startSelector = createSelector(
+  profileFromReducer,
+  profile => ({ profileInStore: profile })
+);
 
 class AccountProfilePage extends Component {
   state = { profile: {}, loading: false };
@@ -38,7 +39,7 @@ class AccountProfilePage extends Component {
       this.setState({ profile: res.data });
       setTimeout(() => {
         this.setState({ loading: false });
-      },500);
+      }, 500);
     });
   }
 
@@ -57,9 +58,10 @@ class AccountProfilePage extends Component {
       {},
       {}
     ).then(res => {
+      this.props.setProfileToReducer && this.props.setProfileToReducer();
       setTimeout(() => {
         this.setState({ loading: false });
-      },1000);
+      }, 1000);
     });
   };
 
@@ -248,4 +250,7 @@ class AccountProfilePage extends Component {
   }
 }
 
-export default AccountProfilePage;
+export default connect(
+  startSelector,
+  { setProfileToReducer }
+)(AccountProfilePage);

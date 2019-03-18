@@ -29,12 +29,19 @@ const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
 const uidFromReducer = state => state[AUTH_STORE].uid;
 const openFromReducer = state => state[AUTH_STORE].open;
+const profileFromReducer = state => state[AUTH_STORE].profile;
 
 const startSelector = createSelector(
   signnedFromReducer,
   uidFromReducer,
   openFromReducer,
-  (signned, uid, open) => ({ signned: signned, uid: uid, open: open })
+  profileFromReducer,
+  (signned, uid, open, profile) => ({
+    signned: signned,
+    uid: uid,
+    open: open,
+    profile: profile
+  })
 );
 
 class LoginForm extends Component {
@@ -101,7 +108,7 @@ class LoginForm extends Component {
 
   handleAccount = () => {
     this.props.history.push("/user");
-  }
+  };
 
   render() {
     const { error, loading, uid } = this.state;
@@ -115,7 +122,7 @@ class LoginForm extends Component {
               <Dropdown.Item disabled>
                 Signed in as <strong>{uid}</strong>
               </Dropdown.Item>
-              <Dropdown.Item  onClick={this.handleAccount}>
+              <Dropdown.Item onClick={this.handleAccount}>
                 <Icon name="user" /> Account
               </Dropdown.Item>
               <Dropdown.Item>
@@ -142,7 +149,7 @@ class LoginForm extends Component {
           src="https://s3.amazonaws.com/uifaces/faces/twitter/javorszky/128.jpg"
           size="mini"
         />
-        Hello, {uid}
+        Hello, {this.props.profile.name}
       </span>
     );
     return (
