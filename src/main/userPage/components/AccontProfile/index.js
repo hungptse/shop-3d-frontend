@@ -7,12 +7,14 @@ import {
   Form,
   Input,
   Icon,
-  Radio
+  Radio,
+  Loader,
+  Dimmer
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import DayPickerInput from "react-day-picker/DayPickerInput";
-import { get } from "../../../../utils/ApiCaller";
+import { get, put } from "../../../../utils/ApiCaller";
 import { PROFILE_ACCOUNT } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
 import MomentLocaleUtils, {
@@ -29,22 +31,46 @@ import moment from "moment";
 // );
 
 class AccountProfilePage extends Component {
-  state = { profile: {} };
+  state = { profile: {}, loading: false };
   async componentDidMount() {
+    this.setState({ loading: true });
     await get(PROFILE_ACCOUNT(LocalStorageUtils.getSub())).then(res => {
       this.setState({ profile: res.data });
+      setTimeout(() => {
+        this.setState({ loading: false });
+      },500);
     });
   }
 
-  handleSumbit = () => {
-    console.log(this.state.profile);
+  handleSumbit = async () => {
+    this.setState({ loading: true });
+    await put(
+      PROFILE_ACCOUNT(LocalStorageUtils.getSub()),
+      {
+        name: this.state.profile.name,
+        gender: this.state.profile.gender,
+        birthdate: this.state.profile.birthDate,
+        email: this.state.profile.email,
+        phone: this.state.profile.phone,
+        address: this.state.profile.address
+      },
+      {},
+      {}
+    ).then(res => {
+      setTimeout(() => {
+        this.setState({ loading: false });
+      },1000);
+    });
   };
 
   render() {
-    const { profile } = this.state;
+    const { profile, loading } = this.state;
     return (
       <div>
         <Grid>
+          <Dimmer active={loading} inverted>
+            <Loader>Loading</Loader>
+          </Dimmer>
           <Grid.Row columns={2}>
             <Grid.Column width={7}>
               <Image
@@ -208,12 +234,7 @@ class AccountProfilePage extends Component {
                     </Form.Field>
                   </Form.Group>
                   <Form.Group>
-                    <Form.Button
-                      width={16}
-                      fluid
-                      basic
-                      color="green"
-                    >
+                    <Form.Button width={16} fluid basic color="red">
                       Update Profile
                     </Form.Button>
                   </Form.Group>
