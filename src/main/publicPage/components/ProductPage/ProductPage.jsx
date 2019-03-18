@@ -28,11 +28,6 @@ class ProductPage extends Component {
   render() {
     return (
       <Container>
-        <Breadcrumb>
-          <Breadcrumb.Section link>Home</Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section active>Product</Breadcrumb.Section>
-        </Breadcrumb>
         <Header as="h1">Product</Header>
         <Grid>
           <Grid.Row>

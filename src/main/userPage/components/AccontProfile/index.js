@@ -236,7 +236,7 @@ class AccountProfilePage extends Component {
                     </Form.Field>
                   </Form.Group>
                   <Form.Group>
-                    <Form.Button width={16} fluid basic color="red">
+                    <Form.Button width={16} fluid secondary>
                       Update Profile
                     </Form.Button>
                   </Form.Group>

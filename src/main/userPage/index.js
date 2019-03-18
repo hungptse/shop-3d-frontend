@@ -3,7 +3,7 @@ import { Tab, Container, Menu, Segment } from "semantic-ui-react";
 import { renderRoutes } from "../../components/route";
 import ThemeRoutes from "./routing";
 import Header from "./../publicPage/components/UI/Header";
-
+import Footer from "./../publicPage/components/UI/Footer";
 class FullLayoutUser extends Component {
   state = { panes: [] };
 
@@ -46,7 +46,7 @@ class FullLayoutUser extends Component {
           location={this.props.location}
           listRouters={[]}
         />
-        <div style={{ padding: "1em 0em", marginTop: "8.5em" }}>
+        <div style={{ padding: "1em 0em", minHeight: "55.5em", position : "relative", top : "8.5em" }}>
           <Container>
             <Tab
               menu={{ fluid: true, vertical: true, tabular: true }}
@@ -54,6 +54,7 @@ class FullLayoutUser extends Component {
             />
           </Container>
         </div>
+        <Footer />
       </div>
     );
   }
