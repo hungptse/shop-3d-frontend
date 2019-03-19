@@ -1,7 +1,7 @@
 import AccountProfile from './components/AccontProfile';
 import OrderHistory from './components/OrderUser';
 import FeedbackUser from './components/FeedbackUser';
-
+import ChangePassword from "./components/ChangePassword";
 
 
 const ThemeRoutes = [
@@ -9,6 +9,11 @@ const ThemeRoutes = [
     path: '/profile',
     name: 'Profile',
     component: AccountProfile
+  },
+  {
+    path: '/change-password',
+    name: 'Change password',
+    component: ChangePassword
   },
   {
     path: '/order',

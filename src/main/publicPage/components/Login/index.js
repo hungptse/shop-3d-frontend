@@ -110,6 +110,10 @@ class LoginForm extends Component {
     this.props.history.push("/user");
   };
 
+  // changePassword = () => {
+  //   this.props.history.push("/user/change-password")
+  // }
+
   render() {
     const { error, loading, uid } = this.state;
     const { signned, open } = this.props;
@@ -123,11 +127,11 @@ class LoginForm extends Component {
                 Signed in as <strong>{uid}</strong>
               </Dropdown.Item>
               <Dropdown.Item onClick={this.handleAccount}>
-                <Icon name="user" /> Account
+                <Icon name="user" /> My Account
               </Dropdown.Item>
-              <Dropdown.Item>
-                <Icon name="settings" /> Settings
-              </Dropdown.Item>
+              {/* <Dropdown.Item onClick={this.changePassword}>
+                <Icon name="settings" /> Change Password
+              </Dropdown.Item> */}
               <Dropdown.Item onClick={this.handleLogout}>
                 <Icon name="sign-out" /> Sign Out
               </Dropdown.Item>
