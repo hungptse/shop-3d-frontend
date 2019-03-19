@@ -23,6 +23,7 @@ import MomentLocaleUtils, {
 } from "react-day-picker/moment";
 import moment from "moment";
 import { setProfileToReducer } from "../../../publicPage/components/Login/Auth.action";
+import { notification } from "antd";
 const AUTH_STORE = "AUTH_STORE";
 const profileFromReducer = state => state[AUTH_STORE].profile;
 
@@ -62,6 +63,15 @@ class AccountProfilePage extends Component {
       setTimeout(() => {
         this.setState({ loading: false });
       }, 1000);
+      notification.success({
+        message: "Change profile successful",
+        placement: "topRight"
+      });
+    }).catch(err => {
+      notification.error({
+        message: "Change profile unsuccessful",
+        placement: "topRight"
+      });
     });
   };
 

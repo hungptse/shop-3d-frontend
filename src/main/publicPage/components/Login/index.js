@@ -20,11 +20,13 @@ import LocalStorageUtils, {
 import {
   setSignnedToReducer,
   getSignnedFromReducer,
-  setOpenToReducer
+  setOpenToReducer,
+  setProfileToReducer
 } from "../Login/Auth.action";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import jwt_decode from "jwt-decode";
+import { notification } from "antd";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
 const uidFromReducer = state => state[AUTH_STORE].uid;
@@ -93,7 +95,13 @@ class LoginForm extends Component {
         this.setState({ uid: LocalStorageUtils.getSub() });
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
-        window.location.reload();
+        this.props.setProfileToReducer && this.props.setProfileToReducer();
+        setTimeout(() => {
+          notification.success({
+            message: "Welcome back, " + this.props.profile.name,
+            placement: "topRight"
+          });
+        }, 500);
       })
       .catch(() => {
         this.setState({ error: false, loading: false });
@@ -224,6 +232,7 @@ export default connect(
   {
     setSignnedToReducer,
     getSignnedFromReducer,
-    setOpenToReducer
+    setOpenToReducer,
+    setProfileToReducer
   }
 )(LoginForm);

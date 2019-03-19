@@ -9,7 +9,7 @@ import {
   Icon,
   Loader
 } from "semantic-ui-react";
-import { message, notification } from "antd";
+import {  notification } from "antd";
 import { put } from "../../../../utils/ApiCaller";
 import { CHANGE_PASSWORD } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtil from "../../../../utils/LocalStorage";
