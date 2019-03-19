@@ -11,7 +11,7 @@ import "./App.css";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import 'react-day-picker/lib/style.css';
-
+import 'antd/dist/antd.css'
 const CART_STORE = 'CART_STORE';
 const AUTH_STORE = 'AUTH_STORE';
 const PRODUCT_PAGE_STORE = 'PRODUCT_PAGE_STORE';

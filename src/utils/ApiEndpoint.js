@@ -60,3 +60,7 @@ export const ORDER_CHANGE_STATUS = (id,status) => {
 };
 
 
+export const CHANGE_PASSWORD = () => {
+    return `${BASE_URL}/auth/change_password`;
+};
+

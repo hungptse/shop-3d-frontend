@@ -6,19 +6,72 @@ import {
   Form,
   Input,
   Image,
-  Icon
+  Icon,
+  Loader
 } from "semantic-ui-react";
-
+import { message, notification } from "antd";
+import { put } from "../../../../utils/ApiCaller";
+import { CHANGE_PASSWORD } from "../../../../utils/ApiEndpoint";
+import LocalStorageUtil from "../../../../utils/LocalStorage";
 class ChangePassword extends Component {
-  state = { oldPassword: "", newPassword: "", reNewPassword: "" };
-  handleSumbit = () => {
-      console.log(this.state);
-      
+  state = {
+    oldPassword: "",
+    newPassword: "",
+    reNewPassword: "",
+    loading: false
+  };
+  handleSumbit = async () => {
+    console.log(this.state);
+    if (this.state.newPassword === this.state.reNewPassword) {
+      this.setState({ loading: true });
+      await put(
+        CHANGE_PASSWORD(),
+        {
+          username: LocalStorageUtil.getSub(),
+          password: this.state.oldPassword,
+          newPassword: this.state.newPassword
+        },
+        {},
+        {}
+      )
+        .then(res => {
+          notification.success({
+            message: "Change password successful",
+            description: "Password changed",
+            placement: "topRight"
+          });
+          setTimeout(() => {
+            this.setState({ loading: false });
+          }, 500);
+          this.setState({ oldPassword : "", reNewPassword : "", newPassword : "" });
+        })
+        .catch(err => {
+          notification.error({
+            message: "Opp! Something wrong",
+            description: "Incorrect old password",
+            placement: "topRight"
+          });
+          setTimeout(() => {
+            this.setState({ loading: false });
+          }, 500);
+          this.setState({ reNewPassword : "" });
+        });
+    } else {
+      notification.error({
+        message: "Opp! Something wrong",
+        description: "Re-Password not match with new password",
+        placement: "topRight"
+      });
+      this.setState({ reNewPassword : "", newPassword : ""})
+    }
   };
   render() {
     return (
       <div>
         <Grid>
+          <Dimmer active={this.state.loading} inverted>
+            <Loader>Loading</Loader>
+          </Dimmer>
           <Grid.Row columns={2}>
             <Grid.Column width={7}>
               <Image
@@ -40,9 +93,12 @@ class ChangePassword extends Component {
                           content: <Icon name="terminal" size="small" />
                         }}
                         labelPosition="left"
-                        onChange={e => this.setState({oldPassword : e.target.value})}
+                        onChange={e =>
+                          this.setState({ oldPassword: e.target.value })
+                        }
                         type="password"
                         required
+                        value={this.state.oldPassword}
                       />
                     </Form.Field>
                   </Form.Group>
@@ -57,7 +113,10 @@ class ChangePassword extends Component {
                         labelPosition="left"
                         type="password"
                         required
-                        onChange={e => this.setState({newPassword : e.target.value})}
+                        onChange={e =>
+                          this.setState({ newPassword: e.target.value })
+                        }
+                        value={this.state.newPassword}
                       />
                     </Form.Field>
                   </Form.Group>
@@ -73,7 +132,11 @@ class ChangePassword extends Component {
                         labelPosition="left"
                         type="password"
                         required
-                        onChange={e => this.setState({reNewPassword : e.target.value})}                        
+                        onChange={e =>
+                          this.setState({ reNewPassword: e.target.value })
+                        }
+                        value={this.state.reNewPassword}
+
                       />
                     </Form.Field>
                   </Form.Group>
