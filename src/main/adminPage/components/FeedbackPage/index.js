@@ -45,7 +45,6 @@ class FeedbackMange extends Component {
         <Grid.Row columns={2}>
           <Grid.Column width={2} />
           <Grid.Column width={13}>
-            {/* <AddProduct /> */}
             <Table padded="very" selectable>
               <Table.Header fullWidth>
                 <Table.Row>

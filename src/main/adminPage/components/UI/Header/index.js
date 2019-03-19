@@ -3,11 +3,31 @@ import {
   Menu,
   Container} from "semantic-ui-react";
 import Login from "../../../../publicPage/components/Login";
+import { connect } from "react-redux";
+import { setProfileToReducer } from "../../../../publicPage/components/Login/Auth.action";
+import { createSelector } from "reselect";
+import { notification } from "antd";
 
+const AUTH_STORE = "AUTH_STORE";
+const profileFromReducer = state => state[AUTH_STORE].profile;
+const startSelector = createSelector(
+  profileFromReducer,
+  profile => ({ profile: profile })
+);
 class HeaderAdmin extends Component {
   backToHome = () => {
     this.props.history.push("/admin");
   };
+
+  componentDidMount(){
+    this.props.setProfileToReducer && this.props.setProfileToReducer();
+    setTimeout(() => {
+      notification.success({
+        message: "Welcome back, " + this.props.profile.name,
+        placement: "topRight"
+      });
+    }, 500);
+  }
 
   render() {
     return (
@@ -35,4 +55,4 @@ class HeaderAdmin extends Component {
   }
 }
 
-export default HeaderAdmin;
+export default connect(startSelector,{ setProfileToReducer })(HeaderAdmin);

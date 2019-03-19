@@ -74,6 +74,13 @@ class LoginForm extends Component {
         LocalStorageUtils.setItem(LOCAL_STORAGE_KEY.JWT, token);
         if (jwt_decode(token).role === "Admin") {
           this.props.history.push("/admin");
+        } else {
+          setTimeout(() => {
+            notification.success({
+              message: "Welcome back, " + this.props.profile.name,
+              placement: "topRight"
+            });
+          }, 500);
         }
       }
     });
@@ -96,12 +103,12 @@ class LoginForm extends Component {
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         this.props.setProfileToReducer && this.props.setProfileToReducer();
-        setTimeout(() => {
-          notification.success({
-            message: "Welcome back, " + this.props.profile.name,
-            placement: "topRight"
-          });
-        }, 500);
+        // setTimeout(() => {
+        //   notification.success({
+        //     message: "Welcome back, " + this.props.profile.name,
+        //     placement: "topRight"
+        //   });
+        // }, 500);
       })
       .catch(() => {
         this.setState({ error: false, loading: false });

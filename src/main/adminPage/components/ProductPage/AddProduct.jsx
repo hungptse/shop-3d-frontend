@@ -180,6 +180,7 @@ class AddProduct extends Component {
                                 }
                               })
                             }
+                            required
                           />
                         </Form.Field>
                         <Form.Field width={6}>
@@ -197,6 +198,7 @@ class AddProduct extends Component {
                                 }
                               })
                             }
+                            required
                           />
                         </Form.Field>
                       </Form.Group>
@@ -216,6 +218,7 @@ class AddProduct extends Component {
                                 }
                               })
                             }
+                            required
                           />
                         </Form.Field>
                         <Form.Field width={6}>
@@ -233,6 +236,7 @@ class AddProduct extends Component {
                                 }
                               })
                             }
+                            required
                           />
                         </Form.Field>
                       </Form.Group>
@@ -249,6 +253,7 @@ class AddProduct extends Component {
                             }
                           })
                         }
+                        required
                       />
                       <Form.Group>
                         <Form.Button width={10} fluid basic color='green'>

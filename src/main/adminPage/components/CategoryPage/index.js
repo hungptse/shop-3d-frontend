@@ -13,6 +13,7 @@ import {
 } from "semantic-ui-react";
 import { get, put } from "../../../../utils/ApiCaller";
 import { PUBLIC_LIST_CATE, CATE_CHANGE_NAME } from "../../../../utils/ApiEndpoint";
+import { notification } from "antd";
 
 class CategoryManage extends Component {
   state = {
@@ -46,6 +47,10 @@ class CategoryManage extends Component {
       });
       this.setState({
         cateSelected : {...this.state.cateSelected, name : this.state.cateName}
+      });
+      notification.success({
+        message: "Category Updated ",
+        placement: "topRight"
       });
     });
   }
