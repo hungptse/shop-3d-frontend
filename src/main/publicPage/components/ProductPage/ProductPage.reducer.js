@@ -1,13 +1,8 @@
 const initialState = {
   listProduct: []
-  // quantity: 0,
-  // status: '',
-  // err: false
 };
 const setListProduct = (state, payload) => {
   if (payload) {
-    // state.listProduct = payload;
-    // state.loading = false;
     return { ...state, listProduct: payload };
   }
   return { ...state };
@@ -15,8 +10,6 @@ const setListProduct = (state, payload) => {
 
 const addProductToList = (state, payload) => {
   if (payload) {
-    // state.listProduct = payload;
-    // state.loading = false;
     return { ...state, listProduct : [...state.listProduct, payload] };
   }
   return { ...state };

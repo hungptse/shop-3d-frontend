@@ -49,6 +49,7 @@ class CheckoutPage extends Component {
     ).then(res => {
       CartLocal.checkout();
       this.props.checkoutCart && this.props.checkoutCart();
+      this.setState({ note : ""});
       console.log(res);
     });
   };

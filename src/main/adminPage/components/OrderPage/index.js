@@ -13,17 +13,30 @@ import {
 import { get, put } from "../../../../utils/ApiCaller";
 import { ORDER_LIST, ORDER_CHANGE_STATUS } from "../../../../utils/ApiEndpoint";
 import TimeAgo from "timeago-react";
+import { getOrderFromAPI, changeStatusOrderToAPI } from "./Order.action";
+import { connect } from "react-redux";
+import { createSelector } from "reselect";
+import { notification } from "antd";
+const ORDER_STORE = "ORDER_STORE";
+
+const loadOrderFromReducer = state => state[ORDER_STORE].orders;
+
+const startSelector = createSelector(
+  loadOrderFromReducer,
+  orders => ({ orders: orders || [] })
+);
 
 class OrderMange extends Component {
-  state = { orders: [], details: [], user: {}, orderSelected: [] };
+  state = { details: [], user: {}, orderSelected: {} };
   componentDidMount() {
-    get(ORDER_LIST(), {}, {}).then(res => {
-      this.setState({ orders: res.data });
-    });
+    // get(ORDER_LIST(), {}, {}).then(res => {
+    //   this.setState({ orders: res.data });
+    // });
+    this.props.getOrderFromAPI && this.props.getOrderFromAPI();
   }
 
   viewDetailOrder = value => {
-    this.state.orders.map(order => {
+    this.props.orders.map(order => {
       if (order.id === value) {
         this.setState({ details: order.orderDetail });
         this.setState({ user: order.user });
@@ -32,28 +45,47 @@ class OrderMange extends Component {
     });
   };
 
-  approveOrder = async id => {
-    await put(ORDER_CHANGE_STATUS(id, 2), {}, {}, {})
-      .then(res => {
-        this.setState({
-          orders: this.state.orders.map(order => order.id === id ? {...order, status : 2} : order)
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  approveOrder = id => {
+    this.props.changeStatusOrderToAPI &&
+      this.props.changeStatusOrderToAPI(id, 2);
+    notification.success({
+      message: "Approved Order #" + id,
+      placement: "topRight"
+    });
   };
 
   deniedOrder = async id => {
-    await put(ORDER_CHANGE_STATUS(id, 3), {}, {}, {})
-      .then(res => {
-        this.setState({
-          orders: this.state.orders.map(order => order.id === id ? {...order, status : 3} : order)
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.props.changeStatusOrderToAPI &&
+      this.props.changeStatusOrderToAPI(id, 3);
+    notification.error({
+      message: "Denied Order #" + id,
+      placement: "topRight"
+    });
+  };
+  shippingOrder = async id => {
+    this.props.changeStatusOrderToAPI &&
+      this.props.changeStatusOrderToAPI(id, 4);
+    notification.success({
+      message: "Shipping Order #" + id,
+      placement: "topRight"
+    });
+  };
+
+  closeOrder = async id => {
+    this.props.changeStatusOrderToAPI &&
+      this.props.changeStatusOrderToAPI(id, 5);
+    notification.success({
+      message: "Closed Order #" + id,
+      placement: "topRight"
+    });
+  };
+  shippingFailOrder = async id => {
+    this.props.changeStatusOrderToAPI &&
+      this.props.changeStatusOrderToAPI(id, 6);
+    notification.success({
+      message: "Returned Order #" + id,
+      placement: "topRight"
+    });
   };
 
   renderStatus = status => {
@@ -75,35 +107,131 @@ class OrderMange extends Component {
       case 3:
         return (
           <Label as="a" basic color="red">
-            Denieded
+            Cancelled
+          </Label>
+        );
+        break;
+      case 4:
+        return (
+          <Label as="a" basic color="blue">
+            Shipping
+          </Label>
+        );
+        break;
+      case 5:
+        return (
+          <Label as="a" basic color="black">
+            Successful
+          </Label>
+        );
+        break;
+      case 6:
+        return (
+          <Label as="a" basic color="olive">
+            Failed Shipping
           </Label>
         );
         break;
     }
   };
   render() {
-    const { orders, details, user, orderSelected } = this.state;
+    const { details, user, orderSelected } = this.state;
+    const { orders } = this.props;
+
     const panes = [
       {
-        menuItem: "Tab 1",
-        render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane>
+        menuItem: "All",
+        render: () => <Tab.Pane>All</Tab.Pane>
       },
       {
-        menuItem: "Tab 2",
+        menuItem: "Pending",
         render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
       },
       {
-        menuItem: "Tab 3",
+        menuItem: "Approved",
+        render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
+      },
+      {
+        menuItem: "Cancelled",
+        render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
+      },
+      {
+        menuItem: "Shipping",
+        render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
+      },
+      {
+        menuItem: "Closed",
         render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
       }
     ];
+
+    const renderBtn = (id, status) => {
+      switch (status) {
+        case 1:
+          return (
+            <Table.Cell>
+              <Button
+                color="green"
+                icon="check"
+                content="Accept"
+                size="small"
+                onClick={() => this.approveOrder(id)}
+              />
+              <Button
+                color="red"
+                icon="times"
+                content="Cancel"
+                size="small"
+                onClick={() => this.deniedOrder(id)}
+              />
+            </Table.Cell>
+          );
+          break;
+        case 2:
+          return (
+            <Table.Cell>
+              <Button
+                color="blue"
+                icon="shipping"
+                content="Shipping"
+                size="small"
+                onClick={() => this.shippingOrder(id)}
+              />
+            </Table.Cell>
+          );
+          break;
+        case 4:
+          return (
+            <Table.Cell>
+              <Button
+                color="blue"
+                icon="inbox"
+                content="Close"
+                size="small"
+                onClick={() => this.closeOrder(id)}
+              />
+              <Button
+                color="purple"
+                icon="user x"
+                content="Ship Failed"
+                size="small"
+                onClick={() => this.shippingFailOrder(id)}
+              />
+            </Table.Cell>
+          );
+          break;
+        default:
+          return <Table.Cell />;
+      }
+    };
+
     return (
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column width={2} />
           <Grid.Column width={13}>
             {/* <AddProduct /> */}
-            {/* <Tab menu={{ secondary: true, pointing: true }} panes={panes} /> */}
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
             <Grid>
               <Grid.Row columns={2}>
                 <Grid.Column width={details.length === 0 ? 16 : 10}>
@@ -140,7 +268,8 @@ class OrderMange extends Component {
                             <Table.Cell>
                               {this.renderStatus(order.status)}
                             </Table.Cell>
-                            {order.status === 1 ? (
+                            {renderBtn(order.id, order.status)}
+                            {/* {order.status === 1 ? (
                               <Table.Cell>
                                 <Button
                                   color="green"
@@ -159,7 +288,7 @@ class OrderMange extends Component {
                               </Table.Cell>
                             ) : (
                               <Table.Cell />
-                            )}
+                            )} */}
                           </Table.Row>
                         );
                       })}
@@ -191,7 +320,10 @@ class OrderMange extends Component {
                       <Grid container>
                         <Grid.Row textAlign="right">
                           <Header as="h5">
-                            Created at: {new Date(orderSelected.createdTime).toLocaleString()}
+                            Created at:{" "}
+                            {new Date(
+                              orderSelected.createdTime
+                            ).toLocaleString()}
                           </Header>
                         </Grid.Row>
                         <Grid.Row centered>
@@ -217,7 +349,10 @@ class OrderMange extends Component {
                         </Grid.Row>
                         <Grid.Row columns={1} centered>
                           <Grid.Column>
-                            Total: ${orderSelected.total}
+                            Status: {this.renderStatus(orderSelected.status)}
+                            <Button size="small" secondary floated="right">
+                              Total: ${orderSelected.total}
+                            </Button>
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
@@ -239,7 +374,9 @@ class OrderMange extends Component {
                               <Table.Cell>{product.quantity}</Table.Cell>
                               <Table.Cell>${product.price}</Table.Cell>
                               <Table.Cell>
-                                ${product.price * product.quantity}
+                                <Button size="mini" secondary floated="right">
+                                  ${product.price * product.quantity}
+                                </Button>
                               </Table.Cell>
                             </Table.Row>
                           );
@@ -259,4 +396,7 @@ class OrderMange extends Component {
   }
 }
 
-export default OrderMange;
+export default connect(
+  startSelector,
+  { getOrderFromAPI, changeStatusOrderToAPI }
+)(OrderMange);
