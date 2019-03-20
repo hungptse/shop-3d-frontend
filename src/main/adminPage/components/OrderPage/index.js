@@ -29,9 +29,6 @@ const startSelector = createSelector(
 class OrderMange extends Component {
   state = { details: [], user: {}, orderSelected: {} };
   componentDidMount() {
-    // get(ORDER_LIST(), {}, {}).then(res => {
-    //   this.setState({ orders: res.data });
-    // });
     this.props.getOrderFromAPI && this.props.getOrderFromAPI();
   }
 
@@ -57,6 +54,7 @@ class OrderMange extends Component {
   deniedOrder = async id => {
     this.props.changeStatusOrderToAPI &&
       this.props.changeStatusOrderToAPI(id, 3);
+
     notification.error({
       message: "Denied Order #" + id,
       placement: "topRight"
@@ -65,6 +63,7 @@ class OrderMange extends Component {
   shippingOrder = async id => {
     this.props.changeStatusOrderToAPI &&
       this.props.changeStatusOrderToAPI(id, 4);
+
     notification.success({
       message: "Shipping Order #" + id,
       placement: "topRight"
@@ -74,6 +73,7 @@ class OrderMange extends Component {
   closeOrder = async id => {
     this.props.changeStatusOrderToAPI &&
       this.props.changeStatusOrderToAPI(id, 5);
+
     notification.success({
       message: "Closed Order #" + id,
       placement: "topRight"
@@ -211,7 +211,7 @@ class OrderMange extends Component {
                 onClick={() => this.closeOrder(id)}
               />
               <Button
-                color="purple"
+                color="olive"
                 icon="user x"
                 content="Ship Failed"
                 size="small"
@@ -234,7 +234,7 @@ class OrderMange extends Component {
             <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
             <Grid>
               <Grid.Row columns={2}>
-                <Grid.Column width={details.length === 0 ? 16 : 10}>
+                <Grid.Column width={10}>
                   <Table padded="very" selectable>
                     <Table.Header fullWidth>
                       <Table.Row>
@@ -314,7 +314,7 @@ class OrderMange extends Component {
                     </Table.Footer>
                   </Table>
                 </Grid.Column>
-                {this.state.orderSelected.length !== 0 ? (
+                {Object.keys(this.state.orderSelected).length !== 0 ? (
                   <Grid.Column width={6}>
                     <Segment>
                       <Grid container>

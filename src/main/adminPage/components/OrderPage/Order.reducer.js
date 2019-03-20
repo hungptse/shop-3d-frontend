@@ -11,7 +11,6 @@ const setOrders = (state, payload) => {
 
 const changeStatusOrder = (state, payload) => {
   if (payload) {
-    console.log(payload);
     return {
       ...state,
       orders: state.orders.map(order =>

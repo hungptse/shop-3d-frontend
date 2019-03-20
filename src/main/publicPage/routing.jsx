@@ -3,7 +3,6 @@ import ProductPage from "./components/ProductPage/ProductPage.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import CheckoutPage from "./components/CheckoutPage";
 import ProductDetailPage from "./components/ProductDetailPage";
-
 import withUserRouteComponent from "../../router/withUserRouteComponent";
 const withUser = withUserRouteComponent("/");
 

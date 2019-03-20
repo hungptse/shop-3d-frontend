@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Table, Icon, Menu } from "semantic-ui-react";
 
 class OrderUser extends Component {
+  
     render() {
         return (
             <Grid>

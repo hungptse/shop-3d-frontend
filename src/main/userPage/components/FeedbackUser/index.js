@@ -1,8 +1,19 @@
 import React, { Component } from "react";
-import { Grid, Table, Icon, Menu } from "semantic-ui-react";
-
+import { Grid, Table, Icon, Menu, Rating, Label } from "semantic-ui-react";
+import { get } from "../../../../utils/ApiCaller";
+import { FEEDBACK_OF_USER } from "../../../../utils/ApiEndpoint";
+import LocalStorageUtils from "../../../../utils/LocalStorage";
 class FeedBackUser extends Component {
+  state = { feedbacks: [] };
+  async componentDidMount() {
+    await get(FEEDBACK_OF_USER(LocalStorageUtils.getSub()), {}, {}).then(
+      res => {
+        this.setState({ feedbacks: res.data });
+      }
+    );
+  }
   render() {
+    const { feedbacks } = this.state;
     return (
       <Grid>
         <Grid.Row>
@@ -20,7 +31,7 @@ class FeedBackUser extends Component {
               </Table.Header>
 
               <Table.Body>
-                {/* {feedbacks.map(feedback => {
+                {feedbacks.map(feedback => {
                   return (
                     <Table.Row
                       key={feedback.id}
@@ -32,7 +43,6 @@ class FeedBackUser extends Component {
                         {new Date(feedback.postedTime).toLocaleString()}
                       </Table.Cell>
                       <Table.Cell>{feedback.pro.name}</Table.Cell>
-                      <Table.Cell>{feedback.acc.name}</Table.Cell>
                       <Table.Cell>
                         <Rating
                           icon="heart"
@@ -51,18 +61,9 @@ class FeedBackUser extends Component {
                           {feedback.isApprove ? "Approved" : "Rejected"}
                         </Label>
                       </Table.Cell>
-                      <Table.Cell>
-                        <Radio
-                          toggle
-                          checked={feedback.isApprove}
-                          onClick={() =>
-                            this.changeStatus(feedback.id, !feedback.isApprove)
-                          }
-                        />
-                      </Table.Cell>
                     </Table.Row>
                   );
-                })} */}
+                })}
               </Table.Body>
             </Table>
           </Grid.Column>

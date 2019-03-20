@@ -40,6 +40,10 @@ export const FEEDBACK_CHANGE = (id) => {
     return `${BASE_URL}/api/feedback/${id}`;
 };
 
+export const FEEDBACK_OF_USER = (uid) => {
+    return `${BASE_URL}/api/feedback/user/${uid}`;
+};
+
 
 export const CATE_CHANGE_NAME = (id) => {
     return `${BASE_URL}/api/category/${id}`;
