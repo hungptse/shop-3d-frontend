@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Tab, Container, Menu, Segment } from "semantic-ui-react";
 import { renderRoutes } from "../../components/route";
-import ThemeRoutes from "./routing";
+import ThemeRoutes from "./routing.jsx";
 import Header from "./../publicPage/components/UI/Header";
 import Footer from "./../publicPage/components/UI/Footer";
 class FullLayoutUser extends Component {
@@ -10,7 +10,7 @@ class FullLayoutUser extends Component {
   componentDidMount() {
     var tabs = [];
     ThemeRoutes.map((route, key) => {
-      if (!route.redirect) {
+      if (!route.redirect && !route.hidden) {
         tabs.push({
           menuItem: (
             <Menu.Item

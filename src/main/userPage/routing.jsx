@@ -2,6 +2,7 @@ import AccountProfile from './components/AccontProfile';
 import OrderHistory from './components/OrderUser';
 import FeedbackUser from './components/FeedbackUser';
 import ChangePassword from "./components/ChangePassword";
+import OrderDetail from './components/OrderUser/OrderDetail.jsx';
 
 
 const ThemeRoutes = [
@@ -16,7 +17,7 @@ const ThemeRoutes = [
     component: ChangePassword
   },
   {
-    path: '/order',
+    path: '/orders',
     name: 'Order history',
     component: OrderHistory
   },
@@ -24,6 +25,12 @@ const ThemeRoutes = [
     path: '/feedback',
     name: 'Feedback history',
     component: FeedbackUser
+  },
+  {
+    path: '/order/:id',
+    name: 'Order Detail',
+    component: OrderDetail,
+    hidden : true
   },
   { path: '/', pathTo: '/profile', name: 'Profile', redirect: true }
 ];

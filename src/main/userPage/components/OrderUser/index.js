@@ -27,7 +27,7 @@ class OrderUser extends Component {
         break;
       case 2:
         return (
-          <Label as="a" basic color="green">
+          <Label as="a" basic color="blue">
             Approved
           </Label>
         );
@@ -55,7 +55,7 @@ class OrderUser extends Component {
         break;
       case 6:
         return (
-          <Label as="a" basic color="olive">
+          <Label as="a" basic color="red">
             Failed Shipping
           </Label>
         );
@@ -68,6 +68,9 @@ class OrderUser extends Component {
       page: this.state.orders.slice(indexMax - ITEM_ON_PAGE, indexMax)
     });
   };
+  linkToDetail = id => {
+    this.props.history.push(`order/${id}`);
+  };
 
   render() {
     const { orders, page } = this.state;
@@ -75,7 +78,7 @@ class OrderUser extends Component {
       <Grid>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Table padded="very" selectable basic >
+            <Table padded="very" selectable basic>
               <Table.Header fullWidth>
                 <Table.Row>
                   <Table.HeaderCell>#</Table.HeaderCell>
@@ -88,7 +91,10 @@ class OrderUser extends Component {
               <Table.Body>
                 {page.map(order => {
                   return (
-                    <Table.Row key={order.id}>
+                    <Table.Row
+                      key={order.id}
+                      onClick={() => this.linkToDetail(order.id)}
+                    >
                       <Table.Cell>#{order.id}</Table.Cell>
                       <Table.Cell>
                         {new Date(order.createdTime).toLocaleDateString()}

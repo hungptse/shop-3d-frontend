@@ -99,7 +99,7 @@ class OrderMange extends Component {
         break;
       case 2:
         return (
-          <Label as="a" basic color="green">
+          <Label as="a" basic color="blue">
             Approved
           </Label>
         );
@@ -127,7 +127,7 @@ class OrderMange extends Component {
         break;
       case 6:
         return (
-          <Label as="a" basic color="olive">
+          <Label as="a" basic color="red">
             Failed Shipping
           </Label>
         );
