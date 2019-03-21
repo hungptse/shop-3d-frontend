@@ -120,7 +120,7 @@ class OrderMange extends Component {
         break;
       case 5:
         return (
-          <Label as="a" basic color="black">
+          <Label as="a" basic color="green">
             Successful
           </Label>
         );
@@ -269,26 +269,6 @@ class OrderMange extends Component {
                               {this.renderStatus(order.status)}
                             </Table.Cell>
                             {renderBtn(order.id, order.status)}
-                            {/* {order.status === 1 ? (
-                              <Table.Cell>
-                                <Button
-                                  color="green"
-                                  icon="check"
-                                  content="Accept"
-                                  size="small"
-                                  onClick={() => this.approveOrder(order.id)}
-                                />
-                                <Button
-                                  color="red"
-                                  icon="times"
-                                  content="Cancel"
-                                  size="small"
-                                  onClick={() => this.deniedOrder(order.id)}
-                                />
-                              </Table.Cell>
-                            ) : (
-                              <Table.Cell />
-                            )} */}
                           </Table.Row>
                         );
                       })}
