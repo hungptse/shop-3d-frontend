@@ -21,14 +21,17 @@ class ProductPage extends Component {
   componentDidMount() {
     if (this.props.listProduct.length === 0) {
       this.props.getListProductFromAPI && this.props.getListProductFromAPI();
-      console.log(this.props);
-    
-    setTimeout(() => {
-      
-      this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
-    }, 200);}
+
+      setTimeout(() => {
+        this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
+      }, 500);
+    } else {
+      setTimeout(() => {
+        this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
+      }, 500);
+    }
   }
-  
+
   changePage = pageNumber => {
     var indexMax = pageNumber * ITEM_ON_PAGE;
     this.setState({
