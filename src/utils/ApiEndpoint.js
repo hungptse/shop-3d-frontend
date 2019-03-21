@@ -68,3 +68,7 @@ export const CHANGE_PASSWORD = () => {
     return `${BASE_URL}/auth/change_password`;
 };
 
+export const ORDER_OF_USER = (uid) => {
+    return `${BASE_URL}/api/order/${uid}`;
+};
+

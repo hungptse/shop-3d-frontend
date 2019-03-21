@@ -3,6 +3,7 @@ import ProductPage from "./components/ProductPage/ProductPage.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import CheckoutPage from "./components/CheckoutPage";
 import ProductDetailPage from "./components/ProductDetailPage";
+import RegisterPage from "./components/RegisterPage";
 import withUserRouteComponent from "../../router/withUserRouteComponent";
 const withUser = withUserRouteComponent("/");
 
@@ -26,6 +27,11 @@ const ThemeRoutes = [
     path: '/product/:id',
     name: 'Product Detail',
     component: ProductDetailPage
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterPage
   },
   { path: '/', pathTo: '/home', name: 'Home', redirect: true }
 ];

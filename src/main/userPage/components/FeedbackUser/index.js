@@ -3,17 +3,28 @@ import { Grid, Table, Icon, Menu, Rating, Label } from "semantic-ui-react";
 import { get } from "../../../../utils/ApiCaller";
 import { FEEDBACK_OF_USER } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
+import { Pagination } from "antd";
+
+const ITEM_ON_PAGE = 5;
+
 class FeedBackUser extends Component {
-  state = { feedbacks: [] };
+  state = { feedbacks: [], page: [] };
   async componentDidMount() {
     await get(FEEDBACK_OF_USER(LocalStorageUtils.getSub()), {}, {}).then(
       res => {
         this.setState({ feedbacks: res.data });
       }
     );
+    this.setState({ page: this.state.feedbacks.slice(0, ITEM_ON_PAGE) });
   }
+  changePage = pageNumber => {
+    var indexMax = pageNumber * ITEM_ON_PAGE;
+    this.setState({
+      page: this.state.feedbacks.slice(indexMax - ITEM_ON_PAGE, indexMax)
+    });
+  };
   render() {
-    const { feedbacks } = this.state;
+    const { feedbacks, page } = this.state;
     return (
       <Grid>
         <Grid.Row>
@@ -21,7 +32,7 @@ class FeedBackUser extends Component {
             <Table padded="very" selectable basic>
               <Table.Header fullWidth>
                 <Table.Row>
-                  <Table.HeaderCell>ID-Feedback</Table.HeaderCell>
+                  <Table.HeaderCell>#</Table.HeaderCell>
                   <Table.HeaderCell>Posted Time</Table.HeaderCell>
                   <Table.HeaderCell>Product</Table.HeaderCell>
                   <Table.HeaderCell>Rate</Table.HeaderCell>
@@ -31,7 +42,7 @@ class FeedBackUser extends Component {
               </Table.Header>
 
               <Table.Body>
-                {feedbacks.map(feedback => {
+                {page.map(feedback => {
                   return (
                     <Table.Row
                       key={feedback.id}
@@ -40,7 +51,7 @@ class FeedBackUser extends Component {
                     >
                       <Table.Cell>#{feedback.id}</Table.Cell>
                       <Table.Cell>
-                        {new Date(feedback.postedTime).toLocaleString()}
+                        {new Date(feedback.postedTime).toLocaleDateString()}
                       </Table.Cell>
                       <Table.Cell>{feedback.pro.name}</Table.Cell>
                       <Table.Cell>
@@ -66,6 +77,18 @@ class FeedBackUser extends Component {
                 })}
               </Table.Body>
             </Table>
+            <Grid>
+              <Grid.Column floated="left" width={5}/>
+              <Grid.Column width={6} textAlign="center">
+                <Pagination
+                  defaultCurrent={1}
+                  pageSize={ITEM_ON_PAGE}
+                  onChange={page => this.changePage(page)}
+                  total={feedbacks.length}
+                />
+              </Grid.Column>
+              <Grid.Column floated="right" width={5}/>
+            </Grid>
           </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -7,7 +7,6 @@ import withGuestRouteComponent from "./withGuestAndUserRouteComponent";
 import AdminPage from '../main/adminPage';
 import UserPage from '../main/userPage';
 import PublicPage from '../main/publicPage';
-import RegisterPage from "../main/publicPage/components/RegisterPage";
 
 
 
@@ -33,11 +32,6 @@ const indexRoutes = [
         path: '/user',
         name: 'User',
         component: withUser(UserPage)
-    },
-    {
-        path: '/register',
-        name: 'Register',
-        component: RegisterPage
     },
     { path: '/', pathTo: '/store', name: 'Public', redirect: true }
 ];
