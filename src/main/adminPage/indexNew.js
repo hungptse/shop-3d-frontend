@@ -27,6 +27,14 @@ class SiderDemo extends React.Component {
     });
   };
 
+  setActiveItem = (path) => {
+    var name = path.split("/")[1];
+    var index = MenuRoutes.findIndex(
+      route => route.path.split("/")[1] === name
+    );
+    this.setState({ indexDefault: index });
+  }
+
   render() {
     return (
       <Layout>
@@ -53,7 +61,7 @@ class SiderDemo extends React.Component {
             {MenuRoutes.map((route, key) => {
               if (!route.redirect) {
                 return (
-                  <Menu.Item key={key}>
+                  <Menu.Item key={key} onClick={() => this.setActiveItem(route.path)}>
                     <Link to={this.props.match.path + route.path}>
                       <Icon type={route.icon} />
                       <span>{route.name}</span>
