@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Grid, Table, Icon, Menu, Label, Header } from "semantic-ui-react";
+import {
+  Grid,
+  Table,
+  Icon,
+  Menu,
+  Label,
+  Header,
+  Dimmer,
+  Loader
+} from "semantic-ui-react";
 import { get } from "../../../../utils/ApiCaller";
 import { ORDER_OF_USER } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
@@ -8,12 +17,15 @@ import { Pagination } from "antd";
 const ITEM_ON_PAGE = 5;
 
 class OrderUser extends Component {
-  state = { orders: [], page: [] };
+  state = { orders: [], page: [], loading: true };
   async componentDidMount() {
     await get(ORDER_OF_USER(LocalStorageUtils.getSub()), {}, {}).then(res => {
       this.setState({ orders: res.data });
       this.setState({ page: this.state.orders.slice(0, ITEM_ON_PAGE) });
     });
+    setTimeout(() => {
+      this.setState({ loading : false});
+    }, 500);
   }
 
   renderStatus = status => {
@@ -73,9 +85,12 @@ class OrderUser extends Component {
   };
 
   render() {
-    const { orders, page } = this.state;
+    const { orders, page, loading } = this.state;
     return (
       <Grid>
+        <Dimmer active={loading} inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
         <Grid.Row>
           <Grid.Column width={16}>
             <Table padded="very" selectable basic>

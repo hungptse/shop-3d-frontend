@@ -47,9 +47,9 @@ class CheckoutPage extends Component {
       {},
       {}
     ).then(res => {
+      this.setState({ note : ""});
       CartLocal.checkout();
       this.props.checkoutCart && this.props.checkoutCart();
-      this.setState({ note : ""});
       console.log(res);
     });
   };
@@ -100,6 +100,7 @@ class CheckoutPage extends Component {
                     placeholder="Note for this order..."
                     rows={5}
                     autoHeight
+                    value={this.state.note}
                     onChange={(e, { value }) => this.setState({ note: value })}
                   />
                   {/* <Form.Checkbox toggle label="Using infomation form account" /> */}

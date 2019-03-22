@@ -15,7 +15,7 @@ export default class Gallery extends React.Component {
         naturalSlideWidth={100}
         naturalSlideHeight={100}
         totalSlides={images.length}
-        orientation={'vertical'}
+        orientation={'horizontal'}
       >
         <Slider>
           {images.map((img, key) => {

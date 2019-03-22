@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Grid, Table, Icon, Menu, Rating, Label } from "semantic-ui-react";
+import {
+  Grid,
+  Table,
+  Icon,
+  Menu,
+  Rating,
+  Label,
+  Dimmer,
+  Loader
+} from "semantic-ui-react";
 import { get } from "../../../../utils/ApiCaller";
 import { FEEDBACK_OF_USER } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
@@ -8,14 +17,19 @@ import { Pagination } from "antd";
 const ITEM_ON_PAGE = 5;
 
 class FeedBackUser extends Component {
-  state = { feedbacks: [], page: [] };
+  state = { feedbacks: [], page: [], loading: true };
   async componentDidMount() {
     await get(FEEDBACK_OF_USER(LocalStorageUtils.getSub()), {}, {}).then(
       res => {
         this.setState({ feedbacks: res.data });
+        this.setState({
+          page: this.state.feedbacks.slice(0, ITEM_ON_PAGE)
+        });
       }
     );
-    this.setState({ page: this.state.feedbacks.slice(0, ITEM_ON_PAGE) });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 500);
   }
   changePage = pageNumber => {
     var indexMax = pageNumber * ITEM_ON_PAGE;
@@ -24,9 +38,12 @@ class FeedBackUser extends Component {
     });
   };
   render() {
-    const { feedbacks, page } = this.state;
+    const { feedbacks, page, loading } = this.state;
     return (
       <Grid>
+        <Dimmer active={loading} inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
         <Grid.Row>
           <Grid.Column width={16}>
             <Table padded="very" selectable basic>
@@ -78,7 +95,7 @@ class FeedBackUser extends Component {
               </Table.Body>
             </Table>
             <Grid>
-              <Grid.Column floated="left" width={5}/>
+              <Grid.Column floated="left" width={5} />
               <Grid.Column width={6} textAlign="center">
                 <Pagination
                   defaultCurrent={1}
@@ -87,7 +104,7 @@ class FeedBackUser extends Component {
                   total={feedbacks.length}
                 />
               </Grid.Column>
-              <Grid.Column floated="right" width={5}/>
+              <Grid.Column floated="right" width={5} />
             </Grid>
           </Grid.Column>
         </Grid.Row>

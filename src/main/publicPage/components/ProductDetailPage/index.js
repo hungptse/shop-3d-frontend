@@ -61,7 +61,6 @@ class ProductDetailPage extends Component {
     await get(PRODUCT_RATE(this.props.match.params.id)).then(res => {
       this.setState({ rate : res.data});
     })
-    console.log(this.state.rate);
   }
   async componentWillReceiveProps(newProps) {
     await get(GET_PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
