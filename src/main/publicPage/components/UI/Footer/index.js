@@ -15,7 +15,7 @@ class Footer extends Component {
     return (
       <Segment
         vertical
-        style={{ margin: "2em 0em 0em", background: "#f0f2f5" }}
+        style={{ background: "#f0f2f5" }}
       >
         <Container textAlign="center">
           <Grid>

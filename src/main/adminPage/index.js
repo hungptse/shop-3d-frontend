@@ -42,7 +42,7 @@ class FullLayoutAdmin extends Component {
           location={this.props.location}
         />
         <div style={{  marginTop: "8em" }}>
-          <Sidebar animation="overlay" visible>
+          <Sidebar visible>
             <Menu
               vertical
               fluid
@@ -89,7 +89,7 @@ class FullLayoutAdmin extends Component {
               })}
             </Menu>
           </Sidebar>
-          <Sidebar.Pusher style={{ paddingLeft: "3em" }}>
+          <Sidebar.Pusher style={{ minHeight: "20.5em", position : "relative", top : "8em"}}>
             {renderRoutes(MenuRoutes, this.props.match.path)}
           </Sidebar.Pusher>
         </div>

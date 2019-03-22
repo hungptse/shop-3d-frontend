@@ -4,7 +4,7 @@ import withGuestRouteComponent from "./withGuestAndUserRouteComponent";
 
 
 
-import AdminPage from '../main/adminPage';
+import AdminPage from '../main/adminPage/indexNew.js';
 import UserPage from '../main/userPage';
 import PublicPage from '../main/publicPage';
 

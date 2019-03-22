@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import {
-  Menu,
-  Container} from "semantic-ui-react";
+import { Menu, Container, Icon, Image } from "semantic-ui-react";
 import Login from "../../../../publicPage/components/Login";
 import { connect } from "react-redux";
 import { setProfileToReducer } from "../../../../publicPage/components/Login/Auth.action";
 import { createSelector } from "reselect";
 import { notification } from "antd";
+import logo from "../../../../../assets/images/azgundam-logo.png";
 
 const AUTH_STORE = "AUTH_STORE";
 const profileFromReducer = state => state[AUTH_STORE].profile;
@@ -19,7 +18,7 @@ class HeaderAdmin extends Component {
     this.props.history.push("/admin");
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.setProfileToReducer && this.props.setProfileToReducer();
     setTimeout(() => {
       notification.success({
@@ -32,14 +31,30 @@ class HeaderAdmin extends Component {
   render() {
     return (
       <Menu
-        fixed="top"
         borderless
         secondary
         pointing
         style={{ paddingBottom: "1em", background: "#ffffff" }}
         className="boderBot"
       >
-        <Container fluid style={{ backgroudColor: "white",paddingRight: '2em' }}>
+        <Container
+          fluid
+          style={{ backgroudColor: "white", paddingRight: "2em" }}
+        >
+          <Menu.Menu position="left">
+            <Menu.Item onClick={this.props.toggle}>
+              <Icon name="gg" size="large" className="trigger" />
+            </Menu.Item>
+          </Menu.Menu>
+          <Menu.Menu>
+            <Menu.Item>
+              <Image
+                src={logo}
+                as="a"
+                size="small"
+              />
+            </Menu.Item>
+          </Menu.Menu>
           <Menu.Menu position="right">
             <Menu.Item>
               <Login
@@ -55,4 +70,7 @@ class HeaderAdmin extends Component {
   }
 }
 
-export default connect(startSelector,{ setProfileToReducer })(HeaderAdmin);
+export default connect(
+  startSelector,
+  { setProfileToReducer }
+)(HeaderAdmin);

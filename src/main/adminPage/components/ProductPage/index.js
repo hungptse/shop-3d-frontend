@@ -39,9 +39,8 @@ class ProductManage extends Component {
     const { listProduct } = this.props;
     return (
       <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column width={2} />
-          <Grid.Column width={13}>  
+        <Grid.Row columns={1}>
+          <Grid.Column width={16}>  
             <AddProduct addProduct={this.addProduct} />
             <Table padded="very" selectable>
               <Table.Header fullWidth>
