@@ -4,7 +4,7 @@ import Login from "../../../../publicPage/components/Login";
 import { connect } from "react-redux";
 import { setProfileToReducer } from "../../../../publicPage/components/Login/Auth.action";
 import { createSelector } from "reselect";
-import { notification } from "antd";
+import { notification, Card } from "antd";
 import logo from "../../../../../assets/images/azgundam-logo.png";
 
 const AUTH_STORE = "AUTH_STORE";
@@ -23,7 +23,8 @@ class HeaderAdmin extends Component {
     setTimeout(() => {
       notification.success({
         message: "Welcome back, " + this.props.profile.name,
-        placement: "topRight"
+        placement: "topLeft",
+        icon: <Icon name="react" />
       });
     }, 500);
   }
@@ -41,18 +42,9 @@ class HeaderAdmin extends Component {
           fluid
           style={{ backgroudColor: "white", paddingRight: "2em" }}
         >
-          <Menu.Menu position="left">
-            <Menu.Item onClick={this.props.toggle}>
-              <Icon name="gg" size="large" className="trigger" />
-            </Menu.Item>
-          </Menu.Menu>
           <Menu.Menu>
             <Menu.Item>
-              <Image
-                src={logo}
-                as="a"
-                size="small"
-              />
+              <Image src={logo} as="a" size="small" />
             </Menu.Item>
           </Menu.Menu>
           <Menu.Menu position="right">

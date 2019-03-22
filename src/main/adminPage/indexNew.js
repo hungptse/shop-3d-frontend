@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Icon, Card } from "antd";
 import "./admin.css";
 import Footer from "../publicPage/components/UI/Footer";
 import HeaderAdmin from "../adminPage/components/UI/Header";
 import MenuRoutes from "./routingMenu";
 import { Link } from "react-router-dom";
 import { renderRoutes } from "../../components/route";
-
+import { Icon as IconSe } from "semantic-ui-react";
 const { Header, Sider, Content } = Layout;
 
 class SiderDemo extends React.Component {
@@ -23,8 +23,20 @@ class SiderDemo extends React.Component {
   render() {
     return (
       <Layout>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+        <Sider
+          style={{ paddingTop: 20 }}
+          theme="light"
+          trigger={null}
+          collapsible
+          collapsed={this.state.collapsed}
+        >
+          <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
+            <Card hoverable size="small" onClick={this.toggle} style={{ marginBottom: 100, textAlign : "center" }}>
+              <IconSe
+                name="sliders horizontal"
+                className="trigger"
+              />
+            </Card>
             {MenuRoutes.map((route, key) => {
               if (!route.redirect) {
                 return (
@@ -40,7 +52,9 @@ class SiderDemo extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          <HeaderAdmin toggle={this.toggle} />
+          <HeaderAdmin
+           
+          />
 
           <Content
             style={{
