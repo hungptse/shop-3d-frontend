@@ -22,14 +22,13 @@ class ProductPage extends Component {
     if (this.props.listProduct.length === 0) {
       this.props.getListProductFromAPI && this.props.getListProductFromAPI();
 
-      setTimeout(() => {
-        this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
-      }, 500);
-    } else {
-      setTimeout(() => {
-        this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
-      }, 500);
+      // setTimeout(() => {
+      //   this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
+      // }, 500);
     }
+    setTimeout(() => {
+      this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
+    }, 500);
   }
 
   changePage = pageNumber => {

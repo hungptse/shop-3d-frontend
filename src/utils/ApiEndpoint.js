@@ -11,7 +11,7 @@ export const PRODUCT_ENDPOINT = () => {
     return `${BASE_URL}/api/product`;
 };
 
-export const GET_PRODUCT_BY_ID = (id) => {
+export const PRODUCT_BY_ID = (id) => {
     return `${BASE_URL}/api/product/${id}`;
 };
 

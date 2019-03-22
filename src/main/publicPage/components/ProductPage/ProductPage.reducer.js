@@ -15,13 +15,17 @@ const addProductToList = (state, payload) => {
   return { ...state };
 }
 
+
+
+
+
 export const productReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "GET_LIST_PRODUCT":
       return setListProduct(state, payload);
-    case "SET_LIST_PRODUCT":
-      return addProductToList(state, payload);
-    default:
+      case "SET_LIST_PRODUCT":
+        return addProductToList(state, payload);
+      default:
       return state;
   }
 };

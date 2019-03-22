@@ -10,7 +10,7 @@ import {
   Button,
   Tab,
   Rating} from "semantic-ui-react";
-import { GET_PRODUCT_BY_ID, PRODUCT_RATE } from "../../../../utils/ApiEndpoint";
+import { PRODUCT_BY_ID, PRODUCT_RATE } from "../../../../utils/ApiEndpoint";
 import { get } from "../../../../utils/ApiCaller";
 import Quantity from "./Quantity.jsx";
 import { connect } from "react-redux";
@@ -48,7 +48,7 @@ class ProductDetailPage extends Component {
   state = { product: {}, quantity: 1, urlThumbail: "" ,rate : 5};
 
   async componentWillMount() {
-    await get(GET_PRODUCT_BY_ID(this.props.match.params.id), {}, {}).then(
+    await get(PRODUCT_BY_ID(this.props.match.params.id), {}, {}).then(
       res => {
         this.setState({ product: res.data });
       }
@@ -63,7 +63,7 @@ class ProductDetailPage extends Component {
     })
   }
   async componentWillReceiveProps(newProps) {
-    await get(GET_PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
+    await get(PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
       this.setState({ product: res.data });
     });
     await FirebaseUitls.getLinkImages(this.state.product.thumbnail).then(

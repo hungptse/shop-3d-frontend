@@ -26,7 +26,7 @@ class HeaderAdmin extends Component {
         placement: "topLeft",
         icon: <Icon name="react" />
       });
-    }, 500);
+    }, 1000);
   }
 
   render() {

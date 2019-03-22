@@ -11,10 +11,10 @@ import {
   Dimmer,
   Loader
 } from "semantic-ui-react";
-import { get } from "../../../../utils/ApiCaller";
+import { get, post, put } from "../../../../utils/ApiCaller";
 import {
   PRODUCT_ENDPOINT,
-  GET_PRODUCT_BY_ID,
+  PRODUCT_BY_ID,
   PUBLIC_LIST_CATE,
   ADMIN_LIST_CATE_NAME
 } from "../../../../utils/ApiEndpoint";
@@ -25,7 +25,7 @@ import {
   getListProductFromAPI,
   setListProductsToReducer
 } from "../../../publicPage/components/ProductPage/ProductPage.action";
-import { Drawer, Row, Col, Divider } from "antd";
+import { Drawer, Row, Col, Divider, notification, Pagination } from "antd";
 import _ from "lodash";
 
 const PRODUCT_PAGE_STORE = "PRODUCT_PAGE_STORE";
@@ -43,39 +43,59 @@ const pStyle = {
   display: "block",
   marginBottom: 16
 };
+const ITEM_ON_PAGE = 5;
+
 class ProductManage extends Component {
-  state = { visible: false, product: {}, loading : false, cates : [] };
+  state = {
+    visible: false,
+    product: {},
+    loading: false,
+    cates: [],
+    addNew: false,
+    page: [],
+    loadingPage : true
+  };
 
   async componentDidMount() {
     if (this.props.listProduct.length === 0) {
       this.props.getListProductFromAPI && this.props.getListProductFromAPI();
     }
-    await get(ADMIN_LIST_CATE_NAME(), {}, {}).then(res => {
-      console.log(res.data);
-      var afterReduce = [];
-      _.reduce(res.data,(obj,cate) => {
-        obj = {
-          key: cate.id,
-          value: cate.id,
-          text: cate.name
-        };
-        afterReduce.push(obj);
-      },{})
-      this.setState({ cates : afterReduce });
-    });
+    setTimeout(() => {
+      this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE), loadingPage : false });
+    }, 500);
 
-    console.log(this.state.cates);
-    
+    await get(ADMIN_LIST_CATE_NAME(), {}, {}).then(res => {
+      var afterReduce = [];
+      _.reduce(
+        res.data,
+        (obj, cate) => {
+          obj = {
+            key: cate.id,
+            value: cate.id,
+            text: cate.name
+          };
+          afterReduce.push(obj);
+        },
+        {}
+      );
+      this.setState({ cates: afterReduce });
+    });
   }
+
+  changePage = pageNumber => {
+    var indexMax = pageNumber * ITEM_ON_PAGE;
+    this.setState({
+      page: this.props.listProduct.slice(indexMax - ITEM_ON_PAGE, indexMax)
+    });
+  };
   showDrawer = async id => {
     this.setState({
       loading: true
     });
-    await get(GET_PRODUCT_BY_ID(id), {}, {}).then(res => {
+    await get(PRODUCT_BY_ID(id), {}, {}).then(res => {
       this.setState({ product: res.data });
     });
-    console.log(this.state.product);
-    
+
     this.setState({
       visible: true
     });
@@ -88,22 +108,97 @@ class ProductManage extends Component {
 
   onClose = () => {
     this.setState({
-      visible: false
+      visible: false,
+      addNew: false
     });
   };
 
-  addProduct = () => {
-    // SignalrClient.sendAddProduct(data => {
-    //   console.log(data);
+  handleSumbit = async () => {
+    var product = this.state.product;
+    this.setState({
+      loading: true
+    });
 
-    //   // this.props.setListProductsToReducer &&
-    //   //   this.props.setListProductsToReducer(data);
-    // });
+    if (!this.state.addNew) {
+      await put(
+        PRODUCT_BY_ID(product.id),
+        {
+          name: product.name,
+          model: product.model,
+          cate: product.cateId,
+          description: product.description,
+          height: product.height,
+          weight: product.weight,
+          price: product.price,
+          quantity: product.quantity,
+          imgThumb: "Demo"
+        },
+        {},
+        {}
+      )
+        .then(res => {
+          this.props.getListProductFromAPI &&
+            this.props.getListProductFromAPI();
+          this.onClose();
+          notification.success({
+            message: "Update product successful",
+            placement: "topRight"
+          });
+        })
+        .catch(err => {
+          notification.error({
+            message: "Update product failed",
+            placement: "topRight"
+          });
+        });
+    } else {
+      await post(
+        PRODUCT_ENDPOINT(),
+        {
+          name: product.name,
+          model: product.model,
+          cate: product.cateId,
+          description: product.description,
+          height: product.height,
+          weight: product.weight,
+          price: product.price,
+          quantity: product.quantity,
+          imgThumb: "Demo"
+        },
+        {},
+        {}
+      )
+        .then(res => {
+          this.props.getListProductFromAPI &&
+            this.props.getListProductFromAPI();
+          this.onClose();
+          notification.success({
+            message: "Insert product successful",
+            placement: "topRight"
+          });
+          this.setState({ addNew: false, product: {} });
+        })
+        .catch(err => {
+          notification.error({
+            message: "Insert product failed",
+            placement: "topRight"
+          });
+        });
+    }
+    setTimeout(() => {
+      this.setState({
+        loading: false
+      });
+    }, 1000);
+  };
+
+  addNewProduct = () => {
+    this.setState({ addNew: true, product: {}, visible: true });
   };
 
   render() {
     const { listProduct } = this.props;
-    const { product, loading, cates } = this.state;
+    const { product, loading, cates, addNew, page , loadingPage} = this.state;
 
     return (
       <div>
@@ -134,7 +229,7 @@ class ProductManage extends Component {
                       }
                     })
                   }
-                  value={product.name}
+                  value={addNew ? "" : product.name}
                   required
                 />
               </Form.Field>
@@ -150,7 +245,7 @@ class ProductManage extends Component {
                       }
                     })
                   }
-                  value={product.model}
+                  value={addNew ? "" : product.model}
                   required
                 />
               </Form.Field>
@@ -166,7 +261,7 @@ class ProductManage extends Component {
                   options={cates}
                   placeholder="Category"
                   selection
-                  value={product.cateId}
+                  value={addNew ? "" : product.cateId}
                 />
               </Form.Field>
             </Form.Group>
@@ -188,7 +283,7 @@ class ProductManage extends Component {
                           }
                         })
                       }
-                      value={product.price}
+                      value={addNew ? "" : product.price}
                       required
                     />
                   </Form.Field>
@@ -207,7 +302,7 @@ class ProductManage extends Component {
                           }
                         })
                       }
-                      value={product.quantity}
+                      value={addNew ? "" : product.quantity}
                       required
                     />
                   </Form.Field>
@@ -232,7 +327,7 @@ class ProductManage extends Component {
                           }
                         })
                       }
-                      value={product.weight}
+                      value={addNew ? "" : product.weight}
                       required
                     />
                   </Form.Field>
@@ -251,7 +346,7 @@ class ProductManage extends Component {
                           }
                         })
                       }
-                      value={product.height}
+                      value={addNew ? "" : product.height}
                       required
                     />
                   </Form.Field>
@@ -275,35 +370,43 @@ class ProductManage extends Component {
                       }
                     })
                   }
-                  value={product.description}
+                  value={addNew ? "" : product.description}
                   required
                 />
               </Col>
             </Row>
             <Divider />
             <Row>
-              <Col span={24}>
+              <Col span={8} offset={8}>
                 <Form.Group>
-                  <Form.Button width={12} fluid secondary>
-                    Update Product
-                  </Form.Button>
-                  <Form.Button
-                    width={12}
-                    fluid
-                    onClick={this.onClose}
-                    color="red"
-                  >
-                    Cancel
-                  </Form.Button>
+                  {addNew ? (
+                    <Form.Button width={16} fluid secondary>
+                      Insert Product
+                    </Form.Button>
+                  ) : (
+                    <Form.Button width={16} fluid secondary>
+                      Update Product
+                    </Form.Button>
+                  )}
                 </Form.Group>
               </Col>
             </Row>
           </Form>
         </Drawer>
         <Grid>
+          <Dimmer active={loadingPage} inverted>
+            <Loader>Loading</Loader>
+          </Dimmer>
           <Grid.Row columns={1}>
             <Grid.Column width={16}>
-              <AddProduct addProduct={this.addProduct} />
+              <Button
+                width={4}
+                basic
+                icon="add"
+                secondary
+                content="Add Product"
+                onClick={this.addNewProduct}
+              />
               <Table padded="very" selectable>
                 <Table.Header fullWidth>
                   <Table.Row>
@@ -316,7 +419,7 @@ class ProductManage extends Component {
                 </Table.Header>
 
                 <Table.Body>
-                  {listProduct.map(product => {
+                  {page.map(product => {
                     return (
                       <Table.Row
                         key={product.id}
@@ -331,26 +434,18 @@ class ProductManage extends Component {
                     );
                   })}
                 </Table.Body>
-
-                {/* <Table.Footer>
-                  <Table.Row>
-                    <Table.HeaderCell colSpan="12">
-                      <Menu floated="right" pagination>
-                        <Menu.Item as="a" icon>
-                          <Icon name="chevron left" />
-                        </Menu.Item>
-                        <Menu.Item as="a">1</Menu.Item>
-                        <Menu.Item as="a">2</Menu.Item>
-                        <Menu.Item as="a">3</Menu.Item>
-                        <Menu.Item as="a">4</Menu.Item>
-                        <Menu.Item as="a" icon>
-                          <Icon name="chevron right" />
-                        </Menu.Item>
-                      </Menu>
-                    </Table.HeaderCell>
-                  </Table.Row>
-                </Table.Footer> */}
               </Table>
+              <Grid>
+                <Grid.Column floated="left" width={10} />
+                <Grid.Column width={6} textAlign="right">
+                  <Pagination
+                    defaultCurrent={1}
+                    pageSize={ITEM_ON_PAGE}
+                    onChange={page => this.changePage(page)}
+                    total={listProduct.length}
+                  />
+                </Grid.Column>
+              </Grid>
             </Grid.Column>
           </Grid.Row>
         </Grid>

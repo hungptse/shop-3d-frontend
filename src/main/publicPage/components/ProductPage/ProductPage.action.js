@@ -10,7 +10,9 @@ const setListProducts = payload => ({
   type: "SET_LIST_PRODUCT",
   payload
 });
-const setLoading = payload => ({ type: "SET_LOADING", payload });
+// const setLoading = payload => ({ type: "SET_LOADING", payload });
+
+
 
 export const getListProductFromAPI = () => {
   return async dispatch => {
@@ -20,12 +22,11 @@ export const getListProductFromAPI = () => {
   };
 };
 
-export const setLoadingToReducer = loading => {
-  return dispatch => dispatch(setLoading(loading));
-};
+// export const setLoadingToReducer = loading => {
+//   return dispatch => dispatch(setLoading(loading));
+// };
 
 export const setListProductsToReducer = product => {
-  
   return dispatch => dispatch(setListProducts(product));
+};
 
-}
