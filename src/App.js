@@ -21,7 +21,6 @@ const ORDER_STORE = 'ORDER_STORE';
 
 
 
-
 class App extends Component {
   componentDidMount() {
     store.injectReducer(CART_STORE, cartReducer);
