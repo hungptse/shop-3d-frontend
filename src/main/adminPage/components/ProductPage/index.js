@@ -43,7 +43,7 @@ const pStyle = {
   display: "block",
   marginBottom: 16
 };
-const ITEM_ON_PAGE = 5;
+const ITEM_ON_PAGE = 6;
 
 class ProductManage extends Component {
   state = {

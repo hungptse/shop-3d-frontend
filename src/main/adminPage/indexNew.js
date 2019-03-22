@@ -11,8 +11,15 @@ const { Header, Sider, Content } = Layout;
 
 class SiderDemo extends React.Component {
   state = {
-    collapsed: false
+    collapsed: true
   };
+  componentDidMount() {
+    var path = this.props.location.pathname.split("/")[2];
+    var index = MenuRoutes.findIndex(
+      route => route.path.split("/")[1] === path
+    );
+    this.setState({ indexDefault: index });
+  }
 
   toggle = () => {
     this.setState({
@@ -30,12 +37,18 @@ class SiderDemo extends React.Component {
           collapsible
           collapsed={this.state.collapsed}
         >
-          <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
-            <Card hoverable size="small" onClick={this.toggle} style={{ marginBottom: 100, textAlign : "center" }}>
-              <IconSe
-                name="sliders horizontal"
-                className="trigger"
-              />
+          <Menu
+            theme="light"
+            mode="inline"
+            selectedKeys={[this.state.indexDefault + ""]}
+          >
+            <Card
+              hoverable
+              size="small"
+              onClick={this.toggle}
+              style={{ marginBottom: 100, textAlign: "center" }}
+            >
+              <IconSe name="sliders horizontal" className="trigger" />
             </Card>
             {MenuRoutes.map((route, key) => {
               if (!route.redirect) {
@@ -52,9 +65,7 @@ class SiderDemo extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          <HeaderAdmin
-           
-          />
+          <HeaderAdmin />
 
           <Content
             style={{
