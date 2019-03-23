@@ -6,18 +6,14 @@ class AccountMange extends Component {
     return (
       <Grid>
         <Grid.Row columns={2}>
-          <Grid.Column width={2} />
           <Grid.Column width={13}>
-            {/* <AddProduct /> */}
             <Table padded="very" selectable>
               <Table.Header fullWidth>
                 <Table.Row>
-                  <Table.HeaderCell>Username  </Table.HeaderCell>
+                  <Table.HeaderCell>Username</Table.HeaderCell>
                   <Table.HeaderCell>Name</Table.HeaderCell>
                   <Table.HeaderCell>Email</Table.HeaderCell>
                   <Table.HeaderCell>Phone</Table.HeaderCell>
-                  <Table.HeaderCell>Category</Table.HeaderCell>
-                  <Table.HeaderCell>Action</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
 

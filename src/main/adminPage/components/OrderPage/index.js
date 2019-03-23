@@ -8,7 +8,9 @@ import {
   Label,
   Segment,
   Header,
-  Tab
+  Tab,
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
 import { get, put } from "../../../../utils/ApiCaller";
 import { ORDER_LIST, ORDER_CHANGE_STATUS } from "../../../../utils/ApiEndpoint";
@@ -33,17 +35,18 @@ class OrderMange extends Component {
     orders: [],
     page: [],
     visible: false,
-    pageDetail: []
+    pageDetail: [],
+    loading : true
   };
 
   async componentDidMount() {
     await get(ORDER_LIST(), {}, {}).then(res => {
       this.setState({ orders: res.data });
       this.setState({ page: this.state.orders.slice(0, ITEM_ON_PAGE) });
+      setTimeout(() => {
+        this.setState({ loading : false});
+      }, 500);
     });
-    // setTimeout(() => {
-    //   this.setState({ loading : false});
-    // }, 500);
   }
 
   changeStatusOrder = async (id, status) => {
@@ -357,35 +360,9 @@ class OrderMange extends Component {
       orders,
       page,
       visible,
-      pageDetail
+      pageDetail,
+      loading
     } = this.state;
-
-    // const panes = [
-    //   {
-    //     menuItem: "All",
-    //     render: () => <Tab.Pane>All</Tab.Pane>
-    //   },
-    //   {
-    //     menuItem: "Pending",
-    //     render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
-    //   },
-    //   {
-    //     menuItem: "Approved",
-    //     render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
-    //   },
-    //   {
-    //     menuItem: "Cancelled",
-    //     render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
-    //   },
-    //   {
-    //     menuItem: "Shipping",
-    //     render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
-    //   },
-    //   {
-    //     menuItem: "Closed",
-    //     render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
-    //   }
-    // ];
 
     const renderBtn = (id, status) => {
       switch (status) {
@@ -555,6 +532,9 @@ class OrderMange extends Component {
           )}
         </Drawer>
         <Grid.Row columns={1}>
+        <Dimmer active={loading} inverted>
+            <Loader>Loading</Loader>
+          </Dimmer>
           <Grid.Column width={16}>
             <Grid>
               <Grid.Row columns={2}>
