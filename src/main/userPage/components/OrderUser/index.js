@@ -123,8 +123,7 @@ class OrderUser extends Component {
               </Table.Body>
             </Table>
             <Grid>
-              <Grid.Column floated="left" width={5} />
-              <Grid.Column width={6} textAlign="center">
+              <Grid.Column width={16} textAlign="right">
                 <Pagination
                   defaultCurrent={1}
                   pageSize={ITEM_ON_PAGE}

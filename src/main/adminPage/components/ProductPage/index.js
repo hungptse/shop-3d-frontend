@@ -53,7 +53,7 @@ class ProductManage extends Component {
     cates: [],
     addNew: false,
     page: [],
-    loadingPage : true
+    loadingPage: true
   };
 
   async componentDidMount() {
@@ -61,7 +61,10 @@ class ProductManage extends Component {
       this.props.getListProductFromAPI && this.props.getListProductFromAPI();
     }
     setTimeout(() => {
-      this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE), loadingPage : false });
+      this.setState({
+        page: this.props.listProduct.slice(0, ITEM_ON_PAGE),
+        loadingPage: false
+      });
     }, 500);
 
     await get(ADMIN_LIST_CATE_NAME(), {}, {}).then(res => {
@@ -198,7 +201,7 @@ class ProductManage extends Component {
 
   render() {
     const { listProduct } = this.props;
-    const { product, loading, cates, addNew, page , loadingPage} = this.state;
+    const { product, loading, cates, addNew, page, loadingPage } = this.state;
 
     return (
       <div>
