@@ -22,7 +22,7 @@ const ThemeRoutes = [
   {
     path: "/accounts",
     name: "Manage Account",
-    icon: "user",
+    icon: "usergroup-add",
     component: AccountManage
   },
   {

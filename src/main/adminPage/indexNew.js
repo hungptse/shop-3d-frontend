@@ -4,6 +4,8 @@ import "./admin.css";
 import Footer from "../publicPage/components/UI/Footer";
 import HeaderAdmin from "../adminPage/components/UI/Header";
 import MenuRoutes from "./routingMenu";
+// import MainRoutes from "./routing";
+
 import { Link } from "react-router-dom";
 import { renderRoutes } from "../../components/route";
 import { Icon as IconSe } from "semantic-ui-react";

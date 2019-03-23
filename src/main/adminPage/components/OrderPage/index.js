@@ -15,7 +15,7 @@ import {
 import { get, put } from "../../../../utils/ApiCaller";
 import { ORDER_LIST, ORDER_CHANGE_STATUS } from "../../../../utils/ApiEndpoint";
 import TimeAgo from "timeago-react";
-import { getOrderFromAPI, changeStatusOrderToAPI } from "./Order.action";
+import { Redirect } from "react-router-dom";
 import {
   notification,
   Pagination,
@@ -352,6 +352,7 @@ class OrderMange extends Component {
     }
   };
 
+
   render() {
     const {
       details,
@@ -429,8 +430,6 @@ class OrderMange extends Component {
             </Grid.Column>
           );
           break;
-        default:
-          return <Table.Cell />;
       }
     };
 

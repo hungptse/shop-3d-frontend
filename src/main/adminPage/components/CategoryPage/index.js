@@ -59,11 +59,8 @@ class CategoryManage extends Component {
     const { cates, cateSelected, cateName } = this.state;
     return (
       <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column width={2} />
-          <Grid.Column width={13}>
-            {/* <AddProduct /> */}
-
+        <Grid.Row columns={1}>
+          <Grid.Column width={16}>
             <Grid>
               <Grid.Row columns={2}>
                 <Grid.Column width={8}>
