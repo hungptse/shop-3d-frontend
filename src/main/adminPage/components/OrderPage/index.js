@@ -14,7 +14,14 @@ import { get, put } from "../../../../utils/ApiCaller";
 import { ORDER_LIST, ORDER_CHANGE_STATUS } from "../../../../utils/ApiEndpoint";
 import TimeAgo from "timeago-react";
 import { getOrderFromAPI, changeStatusOrderToAPI } from "./Order.action";
-import { notification, Pagination, Drawer, Popover } from "antd";
+import {
+  notification,
+  Pagination,
+  Drawer,
+  Popover,
+  Steps,
+  Icon as IconAntd
+} from "antd";
 
 const ITEM_ON_PAGE = 5;
 
@@ -184,8 +191,174 @@ class OrderMange extends Component {
       visible: false
     });
   };
+
+  renderStepOder = status => {
+    switch (status) {
+      case 1:
+        return (
+          <Steps>
+            <Steps.Step
+              status="process"
+              title="Pending"
+              icon={<IconAntd type="sync" spin />}
+              description="Store waiting confirm this order"
+            />
+            <Steps.Step
+              title="Approved"
+              description="Store accepted this order"
+            />
+            <Steps.Step title="Shipping" description="Store shipping for you" />
+            <Steps.Step
+              title="Successful"
+              description="Thank you. Your order completed!"
+            />
+          </Steps>
+        );
+        break;
+      case 2:
+        return (
+          <Steps>
+            <Steps.Step
+              status="process"
+              title="Pending"
+              icon={<Icon name="shopping cart" />}
+              description="Store waiting confirm this order"
+            />
+            <Steps.Step
+              status="finish"
+              title="Approved"
+              icon={<Icon name="check" />}
+              description="Store accepted this order"
+            />
+            <Steps.Step title="Shipping" description="Store shipping for you" />
+            <Steps.Step
+              title="Successful"
+              description="Thank you. Your order completed!"
+            />
+          </Steps>
+        );
+        break;
+      case 3:
+        return (
+          <Steps>
+            <Steps.Step
+              status="process"
+              title="Pending"
+              icon={<Icon name="shopping cart" />}
+              description="Store waiting confirm this order"
+            />
+            <Steps.Step
+              status="error"
+              title="Cancelled"
+              description="Store cancelled this order"
+            />
+            <Steps.Step title="Shipping" description="Store shipping for you" />
+            <Steps.Step
+              title="Successful"
+              description="Thank you. Your order completed!"
+            />
+          </Steps>
+        );
+        break;
+      case 4:
+        return (
+          <Steps>
+            <Steps.Step
+              status="process"
+              title="Pending"
+              icon={<Icon name="shopping cart" />}
+              description="Store waiting confirm this order"
+            />
+            <Steps.Step
+              status="process"
+              icon={<Icon name="check" />}
+              title="Approved"
+              description="Store accepted this order"
+            />
+            <Steps.Step
+              title="Shipping"
+              status="process"
+              icon={<IconAntd type="sync" spin />}
+              description="Store shipping for you"
+            />
+            <Steps.Step
+              title="Successful"
+              description="Thank you. Your order completed!"
+            />
+          </Steps>
+        );
+        break;
+      case 5:
+        return (
+          <Steps>
+            <Steps.Step
+              status="process"
+              title="Pending"
+              icon={<Icon name="shopping cart" />}
+              description="Store waiting confirm this order"
+            />
+            <Steps.Step
+              status="process"
+              icon={<Icon name="check" />}
+              title="Approved"
+              description="Store accepted this order"
+            />
+            <Steps.Step
+              title="Shipping"
+              status="process"
+              icon={<Icon name="shipping" />}
+              description="Store shipping for you"
+            />
+            <Steps.Step
+              status="finish"
+              icon={<IconAntd type="smile" />}
+              title="Successful"
+              description="Thank you. Your order completed!"
+            />
+          </Steps>
+        );
+        break;
+      case 6:
+        return (
+          <Steps>
+            <Steps.Step
+              status="process"
+              title="Pending"
+              icon={<Icon name="shopping cart" />}
+              description="Store waiting confirm this order"
+            />
+            <Steps.Step
+              status="process"
+              icon={<Icon name="check" />}
+              title="Approved"
+              description="Store accepted this order"
+            />
+            <Steps.Step
+              status="error"
+              title="Failed Shipping"
+              icon={<Icon name="x" />}
+              description="Sorry! We can't ship order for you. Please re-order in store"
+            />
+            <Steps.Step
+              title="Successful"
+              description="Thank you. Your order completed!"
+            />
+          </Steps>
+        );
+        break;
+    }
+  };
+
   render() {
-    const { details, user, orderSelected, orders, page, visible, pageDetail } = this.state;
+    const {
+      details,
+      user,
+      orderSelected,
+      orders,
+      page,
+      visible,
+      pageDetail
+    } = this.state;
 
     // const panes = [
     //   {
@@ -322,7 +495,13 @@ class OrderMange extends Component {
                   </Grid.Row>
                   <Grid.Row columns={1} centered>
                     <Grid.Column>
-                      Status: {this.renderStatus(orderSelected.status)}
+                      <Popover
+                        content={this.renderStepOder(orderSelected.status)}
+                        title="Order Tracking"
+                        placement="right"
+                      >
+                        Status: {this.renderStatus(orderSelected.status)}
+                      </Popover>
                       <Button size="small" secondary floated="right">
                         Total: ${orderSelected.total}
                       </Button>
@@ -416,7 +595,15 @@ class OrderMange extends Component {
                             </Table.Cell>
                             <Table.Cell>${order.total}</Table.Cell>
                             <Table.Cell>
-                              {this.renderStatus(order.status)}
+                              <Popover
+                                content={this.renderStepOder(
+                                  order.status
+                                )}
+                                title="Order Tracking"
+                                placement="top"
+                              >
+                                {this.renderStatus(order.status)}
+                              </Popover>
                             </Table.Cell>
                           </Table.Row>
                         );
