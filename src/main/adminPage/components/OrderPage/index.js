@@ -25,7 +25,8 @@ class OrderMange extends Component {
     orderSelected: {},
     orders: [],
     page: [],
-    visible: false
+    visible: false,
+    pageDetail: []
   };
 
   async componentDidMount() {
@@ -62,6 +63,9 @@ class OrderMange extends Component {
         this.setState({ details: order.orderDetail });
         this.setState({ user: order.user });
         this.setState({ orderSelected: order });
+        this.setState({
+          pageDetail: order.orderDetail.slice(0, ITEM_ON_PAGE)
+        });
         this.setState({ visible: true });
       }
     });
@@ -121,6 +125,12 @@ class OrderMange extends Component {
       page: this.state.orders.slice(indexMax - ITEM_ON_PAGE, indexMax)
     });
   };
+  changePageDetail = pageNumber => {
+    var indexMax = pageNumber * ITEM_ON_PAGE;
+    this.setState({
+      pageDetail: this.state.details.slice(indexMax - ITEM_ON_PAGE, indexMax)
+    });
+  };
 
   renderStatus = status => {
     switch (status) {
@@ -175,7 +185,7 @@ class OrderMange extends Component {
     });
   };
   render() {
-    const { details, user, orderSelected, orders, page, visible } = this.state;
+    const { details, user, orderSelected, orders, page, visible, pageDetail } = this.state;
 
     // const panes = [
     //   {
@@ -333,7 +343,7 @@ class OrderMange extends Component {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {details.map(product => {
+                  {pageDetail.map(product => {
                     return (
                       <Table.Row key={product.id}>
                         <Table.Cell>{product.pro.name}</Table.Cell>
@@ -349,6 +359,17 @@ class OrderMange extends Component {
                   })}
                 </Table.Body>
               </Table>
+              <Grid>
+                <Grid.Column width={16} textAlign="right">
+                  <Pagination
+                    defaultCurrent={1}
+                    pageSize={ITEM_ON_PAGE}
+                    onChange={page => this.changePageDetail(page)}
+                    total={details.length}
+                  />
+                </Grid.Column>
+                <Grid.Column floated="right" width={5} />
+              </Grid>
             </Grid.Column>
           ) : (
             <div />
