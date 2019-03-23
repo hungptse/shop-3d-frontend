@@ -436,8 +436,7 @@ class ProductManage extends Component {
                 </Table.Body>
               </Table>
               <Grid>
-                <Grid.Column floated="left" width={10} />
-                <Grid.Column width={6} textAlign="right">
+                <Grid.Column width={16} textAlign="right">
                   <Pagination
                     defaultCurrent={1}
                     pageSize={ITEM_ON_PAGE}

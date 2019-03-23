@@ -12,15 +12,26 @@ import {
 import { get, put } from "../../../../utils/ApiCaller";
 import { FEEDBACK, FEEDBACK_CHANGE } from "../../../../utils/ApiEndpoint";
 import TimeAgo from "timeago-react";
+import { Pagination } from "antd";
+
+const ITEM_ON_PAGE = 6;
+
 class FeedbackMange extends Component {
-  state = { feedbacks: [] };
+  state = { feedbacks: [], page: [] , loading : true };
   async componentDidMount() {
     await get(FEEDBACK(), {}, {}, {}).then(res => {
       this.setState({ feedbacks: res.data });
-    });
-    console.log(this.state.feedbacks);
-    
+      this.setState({
+        page: this.state.feedbacks.slice(0, ITEM_ON_PAGE)
+      });
+    });    
   }
+  changePage = pageNumber => {
+    var indexMax = pageNumber * ITEM_ON_PAGE;
+    this.setState({
+      page: this.state.feedbacks.slice(indexMax - ITEM_ON_PAGE, indexMax)
+    });
+  };
 
   changeStatus = async (id, status) => {
     await put(
@@ -32,19 +43,18 @@ class FeedbackMange extends Component {
       {}
     ).then(res => {
       this.setState({
-        feedbacks: this.state.feedbacks.map(feedback =>
+        page: this.state.page.map(feedback =>
           feedback.id === id ? { ...feedback, isApprove: status } : feedback
         )
       });
     });
   };
   render() {
-    const { feedbacks } = this.state;
+    const { feedbacks, page , loading } = this.state;
     return (
       <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column width={2} />
-          <Grid.Column width={13}>
+        <Grid.Row columns={1}>
+          <Grid.Column width={16}>
             <Table padded="very" selectable>
               <Table.Header fullWidth>
                 <Table.Row>
@@ -60,7 +70,7 @@ class FeedbackMange extends Component {
               </Table.Header>
 
               <Table.Body>
-                {feedbacks.map(feedback => {
+                {page.map(feedback => {
                   return (
                     <Table.Row key={feedback.id} negative={!feedback.isApprove} positive={feedback.isApprove}>
                       <Table.Cell>
@@ -97,43 +107,22 @@ class FeedbackMange extends Component {
                             this.changeStatus(feedback.id, !feedback.isApprove)
                           }
                         />
-                        {/* <Button
-                          size="small"
-                          color="green"
-                          icon="check"
-                          content="Approve"
-                        />
-                        <Button
-                          size="small"
-                          color="red"
-                          icon="times"
-                          content="Denied"
-                        /> */}
                       </Table.Cell>
                     </Table.Row>
                   );
                 })}
               </Table.Body>
-
-              <Table.Footer>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="12">
-                    <Menu floated="right" pagination>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron left" />
-                      </Menu.Item>
-                      <Menu.Item as="a">1</Menu.Item>
-                      <Menu.Item as="a">2</Menu.Item>
-                      <Menu.Item as="a">3</Menu.Item>
-                      <Menu.Item as="a">4</Menu.Item>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron right" />
-                      </Menu.Item>
-                    </Menu>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
             </Table>
+            <Grid>
+              <Grid.Column width={16} textAlign="right">
+                <Pagination
+                  defaultCurrent={1}
+                  pageSize={ITEM_ON_PAGE}
+                  onChange={page => this.changePage(page)}
+                  total={feedbacks.length}
+                />
+              </Grid.Column>
+            </Grid>
           </Grid.Column>
         </Grid.Row>
       </Grid>
