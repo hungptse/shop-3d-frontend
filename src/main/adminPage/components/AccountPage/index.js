@@ -12,10 +12,10 @@ class AccountMange extends Component {
             <Table padded="very" selectable>
               <Table.Header fullWidth>
                 <Table.Row>
-                  <Table.HeaderCell>Thumbnail</Table.HeaderCell>
+                  <Table.HeaderCell>Username  </Table.HeaderCell>
                   <Table.HeaderCell>Name</Table.HeaderCell>
-                  <Table.HeaderCell>Price</Table.HeaderCell>
-                  <Table.HeaderCell>Quantity</Table.HeaderCell>
+                  <Table.HeaderCell>Email</Table.HeaderCell>
+                  <Table.HeaderCell>Phone</Table.HeaderCell>
                   <Table.HeaderCell>Category</Table.HeaderCell>
                   <Table.HeaderCell>Action</Table.HeaderCell>
                 </Table.Row>
@@ -37,25 +37,6 @@ class AccountMange extends Component {
                       );
                     })} */}
               </Table.Body>
-
-              <Table.Footer>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="12">
-                    <Menu floated="right" pagination>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron left" />
-                      </Menu.Item>
-                      <Menu.Item as="a">1</Menu.Item>
-                      <Menu.Item as="a">2</Menu.Item>
-                      <Menu.Item as="a">3</Menu.Item>
-                      <Menu.Item as="a">4</Menu.Item>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron right" />
-                      </Menu.Item>
-                    </Menu>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
             </Table>
           </Grid.Column>
         </Grid.Row>
