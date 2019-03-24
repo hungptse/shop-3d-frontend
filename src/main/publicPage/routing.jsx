@@ -8,11 +8,11 @@ import withUserRouteComponent from "../../router/withUserRouteComponent";
 const withUser = withUserRouteComponent("/");
 
 const ThemeRoutes = [
-  {
-    path: '/home',
-    name: 'Home',
-    component: HomePage,
-  },
+  // {
+  //   path: '/home',
+  //   name: 'Home',
+  //   component: HomePage,
+  // },
   {
     path: '/products',
     name: 'Product',
@@ -33,7 +33,7 @@ const ThemeRoutes = [
     name: 'Register',
     component: RegisterPage
   },
-  { path: '/', pathTo: '/home', name: 'Home', redirect: true }
+  { path: '/', pathTo: '/products', name: 'Product', redirect: true }
 ];
 
 export default ThemeRoutes;

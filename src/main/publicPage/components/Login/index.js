@@ -67,6 +67,7 @@ class LoginForm extends Component {
   componentDidMount() {
     this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
     this.setState({ uid: LocalStorageUtils.getSub() });
+    
     // setTimeout(() => {
     //   FirebaseUitls.getLinkImages("img-user",this.props.profile.avatarUrl).then(res => {
     //     this.setState({ avatarUrl : res });
@@ -179,7 +180,7 @@ class LoginForm extends Component {
       <span>
         <Image
           avatar
-          src={avatarUrl}
+          src={this.props.profile.avatarUrl}
           size="mini"
         />
         Hello, {this.props.profile.name}

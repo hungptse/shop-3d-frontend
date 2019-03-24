@@ -48,14 +48,14 @@ class SearchBar extends Component {
     _.reduce(
       products,
       async (obj, product) => {
-        await FirebaseUitls.getLinkImages("img-products",product.thumbnail).then(res => {
+        // await FirebaseUitls.getLinkImages("img-products",product.thumbnail).then(res => {
           obj = {
             title: product.name,
             description: product.description,
-            image: "res",
+            // image: "res",
             price: product.price + "$",
           };
-        });
+        // });
         afterReduce.push(obj);
       },
       {}
