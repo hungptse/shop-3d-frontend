@@ -33,7 +33,8 @@ class OrderSummary extends Component {
             style={{ fontSize: "2em", fontWeight: 300 }}
           />
           <Divider />
-          <Grid columns={4}>
+          <div style={{ height : 420, overflowY : "scroll", overflowX : "hidden" }}>
+          <Grid columns={4} >
             {cart.map(product => {
               return (
                 <Grid.Row key={product.id} style={{ marginLeft: "1em" }}>
@@ -68,7 +69,9 @@ class OrderSummary extends Component {
               );
             })}
           </Grid>
-          <Segment padded piled compact style={{ marginBottom: 0 }}>
+          </div>
+         
+          <Segment  compact style={{ marginBottom: 0 }}>
             <Segment.Inline style={{ marginBottom: "1em" }}>
               <Label size="large">Total in order: </Label>
               <Button size="mini" secondary floated="right">

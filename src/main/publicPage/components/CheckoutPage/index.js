@@ -65,7 +65,7 @@ class CheckoutPage extends Component {
       <Container style={{ height : 790 }}>
         <Grid>
           <Grid.Row>
-            <Grid.Column width={9}>
+            <Grid.Column width={8}>
               <Card fluid centered>
                 <Card.Content
                   content="Customer Detail"
@@ -125,7 +125,7 @@ class CheckoutPage extends Component {
                 </Form>
               </Card>
             </Grid.Column>
-            <Grid.Column width={7}>
+            <Grid.Column width={8}>
               <OrderSummary />
             </Grid.Column>
           </Grid.Row>
