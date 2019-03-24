@@ -1,0 +1,23 @@
+{
+  "main.css": "/static/css/main.a3cc9d9f.chunk.css",
+  "main.js": "/static/js/main.d0a3f569.chunk.js",
+  "main.js.map": "/static/js/main.d0a3f569.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.fdfcfda2.js",
+  "runtime~main.js.map": "/static/js/runtime~main.fdfcfda2.js.map",
+  "static/css/2.fcf0dc54.chunk.css": "/static/css/2.fcf0dc54.chunk.css",
+  "static/js/2.b46514b7.chunk.js": "/static/js/2.b46514b7.chunk.js",
+  "static/js/2.b46514b7.chunk.js.map": "/static/js/2.b46514b7.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.c028ffff13fdf71b067fb99471675942.js": "/precache-manifest.c028ffff13fdf71b067fb99471675942.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/2.fcf0dc54.chunk.css.map": "/static/css/2.fcf0dc54.chunk.css.map",
+  "static/css/main.a3cc9d9f.chunk.css.map": "/static/css/main.a3cc9d9f.chunk.css.map",
+  "static/media/UploadIcon.svg": "/static/media/UploadIcon.1cedb6e9.svg",
+  "static/media/asp.png": "/static/media/asp.6aa17d69.png",
+  "static/media/close.svg": "/static/media/close.bc4634b5.svg",
+  "static/media/default-product.jpg": "/static/media/default-product.09574f6c.jpg",
+  "static/media/firebase.png": "/static/media/firebase.e642c755.png",
+  "static/media/react.png": "/static/media/react.8ab12c49.png",
+  "static/media/redux.png": "/static/media/redux.0696aa54.png",
+  "static/media/shopping-bag.svg": "/static/media/shopping-bag.7237b6a2.svg"
+}
