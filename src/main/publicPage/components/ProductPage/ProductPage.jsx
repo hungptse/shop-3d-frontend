@@ -42,7 +42,7 @@ class ProductPage extends Component {
     const { page } = this.state;
 
     return (
-      <Container>
+      <Container style={{ height : 1100}}>
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>

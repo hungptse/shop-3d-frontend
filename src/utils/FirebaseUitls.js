@@ -1,14 +1,15 @@
 import firebase from "./Firebase";
 
 class FirebaseUitls {
-  getLinkImages(name) {
+  getLinkImages(folder,name) {
     var value = firebase
       .storage()
       .ref()
-      .child("productsImg/" + name)
+      .child(folder + "/" + name)
       .getDownloadURL();
     return value;
   }
+
 
   uploadImages(image) {
     firebase

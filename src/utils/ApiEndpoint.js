@@ -36,6 +36,10 @@ export const ACCOUNT = () => {
     return `${BASE_URL}/api/account`;
 };
 
+export const ACCOUNT_CHECK = (username) => {
+    return `${BASE_URL}/api/account/check/${username}`;
+};
+
 export const FEEDBACK = () => {
     return `${BASE_URL}/api/feedback`;
 };

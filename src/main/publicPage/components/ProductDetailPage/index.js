@@ -53,7 +53,7 @@ class ProductDetailPage extends Component {
         this.setState({ product: res.data });
       }
     );
-    await FirebaseUitls.getLinkImages(this.state.product.thumbnail).then(
+    await FirebaseUitls.getLinkImages("img-products",this.state.product.thumbnail).then(
       res => {
         this.setState({ urlThumbail: res });
       }
@@ -66,7 +66,7 @@ class ProductDetailPage extends Component {
     await get(PRODUCT_BY_ID(newProps.match.params.id), {}, {}).then(res => {
       this.setState({ product: res.data });
     });
-    await FirebaseUitls.getLinkImages(this.state.product.thumbnail).then(
+    await FirebaseUitls.getLinkImages("img-products",this.state.product.thumbnail).then(
       res => {
         this.setState({ urlThumbail: res });
       }
@@ -102,7 +102,7 @@ class ProductDetailPage extends Component {
   render() {
     const { product, rate } = this.state;
     return (
-      <Container>
+      <Container style={{ height : 1250}}>
         <Grid padded>
           <Grid.Row>
             <Grid.Column width={10}>

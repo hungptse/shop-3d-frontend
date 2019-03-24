@@ -56,7 +56,7 @@ class CheckoutPage extends Component {
   render() {
     const {info} = this.state;
     return (
-      <Container style={{ marginTop: "2em" }}>
+      <Container style={{ height : 790 }}>
         <Grid>
           <Grid.Row>
             <Grid.Column width={9}>

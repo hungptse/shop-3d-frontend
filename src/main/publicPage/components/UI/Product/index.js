@@ -40,7 +40,7 @@ class Product extends Component {
   state = { id: this.props.info.id, active: false, imgUrl: "", loaded : false };
 
   async componentDidMount() {
-    await firebase.getLinkImages(this.props.info.thumbnail).then(res => this.setState({ imgUrl : res}));
+    await firebase.getLinkImages("img-products",this.props.info.thumbnail).then(res => this.setState({ imgUrl : res}));
     this.setState({loaded : true});
   }
 

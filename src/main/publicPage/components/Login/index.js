@@ -27,6 +27,7 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import jwt_decode from "jwt-decode";
 import { notification } from "antd";
+import FirebaseUitls from "../../../../utils/FirebaseUitls";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
 const uidFromReducer = state => state[AUTH_STORE].uid;
@@ -51,7 +52,8 @@ class LoginForm extends Component {
     username: "",
     password: "",
     error: true,
-    loading: false
+    loading: false,
+    avatarUrl : ""
   };
 
   show = () => {
@@ -65,6 +67,12 @@ class LoginForm extends Component {
   componentDidMount() {
     this.props.getSignnedFromReducer && this.props.getSignnedFromReducer();
     this.setState({ uid: LocalStorageUtils.getSub() });
+    // setTimeout(() => {
+    //   FirebaseUitls.getLinkImages("img-user",this.props.profile.avatarUrl).then(res => {
+    //     this.setState({ avatarUrl : res });
+    //   });
+    // }, 1000);
+   
   }
 
   handleSubmit = () => {
@@ -128,9 +136,13 @@ class LoginForm extends Component {
   // changePassword = () => {
   //   this.props.history.push("/user/change-password")
   // }
+  handleRegister = () => {
+    this.props.history.push("/store/register");
+    this.close();
+  }
 
   render() {
-    const { error, loading, uid } = this.state;
+    const { error, loading, uid, avatarUrl } = this.state;
     const { signned, open } = this.props;
 
     const LogginButton = () => {
@@ -165,7 +177,7 @@ class LoginForm extends Component {
       <span>
         <Image
           avatar
-          src="https://s3.amazonaws.com/uifaces/faces/twitter/javorszky/128.jpg"
+          src={avatarUrl}
           size="mini"
         />
         Hello, {this.props.profile.name}
@@ -223,7 +235,7 @@ class LoginForm extends Component {
               </Grid.Column>
 
               <Grid.Column verticalAlign="middle">
-                <Button content="Sign up account" icon="signup" size="medium" />
+                <Button content="Sign up account" icon="signup" size="medium" onClick={this.handleRegister} />
               </Grid.Column>
             </Grid>
             <Divider vertical>Or</Divider>
