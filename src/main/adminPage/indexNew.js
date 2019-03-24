@@ -4,7 +4,7 @@ import "./admin.css";
 import Footer from "../publicPage/components/UI/Footer";
 import HeaderAdmin from "../adminPage/components/UI/Header";
 import MenuRoutes from "./routingMenu";
-// import MainRoutes from "./routing";
+import MainRoutes from "./routing";
 
 import { Link } from "react-router-dom";
 import { renderRoutes } from "../../components/route";
@@ -29,13 +29,13 @@ class SiderDemo extends React.Component {
     });
   };
 
-  setActiveItem = (path) => {
+  setActiveItem = path => {
     var name = path.split("/")[1];
     var index = MenuRoutes.findIndex(
       route => route.path.split("/")[1] === name
     );
     this.setState({ indexDefault: index });
-  }
+  };
 
   render() {
     return (
@@ -63,7 +63,10 @@ class SiderDemo extends React.Component {
             {MenuRoutes.map((route, key) => {
               if (!route.redirect) {
                 return (
-                  <Menu.Item key={key} onClick={() => this.setActiveItem(route.path)}>
+                  <Menu.Item
+                    key={key}
+                    onClick={() => this.setActiveItem(route.path)}
+                  >
                     <Link to={this.props.match.path + route.path}>
                       <Icon type={route.icon} />
                       <span>{route.name}</span>
@@ -75,7 +78,11 @@ class SiderDemo extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          <HeaderAdmin />
+          <HeaderAdmin
+            match={this.props.match}
+            history={this.props.history}
+            location={this.props.location}
+          />
 
           <Content
             style={{
@@ -85,7 +92,7 @@ class SiderDemo extends React.Component {
               minHeight: "69vh"
             }}
           >
-            {renderRoutes(MenuRoutes, this.props.match.path)}
+            {renderRoutes(MainRoutes, this.props.match.path)}
           </Content>
           <Footer />
         </Layout>

@@ -4,6 +4,7 @@ import { Search } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { getListCateFromAPI } from "./Search.action";
+import FirebaseUitls from "../../../../../utils/FirebaseUitls";
 
 const SEARCH_STORE = "SEARCH_STORE";
 const loadListCateFromReducer = state => state[SEARCH_STORE].listCate;
@@ -46,13 +47,15 @@ class SearchBar extends Component {
     var afterReduce = [];
     _.reduce(
       products,
-      (obj, product) => {
-        obj = {
-          title: product.name,
-          description: product.description,
-          image: product.thumbnail,
-          price: product.price + "$",
-        };
+      async (obj, product) => {
+        await FirebaseUitls.getLinkImages("img-products",product.thumbnail).then(res => {
+          obj = {
+            title: product.name,
+            description: product.description,
+            image: "res",
+            price: product.price + "$",
+          };
+        });
         afterReduce.push(obj);
       },
       {}
@@ -60,7 +63,7 @@ class SearchBar extends Component {
     return afterReduce;
   };
 
-  handleSearchChange = (e, { value }) => {
+  handleSearchChange =  (e, { value }) => {
     this.setState({ isLoading: true, value });
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent();
@@ -79,7 +82,7 @@ class SearchBar extends Component {
         }, {});
 
       const source = arrayToObject(this.props.listCate);
-
+        
       const filteredResults = _.reduce(
         source,
         (result, value, key) => {
@@ -93,6 +96,8 @@ class SearchBar extends Component {
         },
         {}
       );
+      console.log(filteredResults);
+      
 
       this.setState({
         isLoading: false,

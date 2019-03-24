@@ -2,8 +2,9 @@ import ProductManage from "./components/ProductPage";
 import CategoryManage from "./components/CategoryPage";
 import AccountManage from "./components/AccountPage";
 import FeedbackMange from "./components/FeedbackPage";
+import AccountProfile from "../userPage/components/AccontProfile";
+import ChangePassword from "../userPage/components/ChangePassword";
 import OrderMange from "./components/OrderPage";
-
 
 
 const ThemeRoutes = [

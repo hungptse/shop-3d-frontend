@@ -20,6 +20,7 @@ import { createSelector } from "reselect";
 import OrderSummary from "./OrderSummary";
 
 import { setProfileToReducer } from "../Login/Auth.action";
+import { notification } from "antd";
 
 const startSelector = createSelector(
   getCartFromLocal,
@@ -50,7 +51,12 @@ class CheckoutPage extends Component {
       this.setState({ note : ""});
       CartLocal.checkout();
       this.props.checkoutCart && this.props.checkoutCart();
-      console.log(res);
+      setTimeout(() => {
+        notification.success({
+          message: "Checkout Successful ",
+          placement: "topRight"
+        });
+      }, 500);
     });
   };
   render() {

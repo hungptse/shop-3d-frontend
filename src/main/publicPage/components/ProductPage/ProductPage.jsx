@@ -18,13 +18,14 @@ const ITEM_ON_PAGE = 6;
 
 class ProductPage extends Component {
   state = { page: [] };
+
+  componentWillMount(){
+    this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
+  }
+
   componentDidMount() {
     if (this.props.listProduct.length === 0) {
       this.props.getListProductFromAPI && this.props.getListProductFromAPI();
-
-      // setTimeout(() => {
-      //   this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
-      // }, 500);
     }
     setTimeout(() => {
       this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
@@ -46,13 +47,13 @@ class ProductPage extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>
-              <Card>
+              {/* <Card>
                 <Card.Content>
                   <Card.Description>
                     Matthew is a musician living in Nashville.
                   </Card.Description>
                 </Card.Content>
-              </Card>
+              </Card> */}
             </Grid.Column>
             <Grid.Column width={12}>
               <Grid columns={3}>

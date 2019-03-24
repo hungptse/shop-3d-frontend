@@ -108,8 +108,8 @@ class ProductDetailPage extends Component {
             <Grid.Column width={10}>
               <Gallery
                 images={[
-                  "https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/productsImg%2FHG-BD-JEGAN-BLAST-MASTER-5.jpg?alt=media&token=f636e27a-4363-4c2f-8d45-d8c5835918e2",
-                  "https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/productsImg%2FHG-BD-JEGAN-BLAST-MASTER-6.jpg?alt=media&token=f89e28b6-c14e-474d-882f-3820b45bb722"
+                  "https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/img-products%2FHG-BD-JEGAN-BLAST-MASTER-5.jpg?alt=media&token=c3602d68-7c1d-4df8-b943-173ba24b83da",
+                  "https://firebasestorage.googleapis.com/v0/b/image-3d.appspot.com/o/img-products%2FHG-BD-JEGAN-BLAST-MASTER-6.jpg?alt=media&token=bedc0712-5627-4b68-9a9e-38c4937b3324"
                 ]}
               />
             </Grid.Column>

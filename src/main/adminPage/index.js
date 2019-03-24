@@ -21,9 +21,7 @@ class FullLayoutAdmin extends Component {
   backToHome = () => {
     this.props.history.push("/admin");
   };
-  componentDidMount() {
-    console.log(this.state.activeItem);
-    
+  componentDidMount() {    
     if (this.state.activeItem === "/admin") {
       this.setState({ activeItem: "/admin/products" });
     } else {

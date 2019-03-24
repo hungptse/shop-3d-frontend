@@ -111,12 +111,6 @@ class LoginForm extends Component {
         this.props.setOpenToReducer && this.props.setOpenToReducer(false);
         this.props.setSignnedToReducer && this.props.setSignnedToReducer(true);
         this.props.setProfileToReducer && this.props.setProfileToReducer();
-        // setTimeout(() => {
-        //   notification.success({
-        //     message: "Welcome back, " + this.props.profile.name,
-        //     placement: "topRight"
-        //   });
-        // }, 500);
       })
       .catch(() => {
         this.setState({ error: false, loading: false });
@@ -130,12 +124,20 @@ class LoginForm extends Component {
   };
 
   handleAccount = () => {
-    this.props.history.push("/user");
+    if (LocalStorageUtils.getRole() === 'Admin') {
+      this.props.history.push("/profile");
+    } else {
+      this.props.history.push("/user");
+    }
   };
 
-  // changePassword = () => {
-  //   this.props.history.push("/user/change-password")
-  // }
+  changePassword = () => {
+    if (LocalStorageUtils.getRole() === 'Admin') {
+      this.props.history.push("/admin/change-password");
+   } else {
+     this.props.history.push("/user/change-password");
+   }
+  }
   handleRegister = () => {
     this.props.history.push("/store/register");
     this.close();
@@ -156,9 +158,9 @@ class LoginForm extends Component {
               <Dropdown.Item onClick={this.handleAccount}>
                 <Icon name="user" /> My Account
               </Dropdown.Item>
-              {/* <Dropdown.Item onClick={this.changePassword}>
+              <Dropdown.Item onClick={this.changePassword}>
                 <Icon name="settings" /> Change Password
-              </Dropdown.Item> */}
+              </Dropdown.Item>
               <Dropdown.Item onClick={this.handleLogout}>
                 <Icon name="sign-out" /> Sign Out
               </Dropdown.Item>

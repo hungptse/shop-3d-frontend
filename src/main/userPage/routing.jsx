@@ -14,7 +14,8 @@ const ThemeRoutes = [
   {
     path: '/change-password',
     name: 'Change password',
-    component: ChangePassword
+    component: ChangePassword,
+    hidden : true
   },
   {
     path: '/orders',

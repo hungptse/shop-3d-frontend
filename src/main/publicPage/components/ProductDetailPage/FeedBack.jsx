@@ -126,7 +126,7 @@ class FeedBack extends Component {
   render() {
     const { feedbacks } = this.props;
     return (
-      <Container>
+      <Container style={{ height : 200, overflowY : "scroll" }}>
         <Comment.Group>
           {feedbacks.map(feedback => {
             if (feedback.isApprove) {
