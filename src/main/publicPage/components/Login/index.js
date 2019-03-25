@@ -27,7 +27,6 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import jwt_decode from "jwt-decode";
 import { notification } from "antd";
-import FirebaseUitls from "../../../../utils/FirebaseUitls";
 const AUTH_STORE = "AUTH_STORE";
 const signnedFromReducer = state => state[AUTH_STORE].signned;
 const uidFromReducer = state => state[AUTH_STORE].uid;
@@ -53,7 +52,6 @@ class LoginForm extends Component {
     password: "",
     error: true,
     loading: false,
-    avatarUrl : ""
   };
 
   show = () => {
@@ -145,7 +143,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { error, loading, uid, avatarUrl } = this.state;
+    const { error, loading, uid } = this.state;
     const { signned, open } = this.props;
 
     const LogginButton = () => {

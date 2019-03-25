@@ -42,6 +42,7 @@ export default class Quantity extends React.PureComponent {
       <Form.Group inline>
         <label>Quantity</label>
         <div className="product-quantity">
+        {/*  eslint-disable-next-line */}
           <a  className="decrement" onClick={this.decrement} />
           <input
             value={value}
@@ -51,6 +52,7 @@ export default class Quantity extends React.PureComponent {
             pattern="\d*"
             disabled={disabled}
           />
+          {/* eslint-disable-next-line */}
           <a className="increment" onClick={this.increment} />
         </div>
       </Form.Group>

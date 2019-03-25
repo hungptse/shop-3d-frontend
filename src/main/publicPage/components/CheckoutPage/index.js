@@ -1,20 +1,10 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Grid,
-  Card,
-  Form,
-  Input,
-  Dropdown,
-  Button,
-  Label,
-  FormField
-} from "semantic-ui-react";
-import { get,post } from "../../../../utils/ApiCaller";
+import { Container, Grid, Card, Form } from "semantic-ui-react";
+import { get, post } from "../../../../utils/ApiCaller";
 import { CHECK_OUT_CART, PROFILE_ACCOUNT } from "../../../../utils/ApiEndpoint";
 import CartLocal from "../../../../utils/CartLocal";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
-import {  checkoutCart, getCartFromLocal } from "../UI/Cart/Cart.action";
+import { checkoutCart, getCartFromLocal } from "../UI/Cart/Cart.action";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import OrderSummary from "./OrderSummary";
@@ -27,13 +17,13 @@ const startSelector = createSelector(
   cart => ({ cart: cart || [] })
 );
 class CheckoutPage extends Component {
-  state = { note: "", info : {} };
+  state = { note: "", info: {} };
 
-  componentDidMount(){
-    get(PROFILE_ACCOUNT(LocalStorageUtils.getSub()),{},{}).then(res => {
+  componentDidMount() {
+    get(PROFILE_ACCOUNT(LocalStorageUtils.getSub()), {}, {}).then(res => {
       console.log(res);
-      this.setState({info : res.data});
-    })
+      this.setState({ info: res.data });
+    });
   }
 
   handleSumbit = async () => {
@@ -47,8 +37,8 @@ class CheckoutPage extends Component {
       },
       {},
       {}
-    ).then(res => {
-      this.setState({ note : ""});
+    ).then(() => {
+      this.setState({ note: "" });
       CartLocal.checkout();
       this.props.checkoutCart && this.props.checkoutCart();
       setTimeout(() => {
@@ -60,9 +50,9 @@ class CheckoutPage extends Component {
     });
   };
   render() {
-    const {info} = this.state;
+    const { info } = this.state;
     return (
-      <Container style={{ height : 790 }}>
+      <Container style={{ height: 790 }}>
         <Grid>
           <Grid.Row>
             <Grid.Column width={8}>
@@ -77,30 +67,14 @@ class CheckoutPage extends Component {
                   style={{ paddingLeft: "1em", paddingRight: "1em" }}
                 >
                   <Form.Group inline widths="equal">
-                    <Form.Input
-                      fluid
-                      label="Fullname"
-                      children={info.name}
-                    />
+                    <Form.Input fluid label="Fullname" children={info.name} />
                   </Form.Group>
 
                   <Form.Group widths="equal" inline>
-                    <Form.Input
-                      fluid
-                      label="Email"
-                      children={info.email}
-                    />
-                    <Form.Input
-                      fluid
-                      label="Phone"
-                      children={info.phone}
-                    />
+                    <Form.Input fluid label="Email" children={info.email} />
+                    <Form.Input fluid label="Phone" children={info.phone} />
                   </Form.Group>
-                  <Form.Input
-                    fluid
-                    label="Address"
-                    children={info.address}
-                  />
+                  <Form.Input fluid label="Address" children={info.address} />
                   <Form.TextArea
                     label="Note"
                     placeholder="Note for this order..."
@@ -121,7 +95,10 @@ class CheckoutPage extends Component {
                       Checkout
                     </Form.Button>
                   </Form.Group>
-                  <i style={{marginTop : "1em", color : "red"}}>*Note: Please confirm all information is correct. We are acceptable order within 2-4 days working</i>
+                  <i style={{ marginTop: "1em", color: "red" }}>
+                    *Note: Please confirm all information is correct. We are
+                    acceptable order within 2-4 days working
+                  </i>
                 </Form>
               </Card>
             </Grid.Column>
@@ -135,4 +112,7 @@ class CheckoutPage extends Component {
   }
 }
 
-export default connect(startSelector,{ checkoutCart, setProfileToReducer })(CheckoutPage);
+export default connect(
+  startSelector,
+  { checkoutCart, setProfileToReducer }
+)(CheckoutPage);

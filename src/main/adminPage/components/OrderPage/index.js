@@ -3,19 +3,16 @@ import {
   Grid,
   Table,
   Icon,
-  Menu,
   Button,
   Label,
   Segment,
   Header,
-  Tab,
   Dimmer,
   Loader
 } from "semantic-ui-react";
 import { get, put } from "../../../../utils/ApiCaller";
 import { ORDER_LIST, ORDER_CHANGE_STATUS } from "../../../../utils/ApiEndpoint";
 import TimeAgo from "timeago-react";
-import { Redirect } from "react-router-dom";
 import {
   notification,
   Pagination,
@@ -36,7 +33,7 @@ class OrderMange extends Component {
     page: [],
     visible: false,
     pageDetail: [],
-    loading : true
+    loading: true
   };
 
   async componentDidMount() {
@@ -44,7 +41,7 @@ class OrderMange extends Component {
       this.setState({ orders: res.data });
       this.setState({ page: this.state.orders.slice(0, ITEM_ON_PAGE) });
       setTimeout(() => {
-        this.setState({ loading : false});
+        this.setState({ loading: false });
       }, 500);
     });
   }
@@ -68,6 +65,7 @@ class OrderMange extends Component {
     });
   };
   viewDetailOrder = id => {
+    // eslint-disable-next-line
     this.state.orders.map(order => {
       if (order.id === id) {
         this.setState({ details: order.orderDetail });
@@ -82,7 +80,7 @@ class OrderMange extends Component {
   };
 
   approveOrder = id => {
-    this.changeStatusOrder(id, 2).then(res => {
+    this.changeStatusOrder(id, 2).then(() => {
       notification.success({
         message: "Approved Order #" + id,
         placement: "topRight"
@@ -92,7 +90,7 @@ class OrderMange extends Component {
   };
 
   deniedOrder = async id => {
-    this.changeStatusOrder(id, 3).then(res => {
+    this.changeStatusOrder(id, 3).then(() => {
       notification.error({
         message: "Denied Order #" + id,
         placement: "topRight"
@@ -101,7 +99,7 @@ class OrderMange extends Component {
     });
   };
   shippingOrder = async id => {
-    this.changeStatusOrder(id, 4).then(res => {
+    this.changeStatusOrder(id, 4).then(() => {
       notification.success({
         message: "Shipping Order #" + id,
         placement: "topRight"
@@ -111,7 +109,7 @@ class OrderMange extends Component {
   };
 
   completeOrder = async id => {
-    this.changeStatusOrder(id, 5).then(res => {
+    this.changeStatusOrder(id, 5).then(() => {
       notification.success({
         message: "Order Completed #" + id,
         placement: "topRight"
@@ -120,7 +118,7 @@ class OrderMange extends Component {
     });
   };
   shippingFailOrder = async id => {
-    this.changeStatusOrder(id, 6).then(res => {
+    this.changeStatusOrder(id, 6).then(() => {
       notification.error({
         message: "Shipping Failed Order #" + id,
         placement: "topRight"
@@ -142,7 +140,9 @@ class OrderMange extends Component {
     });
   };
 
+  // eslint-disable-next-line
   renderStatus = status => {
+    // eslint-disable-next-line
     switch (status) {
       case 1:
         return (
@@ -150,42 +150,36 @@ class OrderMange extends Component {
             Pending
           </Label>
         );
-        break;
       case 2:
         return (
           <Label as="a" basic color="blue">
             Approved
           </Label>
         );
-        break;
       case 3:
         return (
           <Label as="a" basic color="red">
             Cancelled
           </Label>
         );
-        break;
       case 4:
         return (
           <Label as="a" basic color="blue">
             Shipping
           </Label>
         );
-        break;
       case 5:
         return (
           <Label as="a" basic color="green">
             Successful
           </Label>
         );
-        break;
       case 6:
         return (
           <Label as="a" basic color="red">
             Failed Shipping
           </Label>
         );
-        break;
     }
   };
 
@@ -194,8 +188,9 @@ class OrderMange extends Component {
       visible: false
     });
   };
-
+  // eslint-disable-next-line
   renderStepOder = status => {
+    // eslint-disable-next-line
     switch (status) {
       case 1:
         return (
@@ -217,7 +212,6 @@ class OrderMange extends Component {
             />
           </Steps>
         );
-        break;
       case 2:
         return (
           <Steps>
@@ -240,7 +234,6 @@ class OrderMange extends Component {
             />
           </Steps>
         );
-        break;
       case 3:
         return (
           <Steps>
@@ -262,7 +255,6 @@ class OrderMange extends Component {
             />
           </Steps>
         );
-        break;
       case 4:
         return (
           <Steps>
@@ -290,7 +282,6 @@ class OrderMange extends Component {
             />
           </Steps>
         );
-        break;
       case 5:
         return (
           <Steps>
@@ -320,7 +311,6 @@ class OrderMange extends Component {
             />
           </Steps>
         );
-        break;
       case 6:
         return (
           <Steps>
@@ -348,10 +338,8 @@ class OrderMange extends Component {
             />
           </Steps>
         );
-        break;
     }
   };
-
 
   render() {
     const {
@@ -364,8 +352,8 @@ class OrderMange extends Component {
       pageDetail,
       loading
     } = this.state;
-
     const renderBtn = (id, status) => {
+      // eslint-disable-next-line
       switch (status) {
         case 1:
           return (
@@ -390,7 +378,6 @@ class OrderMange extends Component {
               />
             </Grid.Column>
           );
-          break;
         case 2:
           return (
             <Grid.Column>
@@ -405,7 +392,6 @@ class OrderMange extends Component {
               />
             </Grid.Column>
           );
-          break;
         case 4:
           return (
             <Grid.Column>
@@ -429,7 +415,6 @@ class OrderMange extends Component {
               />
             </Grid.Column>
           );
-          break;
       }
     };
 
@@ -531,7 +516,7 @@ class OrderMange extends Component {
           )}
         </Drawer>
         <Grid.Row columns={1}>
-        <Dimmer active={loading} inverted>
+          <Dimmer active={loading} inverted>
             <Loader>Loading</Loader>
           </Dimmer>
           <Grid.Column width={16}>
@@ -575,9 +560,7 @@ class OrderMange extends Component {
                             <Table.Cell>${order.total}</Table.Cell>
                             <Table.Cell>
                               <Popover
-                                content={this.renderStepOder(
-                                  order.status
-                                )}
+                                content={this.renderStepOder(order.status)}
                                 title="Order Tracking"
                                 placement="top"
                               >

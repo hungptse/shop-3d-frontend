@@ -4,7 +4,7 @@ import Login from "../../../../publicPage/components/Login";
 import { connect } from "react-redux";
 import { setProfileToReducer } from "../../../../publicPage/components/Login/Auth.action";
 import { createSelector } from "reselect";
-import { notification, Card } from "antd";
+import { notification } from "antd";
 import logo from "../../../../../assets/images/azgundam-logo.png";
 
 const AUTH_STORE = "AUTH_STORE";

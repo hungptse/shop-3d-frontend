@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import {
   Container,
-  Card,
   Grid,
-  Header,
-  Breadcrumb,
   Dimmer,
   Loader
 } from "semantic-ui-react";

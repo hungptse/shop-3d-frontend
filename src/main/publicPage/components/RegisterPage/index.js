@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import {
   Grid,
-  Container,
-  Segment,
   Form,
   Input,
-  Radio,
   Icon,
-  Header,
-  Label,
-  Message
-} from "semantic-ui-react";
-import { get, post } from "../../../../utils/ApiCaller";
-import { ACCOUNT_CHECK, ACCOUNT } from "../../../../utils/ApiEndpoint";
-import { message, notification } from "antd";
+  Header} from "semantic-ui-react";
+import { post } from "../../../../utils/ApiCaller";
+import { ACCOUNT } from "../../../../utils/ApiEndpoint";
+import { notification } from "antd";
 
 class RegisterPage extends Component {
   state = { profile: {} };
@@ -50,7 +44,7 @@ class RegisterPage extends Component {
         {},
         {}
       )
-        .then(res => {
+        .then(() => {
           notification.success({
             message: "Register successful",
             description: "You can login to system now!",
@@ -58,7 +52,7 @@ class RegisterPage extends Component {
           });
           this.props.history.push("store");
         })
-        .catch(err => {
+        .catch(() => {
           notification.error({
             message: "Username existed",
             description: "Username that you enter is already used",

@@ -15,7 +15,6 @@ import {
 } from "../../../../utils/ApiEndpoint";
 import _ from "lodash";
 import ImageUploader from "react-images-upload";
-import FirebaseUitls from "../../../../utils/FirebaseUitls";
 class AddProduct extends Component {
   state = {
     cates: [],

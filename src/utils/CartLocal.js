@@ -44,6 +44,7 @@ class CartLocal {
   getCheckoutCart(){
     var cart = this.getCart();
     var array = [];
+    // eslint-disable-next-line
     cart.map(p => {
       array.push({
         id : p.id,
@@ -57,6 +58,7 @@ class CartLocal {
   getTotal(){
     var cart = this.getCart();
     var total = 0;
+    // eslint-disable-next-line
     cart.map(p => {
       total += p.quantity * p.price;
     });

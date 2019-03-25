@@ -26,6 +26,7 @@ class OrderDetail extends Component {
     this.setState({ page: this.state.orderDetail.slice(0, ITEM_ON_PAGE) });
   }
   renderStatus = status => {
+    // eslint-disable-next-line
     switch (status) {
       case 1:
         return (
@@ -33,46 +34,41 @@ class OrderDetail extends Component {
             Pending
           </Label>
         );
-        break;
       case 2:
         return (
           <Label as="a" basic color="blue">
             Approved
           </Label>
         );
-        break;
       case 3:
         return (
           <Label as="a" basic color="red">
             Cancelled
           </Label>
         );
-        break;
       case 4:
         return (
           <Label as="a" basic color="blue">
             Shipping
           </Label>
         );
-        break;
       case 5:
         return (
           <Label as="a" basic color="green">
             Successful
           </Label>
         );
-        break;
       case 6:
         return (
           <Label as="a" basic color="red">
             Failed Shipping
           </Label>
         );
-        break;
     }
   };
 
   renderStepOder = status => {
+    // eslint-disable-next-line
     switch (status) {
       case 1:
         return (
@@ -94,7 +90,6 @@ class OrderDetail extends Component {
             />
           </Steps>
         );
-        break;
       case 2:
         return (
           <Steps>
@@ -117,7 +112,6 @@ class OrderDetail extends Component {
             />
           </Steps>
         );
-        break;
       case 3:
         return (
           <Steps>
@@ -139,7 +133,6 @@ class OrderDetail extends Component {
             />
           </Steps>
         );
-        break;
       case 4:
         return (
           <Steps>
@@ -167,7 +160,6 @@ class OrderDetail extends Component {
             />
           </Steps>
         );
-        break;
       case 5:
         return (
           <Steps>
@@ -197,7 +189,6 @@ class OrderDetail extends Component {
             />
           </Steps>
         );
-        break;
       case 6:
         return (
           <Steps>
@@ -225,7 +216,6 @@ class OrderDetail extends Component {
             />
           </Steps>
         );
-        break;
     }
   };
 

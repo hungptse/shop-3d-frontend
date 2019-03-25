@@ -4,7 +4,6 @@ import { Search } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { getListCateFromAPI } from "./Search.action";
-import FirebaseUitls from "../../../../../utils/FirebaseUitls";
 
 const SEARCH_STORE = "SEARCH_STORE";
 const loadListCateFromReducer = state => state[SEARCH_STORE].listCate;
@@ -32,6 +31,7 @@ class SearchBar extends Component {
   handleResultSelect = (e, { result }) => {
     // this.setState({ value: result.title });
     var id = -1;
+    // eslint-disable-next-line
     this.props.listCate.map(cate => {
       var products = cate.product;
       if (products.length !== 0) {    

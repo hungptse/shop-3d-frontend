@@ -3,8 +3,6 @@ import {
   Grid,
   Button,
   Table,
-  Icon,
-  Menu,
   Form,
   Dropdown,
   Input,
@@ -15,10 +13,8 @@ import { get, post, put } from "../../../../utils/ApiCaller";
 import {
   PRODUCT_ENDPOINT,
   PRODUCT_BY_ID,
-  PUBLIC_LIST_CATE,
   ADMIN_LIST_CATE_NAME
 } from "../../../../utils/ApiEndpoint";
-import AddProduct from "./AddProduct.jsx";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import {
@@ -139,7 +135,7 @@ class ProductManage extends Component {
         {},
         {}
       )
-        .then(res => {
+        .then(() => {
           this.props.getListProductFromAPI &&
             this.props.getListProductFromAPI();
           this.onClose();
@@ -148,7 +144,7 @@ class ProductManage extends Component {
             placement: "topRight"
           });
         })
-        .catch(err => {
+        .catch(() => {
           notification.error({
             message: "Update product failed",
             placement: "topRight"
@@ -171,7 +167,7 @@ class ProductManage extends Component {
         {},
         {}
       )
-        .then(res => {
+        .then(() => {
           this.props.getListProductFromAPI &&
             this.props.getListProductFromAPI();
           this.onClose();
@@ -181,7 +177,7 @@ class ProductManage extends Component {
           });
           this.setState({ addNew: false, product: {} });
         })
-        .catch(err => {
+        .catch(() => {
           notification.error({
             message: "Insert product failed",
             placement: "topRight"

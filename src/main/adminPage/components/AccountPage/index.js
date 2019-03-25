@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Grid, Table, Icon, Menu, Label } from "semantic-ui-react";
+import { Grid, Table } from "semantic-ui-react";
 import { get } from "../../../../utils/ApiCaller";
 import { ACCOUNT } from "../../../../utils/ApiEndpoint";
-import { Drawer, List, Avatar, Divider, Col, Row, Popover } from "antd";
+import { Drawer, Divider, Col, Row, Popover } from "antd";
 import TimeAgo from "timeago-react";
 import LocalStorage from "../../../../utils/LocalStorage";
 
@@ -15,6 +15,7 @@ class AccountMange extends Component {
   }
 
   viewProfile = username => {
+    // eslint-disable-next-line
     this.state.accounts.map(account => {
       if (account.username === username) {
         this.setState({ accountSelected: account });
@@ -170,6 +171,7 @@ class AccountMange extends Component {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
+                {/* eslint-disable-next-line */}
                   {accounts.map(account => {
                     if (account.username !== LocalStorage.getSub()) {
                       return (

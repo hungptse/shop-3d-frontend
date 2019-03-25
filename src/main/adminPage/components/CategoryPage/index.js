@@ -4,15 +4,15 @@ import {
   Table,
   Icon,
   Menu,
-  Button,
-  Modal,
   Segment,
   Header,
-  Form,
-  Input
+  Form
 } from "semantic-ui-react";
 import { get, put } from "../../../../utils/ApiCaller";
-import { PUBLIC_LIST_CATE, CATE_CHANGE_NAME } from "../../../../utils/ApiEndpoint";
+import {
+  PUBLIC_LIST_CATE,
+  CATE_CHANGE_NAME
+} from "../../../../utils/ApiEndpoint";
 import { notification } from "antd";
 
 class CategoryManage extends Component {
@@ -21,7 +21,7 @@ class CategoryManage extends Component {
     cateSelected: {
       product: []
     },
-    cateName : ""
+    cateName: ""
   };
   async componentDidMount() {
     await get(PUBLIC_LIST_CATE(), {}, {}).then(res => {
@@ -30,30 +30,38 @@ class CategoryManage extends Component {
   }
 
   viewDetailCate = value => {
+    // eslint-disable-next-line
     this.state.cates.map(cate => {
       if (cate.id === value) {
-        this.setState({ cateSelected: cate, cateName : cate.name });
+        this.setState({ cateSelected: cate, cateName: cate.name });
       }
     });
   };
 
-   saveName = async () => {
+  saveName = async () => {
     var id = this.state.cateSelected.id;
-    await put(CATE_CHANGE_NAME(id),{
-      name : this.state.cateName
-    },{},{}).then(res => {
+    await put(
+      CATE_CHANGE_NAME(id),
+      {
+        name: this.state.cateName
+      },
+      {},
+      {}
+    ).then(() => {
       this.setState({
-        cates: this.state.cates.map(cate => cate.id === id ? {...cate, name : this.state.cateName} : cate)
+        cates: this.state.cates.map(cate =>
+          cate.id === id ? { ...cate, name: this.state.cateName } : cate
+        )
       });
       this.setState({
-        cateSelected : {...this.state.cateSelected, name : this.state.cateName}
+        cateSelected: { ...this.state.cateSelected, name: this.state.cateName }
       });
       notification.success({
         message: "Category Updated ",
         placement: "topRight"
       });
     });
-  }
+  };
 
   render() {
     const { cates, cateSelected, cateName } = this.state;
@@ -122,8 +130,18 @@ class CategoryManage extends Component {
                         <Grid.Row>
                           <Form>
                             <Form.Group inline>
-                              <Form.Input value={cateName} label="Caterogy Name" onChange={(e) =>this.setState({cateName : e.target.value})}/>
-                              <Form.Button content="Save" basic onClick={this.saveName}/>
+                              <Form.Input
+                                value={cateName}
+                                label="Caterogy Name"
+                                onChange={e =>
+                                  this.setState({ cateName: e.target.value })
+                                }
+                              />
+                              <Form.Button
+                                content="Save"
+                                basic
+                                onClick={this.saveName}
+                              />
                             </Form.Group>
                           </Form>
                         </Grid.Row>

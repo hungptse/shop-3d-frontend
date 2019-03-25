@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Grid,
   Header,
-  Card,
   Image,
   Form,
   Input,
@@ -17,7 +16,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import { get, put } from "../../../../utils/ApiCaller";
 import { PROFILE_ACCOUNT } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
-import MomentLocaleUtils, {
+import {
   formatDate,
   parseDate
 } from "react-day-picker/moment";
@@ -65,7 +64,7 @@ class AccountProfilePage extends Component {
       },
       {},
       {}
-    ).then(res => {
+    ).then(() => {
       this.props.setProfileToReducer && this.props.setProfileToReducer();
       setTimeout(() => {
         this.setState({ loading: false });
@@ -74,7 +73,7 @@ class AccountProfilePage extends Component {
         message: "Change profile successful",
         placement: "topRight"
       });
-    }).catch(err => {
+    }).catch(() => {
       notification.error({
         message: "Change profile unsuccessful",
         placement: "topRight"
@@ -141,7 +140,7 @@ class AccountProfilePage extends Component {
                           label="Male"
                           name="radioGroup"
                           checked={profile.gender === true}
-                          onChange={e =>
+                          onChange={() =>
                             this.setState({
                               profile: {
                                 ...this.state.profile,
@@ -154,7 +153,7 @@ class AccountProfilePage extends Component {
                           label="Female"
                           name="radioGroup"
                           checked={profile.gender === false}
-                          onChange={e =>
+                          onChange={() =>
                             this.setState({
                               profile: {
                                 ...this.state.profile,
@@ -194,7 +193,6 @@ class AccountProfilePage extends Component {
                         }}
                         type="email"
                         required
-                        onChange={e => {}}
                         value={profile.email}
                         onChange={e =>
                           this.setState({

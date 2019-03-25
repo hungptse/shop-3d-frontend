@@ -1,6 +1,6 @@
 
-import ProductPage from "./components/ProductPage/ProductPage.jsx";
-import HomePage from "./components/HomePage/HomePage.jsx";
+// import ProductPage from "./components/ProductPage/ProductPage.jsx";
+// import HomePage from "./components/HomePage/HomePage.jsx";
 
 const MenuRoutes = [
   // {

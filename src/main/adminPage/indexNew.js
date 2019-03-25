@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Layout, Menu, Icon, Card } from "antd";
 import "./admin.css";
 import Footer from "../publicPage/components/UI/Footer";
@@ -9,7 +9,7 @@ import MainRoutes from "./routing";
 import { Link } from "react-router-dom";
 import { renderRoutes } from "../../components/route";
 import { Icon as IconSe } from "semantic-ui-react";
-const { Header, Sider, Content } = Layout;
+const {  Sider, Content } = Layout;
 
 class SiderDemo extends React.Component {
   state = {
@@ -60,6 +60,7 @@ class SiderDemo extends React.Component {
             >
               <IconSe name="sliders horizontal" className="trigger" />
             </Card>
+            {/* eslint-disable-next-line */}
             {MenuRoutes.map((route, key) => {
               if (!route.redirect) {
                 return (

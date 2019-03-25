@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import {
   Grid,
   Table,
-  Icon,
-  Menu,
-  Button,
   Rating,
   Label,
   Radio,
@@ -47,7 +44,7 @@ class FeedbackMange extends Component {
       },
       {},
       {}
-    ).then(res => {
+    ).then(() => {
       this.setState({
         page: this.state.page.map(feedback =>
           feedback.id === id ? { ...feedback, isApprove: status } : feedback
@@ -56,17 +53,17 @@ class FeedbackMange extends Component {
       if(status){
         notification.success({
           message: "Approved feedback #" + id,
-          description : this.state.page.find(feedback => feedback.id == id).comment,
+          description : this.state.page.find(feedback => feedback.id === id).comment,
           placement: "topRight"
         });
       } else{
         notification.error({
           message: "Denied feeback #" + id,
-          description : this.state.page.find(feedback => feedback.id == id).comment,
+          description : this.state.page.find(feedback => feedback.id === id).comment,
           placement: "topRight"
         });
       }
-    }).catch(err => {
+    }).catch(() => {
       notification.error({
         message: "Error connection. Please try again",
         placement: "topRight"

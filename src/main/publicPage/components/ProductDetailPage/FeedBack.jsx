@@ -5,7 +5,6 @@ import {
   Button,
   Container,
   TextArea,
-  Icon,
   Rating,
   Header
 } from "semantic-ui-react";
@@ -128,6 +127,7 @@ class FeedBack extends Component {
     return (
       <Container style={{ height : 200, overflowY : "scroll" }}>
         <Comment.Group>
+        {/* eslint-disable-next-line */}
           {feedbacks.map(feedback => {
             if (feedback.isApprove) {
               return (

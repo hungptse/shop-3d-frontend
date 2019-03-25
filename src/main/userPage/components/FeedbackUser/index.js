@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import {
   Grid,
   Table,
-  Icon,
-  Menu,
   Rating,
   Label,
   Dimmer,

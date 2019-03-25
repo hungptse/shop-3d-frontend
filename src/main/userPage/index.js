@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tab, Container, Menu, Segment } from "semantic-ui-react";
+import { Tab, Container, Menu } from "semantic-ui-react";
 import { renderRoutes } from "../../components/route";
 import ThemeRoutes from "./routing.jsx";
 import Header from "./../publicPage/components/UI/Header";
@@ -9,6 +9,7 @@ class FullLayoutUser extends Component {
 
   componentDidMount() {
     var tabs = [];
+     // eslint-disable-next-line
     ThemeRoutes.map((route, key) => {
       if (!route.redirect && !route.hidden) {
         tabs.push({

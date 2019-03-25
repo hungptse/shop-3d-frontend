@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  Table,
-  Icon,
-  Menu,
-  Label,
-  Header,
-  Dimmer,
-  Loader
-} from "semantic-ui-react";
+import { Grid, Table, Label, Dimmer, Loader } from "semantic-ui-react";
 import { get } from "../../../../utils/ApiCaller";
 import { ORDER_OF_USER } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
@@ -29,6 +20,7 @@ class OrderUser extends Component {
   }
 
   renderStatus = status => {
+    // eslint-disable-next-line
     switch (status) {
       case 1:
         return (
@@ -36,42 +28,36 @@ class OrderUser extends Component {
             Pending
           </Label>
         );
-        break;
       case 2:
         return (
           <Label as="a" basic color="blue">
             Approved
           </Label>
         );
-        break;
       case 3:
         return (
           <Label as="a" basic color="red">
             Cancelled
           </Label>
         );
-        break;
       case 4:
         return (
           <Label as="a" basic color="blue">
             Shipping
           </Label>
         );
-        break;
       case 5:
         return (
           <Label as="a" basic color="green">
             Successful
           </Label>
         );
-        break;
       case 6:
         return (
           <Label as="a" basic color="red">
             Failed Shipping
           </Label>
         );
-        break;
     }
   };
   changePage = pageNumber => {
