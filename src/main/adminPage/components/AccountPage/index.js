@@ -131,7 +131,7 @@ class AccountMange extends Component {
             </Col>
           </Row>
           <Divider />
-          <p style={pStyle}>History Order</p>
+          {/* <p style={pStyle}>History Order</p>
           <Row>
             <Col span={12}>
               <DescriptionItem title="Position" content="Programmer" />
@@ -155,7 +155,7 @@ class AccountMange extends Component {
                 content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
               />
             </Col>
-          </Row>
+          </Row> */}
         </Drawer>
         <Grid>
           <Grid.Row columns={1}>

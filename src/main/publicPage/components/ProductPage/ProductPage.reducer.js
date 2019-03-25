@@ -1,9 +1,9 @@
 const initialState = {
-  listProduct: []
+  listProduct: [],
 };
 const setListProduct = (state, payload) => {
   if (payload) {
-    return { ...state, listProduct: payload };
+    return { ...state, listProduct: payload , loading : false };
   }
   return { ...state };
 };

@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Container, Card, Grid, Header, Breadcrumb } from "semantic-ui-react";
+import {
+  Container,
+  Card,
+  Grid,
+  Header,
+  Breadcrumb,
+  Dimmer,
+  Loader
+} from "semantic-ui-react";
 import Product from "../UI/Product";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
@@ -17,9 +25,9 @@ const startSelector = createSelector(
 const ITEM_ON_PAGE = 6;
 
 class ProductPage extends Component {
-  state = { page: [] };
+  state = { page: [], loading: true };
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
   }
 
@@ -29,7 +37,8 @@ class ProductPage extends Component {
     }
     setTimeout(() => {
       this.setState({ page: this.props.listProduct.slice(0, ITEM_ON_PAGE) });
-    }, 500);
+      this.setState({ loading: false });
+    }, 2000);
   }
 
   changePage = pageNumber => {
@@ -40,11 +49,14 @@ class ProductPage extends Component {
   };
   render() {
     const { listProduct } = this.props;
-    const { page } = this.state;
+    const { page, loading } = this.state;
 
     return (
-      <Container style={{ height : 1100}}>
+      <Container style={{ height: 1100 }}>
         <Grid>
+          <Dimmer active={loading} inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
           <Grid.Row>
             <Grid.Column width={4}>
               {/* <Card>

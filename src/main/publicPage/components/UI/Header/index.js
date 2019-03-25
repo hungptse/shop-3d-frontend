@@ -51,8 +51,6 @@ class HeaderPage extends Component {
   };
 
   handleCartIcon = () => {
-    // this.setState({ cartIsActive: !this.state.cartIsActive });
-
     this.props.setCartIsActiveToReducer &&
       this.props.setCartIsActiveToReducer(!this.props.cartIsActive);
     // if (this.props.cartIsActive) {
