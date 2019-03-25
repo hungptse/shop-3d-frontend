@@ -24,7 +24,6 @@ class CartLocal {
 
   removeProduct(id) {
     var cart = this.getCart();
-    console.log(cart.filter(p => p.id !== id));
     if (cart.length === 0) {
       LocalStorage.setItem(LOCAL_STORAGE_KEY.CART, JSON.stringify([]));
     } else {

@@ -40,7 +40,6 @@ class LocalStorageUtils {
         return decode.role;
       }
     } catch (err) {
-      console.log(err);
       
     }
     return "Guest";

@@ -11,35 +11,63 @@ import {
   Label,
   Message
 } from "semantic-ui-react";
-import { get } from "../../../../utils/ApiCaller";
-import { ACCOUNT_CHECK } from "../../../../utils/ApiEndpoint";
-import { message } from "antd";
+import { get, post } from "../../../../utils/ApiCaller";
+import { ACCOUNT_CHECK, ACCOUNT } from "../../../../utils/ApiEndpoint";
+import { message, notification } from "antd";
 
 class RegisterPage extends Component {
   state = { profile: {} };
-  handleSumbit = () => {
-    console.log(this.state.profile);
-  };
-
-  checkDuplicate = async username => {
-    if (username.length >= 6) {
-      await get(ACCOUNT_CHECK(username))
-      .then(res => {
-        message.error("Username already existed");
-      })
-      .catch(err => {
-        message.success("Username can be use");
-        this.setState({
-          profile: {
-            ...this.state.profile,
-            username: username
-          }
-        });
+  handleSumbit = async () => {
+    var profile = this.state.profile;
+    var valid = true;
+    if (profile.username.length < 6) {
+      notification.error({
+        message: "Invalid username",
+        description: "Username must have length great than 6 letter",
+        placement: "topRight"
       });
-    } else {
-      message.error("Username must have length > 6");
+      valid = false;
+    }
+    if (profile.pwd !== profile.rePwd) {
+      notification.error({
+        message: "Invalid password",
+        description: "Two passwords that you enter is inconsistent!",
+        placement: "topRight"
+      });
+      valid = false;
+    }
+    if (valid) {
+      await post(
+        ACCOUNT(),
+        {
+          username: profile.username,
+          name: profile.name,
+          password: profile.pwd,
+          email: profile.email,
+          phone: profile.phone,
+          address: profile.phone
+        },
+        {},
+        {}
+      )
+        .then(res => {
+          notification.success({
+            message: "Register successful",
+            description: "You can login to system now!",
+            placement: "topRight"
+          });
+          this.props.history.push("store");
+        })
+        .catch(err => {
+          notification.error({
+            message: "Username existed",
+            description: "Username that you enter is already used",
+            placement: "topRight"
+          });
+        });
     }
   };
+
   render() {
     return (
       <Grid container style={{ height: 800 }}>
@@ -58,8 +86,15 @@ class RegisterPage extends Component {
                         basic: true,
                         content: <Icon name="terminal" size="small" />
                       }}
-                      // value={profile.username}
-                      onChange={e => this.checkDuplicate(e.target.value)}
+                      onChange={e =>
+                        this.setState({
+                          profile: {
+                            ...this.state.profile,
+                            username: e.target.value
+                          }
+                        })
+                      }
+                      required
                       labelPosition="left"
                       type="text"
                     />
@@ -90,7 +125,7 @@ class RegisterPage extends Component {
                     <Input
                       label={{
                         basic: true,
-                        content: <Icon name="lock"/>
+                        content: <Icon name="lock" />
                       }}
                       type="password"
                       required
@@ -194,7 +229,7 @@ class RegisterPage extends Component {
                 </Form.Group>
                 <Form.Group widths="sixteen">
                   <Form.Field width={4} />
-                  <Form.Button width={8} fluid secondary disabled>
+                  <Form.Button width={8} fluid secondary>
                     Create Account
                   </Form.Button>
                 </Form.Group>
