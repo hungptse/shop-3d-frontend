@@ -1,5 +1,5 @@
 // export const BASE_URL = "https://localhost:5001";
-export const BASE_URL = "https://shopapi-hungpt.azurewebsites.net";
+export const BASE_URL = "https://3d-shop.azurewebsites.net";
 
 
 
