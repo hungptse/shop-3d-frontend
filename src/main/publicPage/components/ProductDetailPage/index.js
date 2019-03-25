@@ -145,16 +145,11 @@ class ProductDetailPage extends Component {
                   onChangeQuantity={this.handleQuantityChange}
                 />
               </Form>
-              <Button
-                animated="fade"
-                color="teal"
-                fluid
-                onClick={this.addToCart}
-              >
-                <Button.Content visible>
+              <Button animated="fade" color="vk" fluid onClick={this.addToCart} disabled={product.quantity === 0 ? true : false}  >
+                <Button.Content visible hidden={product.quantity === 0 ? true : false}>
                   <Icon name="add to cart" />
                 </Button.Content>
-                <Button.Content hidden>Add to cart</Button.Content>
+                <Button.Content content={product.quantity === 0 ? 'Out of stock' : 'Add to cart'} hidden={product.quantity === 0 ? false : true} />
               </Button>
             </Grid.Column>
           </Grid.Row>
