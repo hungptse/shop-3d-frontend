@@ -12,7 +12,7 @@ import {
 import { get } from "../../../../utils/ApiCaller";
 import { FEEDBACK_OF_USER } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
-import { Pagination } from "antd";
+import { Pagination, Empty } from "antd";
 
 const ITEM_ON_PAGE = 5;
 
@@ -46,66 +46,74 @@ class FeedBackUser extends Component {
         </Dimmer>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Table padded="very" selectable basic>
-              <Table.Header fullWidth>
-                <Table.Row>
-                  <Table.HeaderCell>#</Table.HeaderCell>
-                  <Table.HeaderCell>Posted Time</Table.HeaderCell>
-                  <Table.HeaderCell>Product</Table.HeaderCell>
-                  <Table.HeaderCell>Rate</Table.HeaderCell>
-                  <Table.HeaderCell>Comment</Table.HeaderCell>
-                  <Table.HeaderCell>Status</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-
-              <Table.Body>
-                {page.map(feedback => {
-                  return (
-                    <Table.Row
-                      key={feedback.id}
-                      negative={!feedback.isApprove}
-                      positive={feedback.isApprove}
-                    >
-                      <Table.Cell>#{feedback.id}</Table.Cell>
-                      <Table.Cell>
-                        {new Date(feedback.postedTime).toLocaleDateString()}
-                      </Table.Cell>
-                      <Table.Cell>{feedback.pro.name}</Table.Cell>
-                      <Table.Cell>
-                        <Rating
-                          icon="heart"
-                          defaultRating={feedback.rate}
-                          maxRating={5}
-                          disabled
-                        />
-                      </Table.Cell>
-                      <Table.Cell>{feedback.comment}</Table.Cell>
-                      <Table.Cell>
-                        <Label
-                          as="a"
-                          basic
-                          color={feedback.isApprove ? "green" : "red"}
-                        >
-                          {feedback.isApprove ? "Approved" : "Rejected"}
-                        </Label>
-                      </Table.Cell>
+            {page.length === 0 ? (
+              <Empty
+                image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+                description={<span>You don't have any feedback</span>}
+              />
+            ) : (
+              <div>
+                <Table padded="very" selectable basic>
+                  <Table.Header fullWidth>
+                    <Table.Row>
+                      <Table.HeaderCell>#</Table.HeaderCell>
+                      <Table.HeaderCell>Posted Time</Table.HeaderCell>
+                      <Table.HeaderCell>Product</Table.HeaderCell>
+                      <Table.HeaderCell>Rate</Table.HeaderCell>
+                      <Table.HeaderCell>Comment</Table.HeaderCell>
+                      <Table.HeaderCell>Status</Table.HeaderCell>
                     </Table.Row>
-                  );
-                })}
-              </Table.Body>
-            </Table>
-            <Grid>
-              <Grid.Column floated="left" width={5} />
-              <Grid.Column width={6} textAlign="center">
-                <Pagination
-                  defaultCurrent={1}
-                  pageSize={ITEM_ON_PAGE}
-                  onChange={page => this.changePage(page)}
-                  total={feedbacks.length}
-                />
-              </Grid.Column>
-              <Grid.Column floated="right" width={5} />
-            </Grid>
+                  </Table.Header>
+                  <Table.Body>
+                    {page.map(feedback => {
+                      return (
+                        <Table.Row
+                          key={feedback.id}
+                          negative={!feedback.isApprove}
+                          positive={feedback.isApprove}
+                        >
+                          <Table.Cell>#{feedback.id}</Table.Cell>
+                          <Table.Cell>
+                            {new Date(feedback.postedTime).toLocaleDateString()}
+                          </Table.Cell>
+                          <Table.Cell>{feedback.pro.name}</Table.Cell>
+                          <Table.Cell>
+                            <Rating
+                              icon="heart"
+                              defaultRating={feedback.rate}
+                              maxRating={5}
+                              disabled
+                            />
+                          </Table.Cell>
+                          <Table.Cell>{feedback.comment}</Table.Cell>
+                          <Table.Cell>
+                            <Label
+                              as="a"
+                              basic
+                              color={feedback.isApprove ? "green" : "red"}
+                            >
+                              {feedback.isApprove ? "Approved" : "Rejected"}
+                            </Label>
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table.Body>
+                </Table>
+                <Grid>
+                  <Grid.Column floated="left" width={5} />
+                  <Grid.Column width={6} textAlign="center">
+                    <Pagination
+                      defaultCurrent={1}
+                      pageSize={ITEM_ON_PAGE}
+                      onChange={page => this.changePage(page)}
+                      total={feedbacks.length}
+                    />
+                  </Grid.Column>
+                  <Grid.Column floated="right" width={5} />
+                </Grid>
+              </div>
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>

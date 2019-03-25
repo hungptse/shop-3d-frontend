@@ -12,7 +12,7 @@ import {
 import { get } from "../../../../utils/ApiCaller";
 import { ORDER_OF_USER } from "../../../../utils/ApiEndpoint";
 import LocalStorageUtils from "../../../../utils/LocalStorage";
-import { Pagination } from "antd";
+import { Pagination, Empty } from "antd";
 
 const ITEM_ON_PAGE = 5;
 
@@ -24,7 +24,7 @@ class OrderUser extends Component {
       this.setState({ page: this.state.orders.slice(0, ITEM_ON_PAGE) });
     });
     setTimeout(() => {
-      this.setState({ loading : false});
+      this.setState({ loading: false });
     }, 500);
   }
 
@@ -93,46 +93,59 @@ class OrderUser extends Component {
         </Dimmer>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Table padded="very" selectable basic>
-              <Table.Header fullWidth>
-                <Table.Row>
-                  <Table.HeaderCell>#</Table.HeaderCell>
-                  <Table.HeaderCell>Created Time</Table.HeaderCell>
-                  <Table.HeaderCell>Product</Table.HeaderCell>
-                  <Table.HeaderCell>Total</Table.HeaderCell>
-                  <Table.HeaderCell>Status</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {page.map(order => {
-                  return (
-                    <Table.Row
-                      key={order.id}
-                      onClick={() => this.linkToDetail(order.id)}
-                    >
-                      <Table.Cell>#{order.id}</Table.Cell>
-                      <Table.Cell>
-                        {new Date(order.createdTime).toLocaleDateString()}
-                      </Table.Cell>
-                      <Table.Cell>{order.orderDetail[0].pro.name}</Table.Cell>
-                      <Table.Cell>${order.total}</Table.Cell>
-                      <Table.Cell>{this.renderStatus(order.status)}</Table.Cell>
+            {orders.length === 0 ? (
+              <Empty
+                image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+                description={<span>You don't have any order</span>}
+              />
+            ) : (
+              <div>
+                <Table padded="very" selectable basic>
+                  <Table.Header fullWidth>
+                    <Table.Row>
+                      <Table.HeaderCell>#</Table.HeaderCell>
+                      <Table.HeaderCell>Created Time</Table.HeaderCell>
+                      <Table.HeaderCell>Product</Table.HeaderCell>
+                      <Table.HeaderCell>Total</Table.HeaderCell>
+                      <Table.HeaderCell>Status</Table.HeaderCell>
                     </Table.Row>
-                  );
-                })}
-              </Table.Body>
-            </Table>
-            <Grid>
-              <Grid.Column width={16} textAlign="right">
-                <Pagination
-                  defaultCurrent={1}
-                  pageSize={ITEM_ON_PAGE}
-                  onChange={page => this.changePage(page)}
-                  total={orders.length}
-                />
-              </Grid.Column>
-              <Grid.Column floated="right" width={5} />
-            </Grid>
+                  </Table.Header>
+                  <Table.Body>
+                    {page.map(order => {
+                      return (
+                        <Table.Row
+                          key={order.id}
+                          onClick={() => this.linkToDetail(order.id)}
+                        >
+                          <Table.Cell>#{order.id}</Table.Cell>
+                          <Table.Cell>
+                            {new Date(order.createdTime).toLocaleDateString()}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {order.orderDetail[0].pro.name}
+                          </Table.Cell>
+                          <Table.Cell>${order.total}</Table.Cell>
+                          <Table.Cell>
+                            {this.renderStatus(order.status)}
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table.Body>
+                </Table>
+                <Grid>
+                  <Grid.Column width={16} textAlign="right">
+                    <Pagination
+                      defaultCurrent={1}
+                      pageSize={ITEM_ON_PAGE}
+                      onChange={page => this.changePage(page)}
+                      total={orders.length}
+                    />
+                  </Grid.Column>
+                  <Grid.Column floated="right" width={5} />
+                </Grid>
+              </div>
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>
