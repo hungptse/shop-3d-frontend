@@ -33,7 +33,14 @@ const startSelector = createSelector(
 );
 
 class AccountProfilePage extends Component {
-  state = { profile: {}, loading: false };
+  state = { profile: {
+    username : '',
+    name : '',
+    email : '', 
+    phone : '',
+    address : ''
+
+  }, loading: false };
   async componentDidMount() {
     this.setState({ loading: true });
     await get(PROFILE_ACCOUNT(LocalStorageUtils.getSub())).then(res => {
