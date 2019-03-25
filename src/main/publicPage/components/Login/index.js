@@ -126,7 +126,7 @@ class LoginForm extends Component {
 
   handleAccount = () => {
     if (LocalStorageUtils.getRole() === 'Admin') {
-      this.props.history.push("/profile");
+      this.props.history.push("/admin/profile");
     } else {
       this.props.history.push("/user");
     }
