@@ -8,7 +8,7 @@ pipeline {
         // }
         stage('Build') { 
             steps {
-                sh 'docker build -t 3d-front-end:dev'
+                sh 'docker build -t fe:dev'
             }
         }
         // stage('Release') { 
