@@ -19,11 +19,6 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Build') { 
-            steps {
-                sh 'npm run build'
-            }
-        }
         stage('Release') { 
             steps {
                 sh 'serve -s build'
