@@ -8,7 +8,7 @@ pipeline {
         // }
         stage('Build') { 
             steps {
-                sh 'docker build -t fe'
+                sh 'docker build -t fe .'
             }
         }
         // stage('Release') { 
