@@ -9,8 +9,6 @@ pipeline {
         stage('Install') { 
             steps {
                 sh  'npm install'
-            }
-            steps {
                 sh  'npm install -g serve'
             }
         }
