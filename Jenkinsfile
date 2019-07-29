@@ -1,11 +1,6 @@
 pipeline {
     agent any 
     stages {
-        // stage('Change dir'){
-        //     steps {
-        //         sh 'cd /var/lib/jenkins/workspace/resume-ci@script'
-        //     }
-        // }
         stage('Install') { 
             steps {
                 sh  'npm install'
@@ -21,15 +16,5 @@ pipeline {
                 sh 'npm run start:prod'
             }
         }
-        // stage('Test') { 
-        //     steps {
-        //         // 
-        //     }
-        // }
-        // stage('Deploy') { 
-        //     steps {
-        //         // 
-        //     }
-        // }
     }
 }
