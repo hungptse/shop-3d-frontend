@@ -9,7 +9,6 @@ pipeline {
         stage('Install') { 
             steps {
                 sh  'npm install'
-                sh  'npm install -g serve'
             }
         }
         stage('Build') { 
@@ -19,7 +18,7 @@ pipeline {
         }
         stage('Release') { 
             steps {
-                sh 'serve -s build'
+                sh 'npm run start:prod'
             }
         }
         // stage('Test') { 

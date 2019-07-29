@@ -53,6 +53,7 @@
     "start-js": "react-scripts start",
     "start": "npm-run-all -p start-js",
     "build": "npm run build-css && react-scripts build",
+    "start:prod" : "serve -s build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
