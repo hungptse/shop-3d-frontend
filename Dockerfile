@@ -1,13 +1,11 @@
-FROM node:12.2.0-alpine
 
-WORKDIR /build
+FROM node:10.16.0
 
-ENV PATH /build
+RUN mkdir -p /root/src/front-end
+WORKDIR /root/src/front-end
 
-
-COPY package.json /app/package.json
-
-RUN npm install --silent
-RUN npm install react-scripts@3.0.1 -g --silent
-
+COPY package.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
 CMD ["npm", "start"]
