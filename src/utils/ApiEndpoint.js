@@ -1,4 +1,4 @@
-export const BASE_URL = "https://localhost:4000";
+export const BASE_URL = "http://52.230.15.74:4000";
 // export const BASE_URL = "https://3d-shop.azurewebsites.net";
 
 
