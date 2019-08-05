@@ -1,4 +1,3 @@
-
 FROM node:10.16.0
 
 RUN mkdir -p /root/src/front-end
